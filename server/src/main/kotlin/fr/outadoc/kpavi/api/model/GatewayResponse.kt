@@ -93,7 +93,7 @@ sealed interface Command {
     data class InputText(
         @SerialName("params")
         val params: Params,
-    ) {
+    ) : Command {
         data class Params(
             /**
              * Position de la colonne (1-40) de la zone de saisie.
@@ -136,7 +136,7 @@ sealed interface Command {
              * Si `on`, le curseur sera visible, sinon `off`.
              */
             @SerialName("cursor")
-            val cursor: CursorSetting,
+            val cursor: OnOff,
 
             /**
              * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
@@ -153,14 +153,6 @@ sealed interface Command {
             val validWith: Int,
         )
 
-        enum class CursorSetting {
-            @SerialName("on")
-            ON,
-
-            @SerialName("off")
-            OFF
-        }
-
         object FunctionKeys {
             const val SOMMAIRE = 1
             const val RETOUR = 4
@@ -172,29 +164,37 @@ sealed interface Command {
     }
 
     @SerialName("InputMsg")
-    data object InputMessage
+    data object InputMessage : Command
 
     @SerialName("InputForm")
-    data object InputForm
+    data object InputForm : Command
 
     @SerialName("libCnx")
-    data object Disconnect
+    data object Disconnect : Command
 
     @SerialName("PushServiceMsg")
-    data object PushServiceMessage
+    data object PushServiceMessage : Command
 
     @SerialName("BackgroundCall")
-    data object BackgroundCall
+    data object BackgroundCall : Command
 
     @SerialName("connectToWs")
-    data object ConnectToWebSocket
+    data object ConnectToWebSocket : Command
 
     @SerialName("connectToTln")
-    data object ConnectToTelnet
+    data object ConnectToTelnet : Command
 
     @SerialName("connectToExt")
-    data object ConnectToExt
+    data object ConnectToExt : Command
 
     @SerialName("duplicateStream")
-    data object DuplicateStream
+    data object DuplicateStream : Command
+
+    enum class OnOff {
+        @SerialName("on")
+        ON,
+
+        @SerialName("off")
+        OFF
+    }
 }
