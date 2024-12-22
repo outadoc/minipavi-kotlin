@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  minipavi:
+    container_name: minipavi
+    build: ./minipavi
+    ports:
+      # Websocket port
+      - "8182:8182"
+    volumes:
+      - ./minipavi/config:/config
+
+  emulminitel:
+    container_name: emulminitel
+    build: ./emulminitel
+    links:
+      - minipavi
+    ports:
+      # Web interface
+      - "8082:80"
