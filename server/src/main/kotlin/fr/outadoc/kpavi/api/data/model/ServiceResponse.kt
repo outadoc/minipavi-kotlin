@@ -1,8 +1,8 @@
 package fr.outadoc.kpavi.api.data.model
 
-import fr.outadoc.kpavi.Base64Serializer
-import fr.outadoc.kpavi.FunctionKeySetSerializer
-import fr.outadoc.kpavi.InstantUnixEpochSerializer
+import fr.outadoc.kpavi.api.data.serializer.Base64Serializer
+import fr.outadoc.kpavi.api.data.serializer.FunctionKeySetSerializer
+import fr.outadoc.kpavi.api.data.serializer.InstantUnixEpochSerializer
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
 import kotlinx.serialization.ExperimentalSerializationApi

@@ -1,4 +1,4 @@
-package fr.outadoc.kpavi
+package fr.outadoc.kpavi.api.data.serializer
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer

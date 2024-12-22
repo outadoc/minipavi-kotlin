@@ -1,4 +1,4 @@
-package fr.outadoc.kpavi
+package fr.outadoc.kpavi.api.data.serializer
 
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.decodeToByteString
