@@ -38,7 +38,7 @@ data class ServiceResponse(
      * Généralement, cette clé aura la valeur [Command.OnOff.ON].
      */
     @SerialName("echo")
-    val echo: Command.OnOff,
+    val echo: Command.OnOff = Command.OnOff.ON,
 
     /**
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
@@ -48,20 +48,20 @@ data class ServiceResponse(
      * - Si la valeur est `yes-cnx`, l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
      */
     @SerialName("directcall")
-    val directCall: DirectCallSetting,
+    val directCall: DirectCallSetting = DirectCallSetting.NO,
 
     /**
      * Prochaine URL du service qui devra être appelée par la passerelle.
      */
     @SerialName("next")
-    val next: String,
+    val next: String = "",
 
     /**
      * Commande particulière que doit gérer la passerelle
      * (saisie texte, saisie message, etc.).
      */
     @SerialName("COMMAND")
-    val command: Command,
+    val command: Command? = null,
 ) {
     @Serializable
     enum class DirectCallSetting {

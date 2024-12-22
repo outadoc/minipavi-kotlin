@@ -9,6 +9,8 @@ services:
       - "8182:8182"
     volumes:
       - ./minipavi/config:/config
+    networks:
+      - teletel
 
   emulminitel:
     container_name: emulminitel
@@ -18,3 +20,8 @@ services:
     ports:
       # Web interface
       - "8082:80"
+    networks:
+      - teletel
+
+networks:
+  teletel:
