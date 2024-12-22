@@ -1,8 +1,6 @@
 package fr.outadoc.kpavi.api.data
 
-import fr.outadoc.kpavi.api.data.model.Command
 import fr.outadoc.kpavi.api.data.model.GatewayRequest
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
 import kotlin.test.Test
@@ -37,7 +35,7 @@ class GatewayRequestTest {
                 minitelVersion = "Cv;",
                 content = emptyList(),
                 context = "",
-                function = GatewayRequest.Function.CNX,
+                function = GatewayRequest.Function.CONNECTION,
             )
         )
 
@@ -74,7 +72,7 @@ class GatewayRequestTest {
                 minitelVersion = "Cz6",
                 content = emptyList(),
                 context = "",
-                function = GatewayRequest.Function.CNX,
+                function = GatewayRequest.Function.CONNECTION,
             )
         )
 

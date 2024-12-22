@@ -112,7 +112,7 @@ data class GatewayRequest(
         SOMMAIRE,
 
         @SerialName("CNX")
-        CNX,
+        CONNECTION,
 
         @SerialName("FIN")
         FIN,
@@ -121,18 +121,18 @@ data class GatewayRequest(
         DIRECT,
 
         @SerialName("DIRECTCNX")
-        DIRECTCNX,
+        DIRECT_CONNECTION,
 
         @SerialName("DIRECTCALLFAILED")
-        DIRECTCALLFAILED,
+        DIRECT_CALL_FAILED,
 
         @SerialName("DIRECTCALLENDED")
-        DIRECTCALLENDED,
+        DIRECT_CALL_ENDED,
 
         @SerialName("BGCALL")
-        BGCALL,
+        BACKGROUND_CALL,
 
         @SerialName("BGCALL_SIMU")
-        BGCALL_SIMU,
+        SIMULATED_BACKGROUND_CALL,
     }
 }

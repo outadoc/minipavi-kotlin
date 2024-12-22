@@ -44,9 +44,8 @@ data class ServiceResponse(
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
      * [next], sans attendre une action de l'utilisateur.
      *
-     * Valeurs possibles : `no`, `yes`, `yes-cnx`.
-     * Si la valeur est `yes`, l'appel au service aura la clé `fctn` à la valeur `DIRECT`.
-     * Si la valeur est `yes-cnx`, l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
+     * - Si la valeur est `yes`, l'appel au service aura la clé `fctn` à la valeur `DIRECT`.
+     * - Si la valeur est `yes-cnx`, l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
      */
     @SerialName("directcall")
     val directCall: DirectCallSetting,
