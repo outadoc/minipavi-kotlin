@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
-data class GatewayResponse(
+data class ServiceResponse(
     /**
      * Version du client.
      */
@@ -34,17 +34,10 @@ data class GatewayResponse(
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
      * pour que l'utilisateur voie ce qu'il tape.
      *
-     * Valeurs possibles : [OnOff.ON] ou [OnOff.OFF].
-     * Généralement, cette clé aura la valeur [OnOff.ON].
+     * Généralement, cette clé aura la valeur [Command.OnOff.ON].
      */
     @SerialName("echo")
     val echo: Command.OnOff,
-
-    /**
-     * Prochaine URL du service qui devra être appelée par la passerelle.
-     */
-    @SerialName("next")
-    val next: String,
 
     /**
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
@@ -58,7 +51,14 @@ data class GatewayResponse(
     val directCall: DirectCallSetting,
 
     /**
-     * Commande particulière que doit gérer la passerelle (saisie texte, saisie message, etc.).
+     * Prochaine URL du service qui devra être appelée par la passerelle.
+     */
+    @SerialName("next")
+    val next: String,
+
+    /**
+     * Commande particulière que doit gérer la passerelle
+     * (saisie texte, saisie message, etc.).
      */
     @SerialName("COMMAND")
     val command: Command,
@@ -90,7 +90,7 @@ sealed interface Command {
     @Serializable
     @SerialName("InputTxt")
     data class InputText(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params,
     ) : Command {
 
@@ -163,7 +163,7 @@ sealed interface Command {
     @Serializable
     @SerialName("InputMsg")
     data class InputMessage(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params,
     ) : Command {
 
@@ -235,7 +235,7 @@ sealed interface Command {
     @Serializable
     @SerialName("InputForm")
     data class InputForm(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params,
     ) : Command {
 
@@ -314,7 +314,7 @@ sealed interface Command {
     @Serializable
     @SerialName("PushServiceMsg")
     data class PushServiceMessage(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params,
     ) : Command {
 
@@ -342,7 +342,7 @@ sealed interface Command {
     @Serializable
     @SerialName("BackgroundCall")
     data class BackgroundCall(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params
     ) : Command {
 
@@ -407,7 +407,7 @@ sealed interface Command {
     @Serializable
     @SerialName("connectToWs")
     data class ConnectToWebSocket(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params
     ) : Command {
 
@@ -472,7 +472,7 @@ sealed interface Command {
     @Serializable
     @SerialName("connectToTln")
     data class ConnectToTelnet(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params
     ) : Command {
 
@@ -531,7 +531,7 @@ sealed interface Command {
     @Serializable
     @SerialName("connectToExt")
     data class ConnectToExt(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params
     ) : Command {
 
@@ -580,7 +580,7 @@ sealed interface Command {
     @Serializable
     @SerialName("duplicateStream")
     data class DuplicateStream(
-        @SerialName("params")
+        @SerialName("param")
         val params: Params
     ) : Command {
 
