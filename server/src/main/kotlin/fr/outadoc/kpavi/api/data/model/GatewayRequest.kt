@@ -76,14 +76,17 @@ data class GatewayRequest(
     )
 
     enum class SocketType {
-        @SerialName("websocket")
+        @SerialName("WS")
         WebSocket,
 
-        @SerialName("websocketssl")
+        @SerialName("WSS")
         WebSocketSSL,
 
-        @SerialName("other")
-        Other
+        @SerialName("AST")
+        Asterisk,
+
+        @SerialName("TELN")
+        Telnet,
     }
 
     enum class Function {
