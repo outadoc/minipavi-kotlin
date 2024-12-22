@@ -49,12 +49,16 @@ class ServiceResponseTest {
                 params = Command.InputMessage.Params(
                     x = 1,
                     y = 13,
-                    w = 40,
-                    h = 2,
+                    width = 40,
+                    height = 2,
                     spaceChar = ".",
                     prefill = emptyList(),
                     cursor = Command.OnOff.ON,
-                    submitWith = Command.FunctionKeys.REPETITION + Command.FunctionKeys.GUIDE + Command.FunctionKeys.ENVOI
+                    submitWith = setOf(
+                        Command.FunctionKey.REPETITION,
+                        Command.FunctionKey.GUIDE,
+                        Command.FunctionKey.ENVOI
+                    )
                 )
             )
         )
@@ -103,12 +107,15 @@ class ServiceResponseTest {
                 params = Command.InputText.Params(
                     x = 2,
                     y = 20,
-                    l = 10,
+                    length = 10,
                     char = "",
                     spaceChar = ".",
                     prefill = "Salut!",
                     cursor = Command.OnOff.ON,
-                    submitWith = Command.FunctionKeys.REPETITION + Command.FunctionKeys.ENVOI
+                    submitWith = setOf(
+                        Command.FunctionKey.REPETITION,
+                        Command.FunctionKey.ENVOI
+                    )
                 )
             )
         )

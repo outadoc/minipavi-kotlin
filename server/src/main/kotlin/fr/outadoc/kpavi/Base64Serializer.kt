@@ -16,7 +16,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 internal object Base64Serializer : KSerializer<ByteString> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("Instant", PrimitiveKind.LONG)
+        PrimitiveSerialDescriptor("Base64Serializer", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): ByteString =
         Base64.decodeToByteString(decoder.decodeString())

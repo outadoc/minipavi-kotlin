@@ -1,6 +1,7 @@
 package fr.outadoc.kpavi.api.data.model
 
 import fr.outadoc.kpavi.Base64Serializer
+import fr.outadoc.kpavi.FunctionKeySetSerializer
 import fr.outadoc.kpavi.InstantUnixEpochSerializer
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
@@ -112,7 +113,7 @@ sealed interface Command {
              * Longueur de la zone de saisie (1-40).
              */
             @SerialName("l")
-            val l: Int,
+            val length: Int,
 
             /**
              *  Si non vide, quel que soit la caractère tapé par l'utilisateur,
@@ -148,15 +149,16 @@ sealed interface Command {
              * par l'utilisateur.
              *
              * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
-             * - [FunctionKeys.SOMMAIRE]
-             * - [FunctionKeys.RETOUR]
-             * - [FunctionKeys.REPETITION]
-             * - [FunctionKeys.GUIDE]
-             * - [FunctionKeys.SUITE]
-             * - [FunctionKeys.ENVOI]
+             * - [FunctionKey.SOMMAIRE]
+             * - [FunctionKey.RETOUR]
+             * - [FunctionKey.REPETITION]
+             * - [FunctionKey.GUIDE]
+             * - [FunctionKey.SUITE]
+             * - [FunctionKey.ENVOI]
              */
             @SerialName("validwith")
-            val submitWith: Int,
+            @Serializable(with = FunctionKeySetSerializer::class)
+            val submitWith: Set<FunctionKey>,
         )
     }
 
@@ -185,13 +187,13 @@ sealed interface Command {
              * Longueur de la zone de saisie (1-40).
              */
             @SerialName("w")
-            val w: Int,
+            val width: Int,
 
             /**
              * Hauteur (nombre de lignes) de la zone de saisie.
              */
             @SerialName("h")
-            val h: Int,
+            val height: Int,
 
             /**
              * Caractère pour affichage du champ de saisie (` ` ou `.` généralement).
@@ -222,13 +224,14 @@ sealed interface Command {
              * De même que les touches Suite et Retour gérées directement par la passerelle pour le changement de ligne dans la zone de saisie.
              *
              * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
-             * - [FunctionKeys.SOMMAIRE]
-             * - [FunctionKeys.REPETITION]
-             * - [FunctionKeys.GUIDE]
-             * - [FunctionKeys.ENVOI]
+             * - [FunctionKey.SOMMAIRE]
+             * - [FunctionKey.REPETITION]
+             * - [FunctionKey.GUIDE]
+             * - [FunctionKey.ENVOI]
              */
             @SerialName("validwith")
-            val submitWith: Int,
+            @Serializable(with = FunctionKeySetSerializer::class)
+            val submitWith: Set<FunctionKey>,
         )
     }
 
@@ -257,7 +260,7 @@ sealed interface Command {
              * Tableau des longueurs des zones de saisie (1-40).
              */
             @SerialName("l")
-            val l: List<Int>,
+            val length: List<Int>,
 
             /**
              *  Caractère pour affichage du champ de saisie (` ` ou `.` généralement).
@@ -289,13 +292,14 @@ sealed interface Command {
              * De même que les touches Suite et Retour gérées directement par la passerelle pour le changement de ligne dans la zone de saisie.
              *
              * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
-             * - [FunctionKeys.SOMMAIRE]
-             * - [FunctionKeys.REPETITION]
-             * - [FunctionKeys.GUIDE]
-             * - [FunctionKeys.ENVOI]
+             * - [FunctionKey.SOMMAIRE]
+             * - [FunctionKey.REPETITION]
+             * - [FunctionKey.GUIDE]
+             * - [FunctionKey.ENVOI]
              */
             @SerialName("validwith")
-            val submitWith: Int,
+            @Serializable(with = FunctionKeySetSerializer::class)
+            val submitWith: Set<FunctionKey>,
         )
     }
 
@@ -618,12 +622,12 @@ sealed interface Command {
         LOWER
     }
 
-    object FunctionKeys {
-        const val SOMMAIRE = 1
-        const val RETOUR = 4
-        const val REPETITION = 8
-        const val GUIDE = 16
-        const val SUITE = 64
-        const val ENVOI = 128
+    enum class FunctionKey(val value: Int) {
+        SOMMAIRE(1),
+        RETOUR(4),
+        REPETITION(8),
+        GUIDE(16),
+        SUITE(64),
+        ENVOI(128)
     }
 }
