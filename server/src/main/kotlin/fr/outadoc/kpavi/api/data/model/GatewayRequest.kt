@@ -1,4 +1,4 @@
-package fr.outadoc.kpavi.api.model
+package fr.outadoc.kpavi.api.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
