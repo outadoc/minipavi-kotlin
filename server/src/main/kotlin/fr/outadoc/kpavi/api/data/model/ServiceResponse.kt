@@ -29,7 +29,7 @@ data class ServiceResponse(
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
      */
     @SerialName("context")
-    val context: String,
+    val context: String = "",
 
     /**
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
