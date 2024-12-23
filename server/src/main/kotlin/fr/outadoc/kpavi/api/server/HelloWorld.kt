@@ -2,7 +2,6 @@ package fr.outadoc.kpavi.api.server
 
 import fr.outadoc.kpavi.api.data.minitelApp
 import fr.outadoc.kpavi.api.domain.model.ServiceResponse
-import fr.outadoc.kpavi.videotex.BackgroundColor
 import fr.outadoc.kpavi.videotex.TextColor
 import fr.outadoc.kpavi.videotex.buildVideotex
 import io.ktor.server.routing.*
@@ -44,9 +43,18 @@ fun Route.helloWorld() {
                     context = HelloWorldState.Background,
                     content = buildVideotex {
                         clearScreen()
+
                         TextColor.entries.forEach { color ->
                             withTextColor(color) {
                                 appendLine("Texte en ${color.name}")
+                            }
+                        }
+
+                        withInvertedBackground {
+                            TextColor.entries.forEach { color ->
+                                withTextColor(color) {
+                                    appendLine("Texte en ${color.name}")
+                                }
                             }
                         }
                     },
@@ -58,10 +66,13 @@ fun Route.helloWorld() {
                     context = HelloWorldState.Intro,
                     content = buildVideotex {
                         clearScreen()
-                        BackgroundColor.entries.forEach { color ->
-                            withBackgroundColor(color) {
-                                appendLine(" Fond en ${color.name}")
-                            }
+
+                        withBlink {
+                            appendLine("Texte clignotant")
+                        }
+
+                        withUnderline {
+                            appendLine("Texte souligné")
                         }
                     },
                 )
