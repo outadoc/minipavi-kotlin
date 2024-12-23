@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
-data class ServiceResponse<T : Any>(
+data class ServiceResponseDTO(
     /**
      * Version du client.
      */
@@ -29,16 +29,16 @@ data class ServiceResponse<T : Any>(
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
      */
     @SerialName("context")
-    val context: T,
+    val context: String,
 
     /**
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
      * pour que l'utilisateur voie ce qu'il tape.
      *
-     * Généralement, cette clé aura la valeur [Command.OnOff.ON].
+     * Généralement, cette clé aura la valeur [CommandDTO.OnOff.ON].
      */
     @SerialName("echo")
-    val echo: Command.OnOff = Command.OnOff.ON,
+    val echo: CommandDTO.OnOff = CommandDTO.OnOff.ON,
 
     /**
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
@@ -61,7 +61,7 @@ data class ServiceResponse<T : Any>(
      * (saisie texte, saisie message, etc.).
      */
     @SerialName("COMMAND")
-    val command: Command? = null,
+    val command: CommandDTO? = null,
 ) {
     @Serializable
     enum class DirectCallSetting {
@@ -79,7 +79,7 @@ data class ServiceResponse<T : Any>(
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @JsonClassDiscriminator("name")
-sealed interface Command {
+sealed interface CommandDTO {
 
     /**
      * Demande à la passerelle de gérer la saisie par l'utilisateur d'une seule ligne de saisie,
@@ -92,7 +92,7 @@ sealed interface Command {
     data class InputText(
         @SerialName("param")
         val params: Params,
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -166,7 +166,7 @@ sealed interface Command {
     data class InputMessage(
         @SerialName("param")
         val params: Params,
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -239,7 +239,7 @@ sealed interface Command {
     data class InputForm(
         @SerialName("param")
         val params: Params,
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -309,7 +309,7 @@ sealed interface Command {
      */
     @SerialName("libCnx")
     @Serializable
-    data object Disconnect : Command
+    data object Disconnect : CommandDTO
 
     /**
      * Demande à la passerelle de d'afficher un message en ligne `0` aux autres utilisateurs.
@@ -319,7 +319,7 @@ sealed interface Command {
     data class PushServiceMessage(
         @SerialName("param")
         val params: Params,
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -347,7 +347,7 @@ sealed interface Command {
     data class BackgroundCall(
         @SerialName("param")
         val params: Params
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -412,7 +412,7 @@ sealed interface Command {
     data class ConnectToWebSocket(
         @SerialName("param")
         val params: Params
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -477,7 +477,7 @@ sealed interface Command {
     data class ConnectToTelnet(
         @SerialName("param")
         val params: Params
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -536,7 +536,7 @@ sealed interface Command {
     data class ConnectToExt(
         @SerialName("param")
         val params: Params
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(
@@ -585,7 +585,7 @@ sealed interface Command {
     data class DuplicateStream(
         @SerialName("param")
         val params: Params
-    ) : Command {
+    ) : CommandDTO {
 
         @Serializable
         data class Params(

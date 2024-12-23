@@ -1,14 +1,17 @@
 package fr.outadoc.kpavi.api.server
 
-import fr.outadoc.kpavi.api.data.model.ServiceResponse
+import fr.outadoc.kpavi.api.data.minitelApp
+import fr.outadoc.kpavi.api.domain.model.ServiceResponse
 import io.ktor.server.routing.*
 
+data object MitterrandState
+
 fun Route.mitterrand() {
-    miniRoute("/") {
+    minitelApp<MitterrandState>("/") {
         ServiceResponse(
             version = "0.1",
             content = readResource("/static/mitterrand.vdt"),
-            context = ""
+            context = MitterrandState
         )
     }
 }

@@ -1,7 +1,7 @@
 package fr.outadoc.kpavi.api.data
 
-import fr.outadoc.kpavi.api.data.model.Command
-import fr.outadoc.kpavi.api.data.model.ServiceResponse
+import fr.outadoc.kpavi.api.data.model.CommandDTO
+import fr.outadoc.kpavi.api.data.model.ServiceResponseDTO
 import kotlinx.io.bytestring.encodeToByteString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -9,7 +9,7 @@ import org.intellij.lang.annotations.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ServiceResponseTest {
+class ServiceResponseDTOTest {
 
     @Test
     fun `Correctly encode InputMessage command`() {
@@ -38,26 +38,26 @@ class ServiceResponseTest {
             }
         """.trimIndent()
 
-        val payload = ServiceResponse(
+        val payload = ServiceResponseDTO(
             version = "1.0",
             content = "Hello World!".encodeToByteString(),
             context = "a:1:{s:3:\"url\";s:0:\"\";}",
-            echo = Command.OnOff.ON,
-            directCall = ServiceResponse.DirectCallSetting.NO,
+            echo = CommandDTO.OnOff.ON,
+            directCall = ServiceResponseDTO.DirectCallSetting.NO,
             next = "http://www.monsite.fr/index.php?step=20",
-            command = Command.InputMessage(
-                params = Command.InputMessage.Params(
+            command = CommandDTO.InputMessage(
+                params = CommandDTO.InputMessage.Params(
                     x = 1,
                     y = 13,
                     width = 40,
                     height = 2,
                     spaceChar = ".",
                     prefill = emptyList(),
-                    cursor = Command.OnOff.ON,
+                    cursor = CommandDTO.OnOff.ON,
                     submitWith = setOf(
-                        Command.FunctionKey.REPETITION,
-                        Command.FunctionKey.GUIDE,
-                        Command.FunctionKey.ENVOI
+                        CommandDTO.FunctionKey.REPETITION,
+                        CommandDTO.FunctionKey.GUIDE,
+                        CommandDTO.FunctionKey.ENVOI
                     )
                 )
             )
@@ -96,25 +96,25 @@ class ServiceResponseTest {
             }
         """.trimIndent()
 
-        val payload = ServiceResponse(
+        val payload = ServiceResponseDTO(
             version = "1.0",
             content = "Hello World!".encodeToByteString(),
             context = "a:0:{}",
-            echo = Command.OnOff.ON,
-            directCall = ServiceResponse.DirectCallSetting.NO,
+            echo = CommandDTO.OnOff.ON,
+            directCall = ServiceResponseDTO.DirectCallSetting.NO,
             next = "http://www.monsite.fr/index.php?step=20",
-            command = Command.InputText(
-                params = Command.InputText.Params(
+            command = CommandDTO.InputText(
+                params = CommandDTO.InputText.Params(
                     x = 2,
                     y = 20,
                     length = 10,
                     char = "",
                     spaceChar = ".",
                     prefill = "Salut!",
-                    cursor = Command.OnOff.ON,
+                    cursor = CommandDTO.OnOff.ON,
                     submitWith = setOf(
-                        Command.FunctionKey.REPETITION,
-                        Command.FunctionKey.ENVOI
+                        CommandDTO.FunctionKey.REPETITION,
+                        CommandDTO.FunctionKey.ENVOI
                     )
                 )
             )
