@@ -53,24 +53,6 @@ class VideotexBuilder internal constructor() {
     }
 
     /**
-     * Writes text on line 0 and then returns the cursor to the current position.
-     *
-     * @param txt The text to write
-     * @param blink Whether the text should blink
-     * @return The command to write the text
-     */
-    fun writeLine0(txt: String, blink: Boolean = false) {
-        setPosition(1, 0)
-        if (blink) {
-            append(VDT_BLINK)
-        }
-        append(txt)
-        append(VDT_FIXED)
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    /**
      * Clears the entire screen.
      *
      * @return The command to clear the screen
@@ -95,25 +77,6 @@ class VideotexBuilder internal constructor() {
         append(char)
         append(VDT_REP)
         append((63 + num).toChar())
-    }
-
-    /**
-     * Writes centered text on a specified line, preceded by attributes.
-     *
-     * @param line The line number
-     * @param text The text to write
-     * @param attr The attributes to apply
-     * @return The command to write the centered text
-     */
-    fun writeCentered(line: Int, text: String, attr: String = "") {
-        if (text.length >= 40) {
-            setPosition(1, line)
-        } else {
-            setPosition((40 - text.length) / 2, line)
-        }
-
-        append(attr)
-        append(text)
     }
 
     /**
