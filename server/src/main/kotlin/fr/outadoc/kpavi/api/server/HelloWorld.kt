@@ -13,7 +13,7 @@ fun Route.helloWorld() {
             content = buildVideotex {
                 clearScreen()
                 appendLine("Bonjour le monde !")
-                appendLine("Vous etes ${request.payload.uniqueId}")
+                appendLine("Vous êtes ${request.payload.uniqueId}")
 
                 TextColor.entries.forEach { color ->
                     withTextColor(color) {
@@ -23,7 +23,7 @@ fun Route.helloWorld() {
 
                 BackgroundColor.entries.forEach { color ->
                     withBackgroundColor(color) {
-                        appendLine("Fond en ${color.name}")
+                        appendLine(" Fond en ${color.name}")
                     }
                 }
             },

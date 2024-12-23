@@ -27,11 +27,11 @@ class VideotexBuilder internal constructor() {
     private val sb = StringBuilder()
 
     fun append(text: String) {
-        sb.append(text)
+        sb.append(text.toG2())
     }
 
     fun append(char: Char) {
-        sb.append(char)
+        append(char.toString())
     }
 
     fun appendLine(text: String = "") {
@@ -192,10 +192,7 @@ class VideotexBuilder internal constructor() {
      * @return The converted string
      */
     fun String.toG2(): String {
-        return replace(
-            regex = Regex("[\\u0000-\\u001F\\u0081\\u008D\\u008F\\u0090\\u009D]"),
-            replacement = " "
-        )
+        return this
             .map { char ->
                 g2Map.getOrDefault(char, char.toString())
             }
