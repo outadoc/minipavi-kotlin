@@ -16,17 +16,17 @@ fun Route.helloWorld() {
                 content = buildVideotex {
                     clearScreen()
                     appendLine("Bonjour le monde !")
-                    withTextColor(TextColor.RED) {
-                        appendLine("Texte rouge")
+
+                    TextColor.entries.forEach { color ->
+                        withTextColor(color) {
+                            appendLine("Texte en ${color.name}")
+                        }
                     }
-                    withBackgroundColor(BackgroundColor.GREEN) {
-                        appendLine("abcdefghijklmnopqrstuvwxyz")
-                    }
-                    withRouleau {
-                        appendLine("Rouleau")
-                    }
-                    withBlink {
-                        appendLine("Clignotant")
+
+                    BackgroundColor.entries.forEach { color ->
+                        withBackgroundColor(color) {
+                            appendLine("Fond en ${color.name}")
+                        }
                     }
                 },
                 context = ""

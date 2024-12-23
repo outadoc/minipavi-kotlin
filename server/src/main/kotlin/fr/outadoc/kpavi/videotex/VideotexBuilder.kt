@@ -293,4 +293,10 @@ class VideotexBuilder internal constructor() {
         block()
         append(VideotextConstants.PRO_ROULEAU_OFF)
     }
+
+    fun withInvertedBackground(block: VideotexBuilder.() -> Unit) {
+        append(VideotextConstants.VDT_FDINV)
+        block()
+        append(VideotextConstants.VDT_FDNORM)
+    }
 }
