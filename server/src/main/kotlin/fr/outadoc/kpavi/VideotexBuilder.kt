@@ -323,17 +323,17 @@ class VideotexBuilder internal constructor() {
         const val VDT_CLRLN = "\u0018"
 
         /**
-         * Taille des caratcères normale.
+         * Taille des caractères normale.
          */
         const val VDT_SZNORM = "\u001B\u004C"
 
         /**
-         * Taille des caratcères double hauteur.
+         * Taille des caractères double hauteur.
          */
         const val VDT_SZDBLH = "\u001B\u004D"
 
         /**
-         * Taille des caratcères double largeur.
+         * Taille des caractères double largeur.
          */
         const val VDT_SZDBLW = "\u001B\u004E"
 
