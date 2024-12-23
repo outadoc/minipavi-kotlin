@@ -23,6 +23,6 @@ fun Application.module() {
     }
 
     routing {
-        mitterrand()
+        helloWorld()
     }
 }

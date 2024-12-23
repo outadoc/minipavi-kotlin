@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
-data class ServiceResponse(
+data class ServiceResponse<T : Any>(
     /**
      * Version du client.
      */
@@ -29,7 +29,7 @@ data class ServiceResponse(
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
      */
     @SerialName("context")
-    val context: String = "",
+    val context: T,
 
     /**
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,

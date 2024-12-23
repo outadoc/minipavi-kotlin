@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GatewayRequest(
+data class GatewayRequest<T : Any>(
     @SerialName("PAVI")
-    val payload: Payload,
+    val payload: Payload<T>,
     /**
      * Tableau associatif contenant les éventuels paramètres indiqués dans l'Url.
      */
@@ -14,7 +14,7 @@ data class GatewayRequest(
     val urlParams: List<String>? = null,
 ) {
     @Serializable
-    data class Payload(
+    data class Payload<T : Any>(
         /**
          * Version de la passerelle.
          */
@@ -66,7 +66,7 @@ data class GatewayRequest(
          * Sert à sauvegarder le contexte de l'utilisateur tout au long de sa visite du service.
          */
         @SerialName("context")
-        val context: String,
+        val context: T,
 
         /**
          * Touche de fonction saisie, ou évènement, ayant initié cette requête.
