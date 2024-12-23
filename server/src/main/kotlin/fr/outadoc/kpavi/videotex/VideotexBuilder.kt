@@ -46,7 +46,7 @@ class VideotexBuilder internal constructor() {
      * @param line Line number (0 to 24)
      * @return The command to position the cursor
      */
-    fun setPos(col: Int, line: Int) {
+    fun setPosition(col: Int, line: Int) {
         append(VDT_POS)
         append((64 + line).toChar())
         append((64 + col).toChar())
@@ -60,11 +60,11 @@ class VideotexBuilder internal constructor() {
      * @return The command to write the text
      */
     fun writeLine0(txt: String, blink: Boolean = false) {
-        setPos(1, 0)
+        setPosition(1, 0)
         if (blink) {
             append(VDT_BLINK)
         }
-        append(txt.toG2())
+        append(txt)
         append(VDT_FIXED)
         append(VDT_CLRLN)
         appendLine()
@@ -76,10 +76,10 @@ class VideotexBuilder internal constructor() {
      * @return The command to clear the screen
      */
     fun clearScreen() {
-        setPos(1, 0)
+        setPosition(1, 0)
         append(' ')
         repeatChar(' ', 39)
-        setPos(1, 1)
+        setPosition(1, 1)
         append(VDT_CLR)
         append(VDT_CUROFF)
     }
@@ -107,13 +107,13 @@ class VideotexBuilder internal constructor() {
      */
     fun writeCentered(line: Int, text: String, attr: String = "") {
         if (text.length >= 40) {
-            setPos(1, line)
+            setPosition(1, line)
         } else {
-            setPos((40 - text.length) / 2, line)
+            setPosition((40 - text.length) / 2, line)
         }
 
         append(attr)
-        append(text.toG2())
+        append(text)
     }
 
     /**
@@ -123,7 +123,7 @@ class VideotexBuilder internal constructor() {
      * @return The command to display the YouTube video
      */
     fun webMediaYoutube(youtubeId: String) {
-        setPos(1, 0)
+        setPosition(1, 0)
         append("\u001B@\u0014#DYT:$youtubeId\u0014#F")
         append(VDT_CLRLN)
         appendLine()
@@ -136,7 +136,7 @@ class VideotexBuilder internal constructor() {
      * @return The command to display the video
      */
     fun webMediaVideo(url: String) {
-        setPos(1, 0)
+        setPosition(1, 0)
         append("\u001B@\u0014#DVID:$url\u0014#F")
         append(VDT_CLRLN)
         appendLine()
@@ -149,7 +149,7 @@ class VideotexBuilder internal constructor() {
      * @return The command to play the sound
      */
     fun webMediaSound(url: String) {
-        setPos(1, 0)
+        setPosition(1, 0)
         append("\u001B@\u0014#DSND:$url\u0014#F")
         append(VDT_CLRLN)
         appendLine()
@@ -162,7 +162,7 @@ class VideotexBuilder internal constructor() {
      * @return The command to display the image
      */
     fun webMediaImg(url: String) {
-        setPos(1, 0)
+        setPosition(1, 0)
         append("\u001B@\u0014#DIMG:$url\u0014#F")
         append(VDT_CLRLN)
         appendLine()
@@ -175,7 +175,7 @@ class VideotexBuilder internal constructor() {
      * @return The command to create the link
      */
     fun webMediaUrl(url: String) {
-        setPos(1, 0)
+        setPosition(1, 0)
         append("\u001B@\u0014#DURL:$url\u0014#F")
         append(VDT_CLRLN)
         appendLine()
@@ -191,7 +191,7 @@ class VideotexBuilder internal constructor() {
      * @receiver The string to convert
      * @return The converted string
      */
-    fun String.toG2(): String {
+    private fun String.toG2(): String {
         return this
             .map { char ->
                 g2Map.getOrDefault(char, char.toString())
