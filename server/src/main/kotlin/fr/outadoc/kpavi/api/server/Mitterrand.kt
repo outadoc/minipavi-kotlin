@@ -9,9 +9,8 @@ import kotlinx.serialization.Serializable
 data object MitterrandState
 
 fun Route.mitterrand() {
-    minitelApp<MitterrandState>("/") {
+    minitelApp<MitterrandState>(version = "0.1") {
         ServiceResponse(
-            version = "0.1",
             content = readResource("/static/mitterrand.vdt"),
             context = MitterrandState
         )

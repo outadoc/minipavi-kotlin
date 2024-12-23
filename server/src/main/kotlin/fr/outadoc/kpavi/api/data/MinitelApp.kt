@@ -9,6 +9,7 @@ import io.ktor.server.routing.*
 
 inline fun <reified T : Any> Route.minitelApp(
     path: String = "/",
+    version: String,
     crossinline block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
 ) {
     post(path) {
@@ -21,6 +22,8 @@ inline fun <reified T : Any> Route.minitelApp(
 
         application.environment.log.debug("Responding with: {}", response)
 
-        call.respond(response.mapToDTO())
+        call.respond(
+            response.mapToDTO(version = version)
+        )
     }
 }

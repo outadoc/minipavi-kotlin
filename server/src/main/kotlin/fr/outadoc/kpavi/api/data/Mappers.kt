@@ -8,7 +8,7 @@ import fr.outadoc.kpavi.api.domain.model.GatewayRequest
 import fr.outadoc.kpavi.api.domain.model.ServiceResponse
 import kotlinx.serialization.json.Json
 
-inline fun <reified T : Any> ServiceResponse<T>.mapToDTO(): ServiceResponseDTO {
+inline fun <reified T : Any> ServiceResponse<T>.mapToDTO(version: String): ServiceResponseDTO {
     return ServiceResponseDTO(
         version = version,
         content = content,

@@ -6,10 +6,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 data class ServiceResponse<T: Any>(
-    /**
-     * Version du client.
-     */
-    val version: String,
 
     /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle

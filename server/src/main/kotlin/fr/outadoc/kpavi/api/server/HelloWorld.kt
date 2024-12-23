@@ -23,17 +23,13 @@ sealed interface HelloWorldState {
     @Serializable
     @SerialName("background")
     data object Background : HelloWorldState
-
 }
 
-const val HelloWorldVersion = "0.1"
-
 fun Route.helloWorld() {
-    minitelApp<HelloWorldState>("/") { request ->
+    minitelApp<HelloWorldState>(version = "0.1") { request ->
         when (request.payload.context) {
             null, HelloWorldState.Intro -> {
                 ServiceResponse(
-                    version = HelloWorldVersion,
                     context = HelloWorldState.Text,
                     content = buildVideotex {
                         clearScreen()
@@ -45,7 +41,6 @@ fun Route.helloWorld() {
 
             HelloWorldState.Text -> {
                 ServiceResponse(
-                    version = HelloWorldVersion,
                     context = HelloWorldState.Background,
                     content = buildVideotex {
                         clearScreen()
@@ -60,7 +55,6 @@ fun Route.helloWorld() {
 
             HelloWorldState.Background -> {
                 ServiceResponse(
-                    version = HelloWorldVersion,
                     context = HelloWorldState.Intro,
                     content = buildVideotex {
                         clearScreen()
