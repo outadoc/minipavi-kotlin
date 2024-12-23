@@ -13,21 +13,28 @@ import kotlinx.serialization.Serializable
 sealed interface HelloWorldState {
 
     @Serializable
-    @SerialName("p1")
-    data object Page1 : HelloWorldState
+    @SerialName("intro")
+    data object Intro : HelloWorldState
 
     @Serializable
-    @SerialName("p2")
-    data object Page2 : HelloWorldState
+    @SerialName("text")
+    data object Text : HelloWorldState
+
+    @Serializable
+    @SerialName("background")
+    data object Background : HelloWorldState
+
 }
+
+const val HelloWorldVersion = "0.1"
 
 fun Route.helloWorld() {
     minitelApp<HelloWorldState>("/") { request ->
         when (request.payload.context) {
-            null, HelloWorldState.Page1 -> {
+            null, HelloWorldState.Intro -> {
                 ServiceResponse(
-                    version = "0.1",
-                    context = HelloWorldState.Page2,
+                    version = HelloWorldVersion,
+                    context = HelloWorldState.Text,
                     content = buildVideotex {
                         clearScreen()
                         appendLine("Bonjour le monde !")
@@ -36,10 +43,10 @@ fun Route.helloWorld() {
                 )
             }
 
-            HelloWorldState.Page2 -> {
+            HelloWorldState.Text -> {
                 ServiceResponse(
-                    version = "0.1",
-                    context = HelloWorldState.Page1,
+                    version = HelloWorldVersion,
+                    context = HelloWorldState.Background,
                     content = buildVideotex {
                         clearScreen()
                         TextColor.entries.forEach { color ->
@@ -47,7 +54,16 @@ fun Route.helloWorld() {
                                 appendLine("Texte en ${color.name}")
                             }
                         }
+                    },
+                )
+            }
 
+            HelloWorldState.Background -> {
+                ServiceResponse(
+                    version = HelloWorldVersion,
+                    context = HelloWorldState.Intro,
+                    content = buildVideotex {
+                        clearScreen()
                         BackgroundColor.entries.forEach { color ->
                             withBackgroundColor(color) {
                                 appendLine(" Fond en ${color.name}")

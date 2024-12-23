@@ -12,14 +12,14 @@ data class ServiceResponse<T: Any>(
     val version: String,
 
     /**
-     * Le contenu de la page videotex à afficher, encodée en Base 64
-     */
-    val content: ByteString,
-
-    /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
      */
     val context: T? = null,
+
+    /**
+     * Le contenu de la page videotex à afficher, encodée en Base 64
+     */
+    val content: ByteString,
 
     /**
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,

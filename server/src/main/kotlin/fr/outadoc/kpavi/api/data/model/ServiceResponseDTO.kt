@@ -19,17 +19,17 @@ data class ServiceResponseDTO(
     val version: String,
 
     /**
+     * Données libres qui seront renvoyées inchangées par la suite par la passerelle
+     */
+    @SerialName("context")
+    val context: String,
+
+    /**
      * Le contenu de la page videotex à afficher, encodée en Base 64
      */
     @SerialName("content")
     @Serializable(with = Base64Serializer::class)
     val content: ByteString,
-
-    /**
-     * Données libres qui seront renvoyées inchangées par la suite par la passerelle
-     */
-    @SerialName("context")
-    val context: String,
 
     /**
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
