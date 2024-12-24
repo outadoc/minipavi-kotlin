@@ -29,12 +29,15 @@ private val sampleFiles = listOf(
 )
 
 fun Route.staticSampleVdt() {
-    minitelApp<StaticSampleVdtState>(version = "0.1") { request ->
-        val state = request.payload.context ?: StaticSampleVdtState()
+    minitelApp<StaticSampleVdtState>(
+        version = "0.1",
+        initialState = StaticSampleVdtState()
+    ) { request ->
+        val state = request.payload.state
         val file = sampleFiles[state.iter % sampleFiles.size]
         ServiceResponse(
             content = readResource("/static/${file}"),
-            context = state.copy(
+            state = state.copy(
                 iter = state.iter + 1
             )
         )

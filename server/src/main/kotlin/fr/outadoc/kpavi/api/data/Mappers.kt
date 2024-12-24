@@ -12,7 +12,7 @@ inline fun <reified T : Any> ServiceResponse<T>.mapToDTO(version: String): Servi
     return ServiceResponseDTO(
         version = version,
         content = content,
-        context = context?.let { Json.encodeToString(context) } ?: "",
+        context = Json.encodeToString(state),
         echo = echo.mapToDTO(),
         directCall = directCall.mapToDTO(),
         next = next,
@@ -170,7 +170,9 @@ fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.DirectCallS
     }
 }
 
-inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(): GatewayRequest<T> {
+inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
+    initialState: T
+): GatewayRequest<T> {
     return GatewayRequest(
         payload = GatewayRequest.Payload(
             version = payload.version,
@@ -179,9 +181,10 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(): GatewayRequest<T> 
             socketType = payload.socketType.mapToDomain(),
             minitelVersion = payload.minitelVersion,
             content = payload.content,
-            context = payload.context
+            state = payload.context
                 .takeIf { context -> context.isNotEmpty() }
-                ?.let { context -> Json.decodeFromString(context) },
+                ?.let { context -> Json.decodeFromString(context) }
+                ?: initialState,
             function = payload.function.mapToDomain()
         ),
         urlParams = urlParams

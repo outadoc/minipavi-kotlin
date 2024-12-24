@@ -10,11 +10,12 @@ import io.ktor.server.routing.*
 inline fun <reified T : Any> Route.minitelApp(
     path: String = "/",
     version: String,
+    initialState: T,
     crossinline block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
 ) {
     post(path) {
         val requestDto: GatewayRequestDTO = call.receive<GatewayRequestDTO>()
-        val request = requestDto.mapToDomain<T>()
+        val request = requestDto.mapToDomain<T>(initialState = initialState)
 
         application.environment.log.debug("Received request: {}", request)
 

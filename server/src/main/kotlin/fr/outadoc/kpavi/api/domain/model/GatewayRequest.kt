@@ -52,7 +52,7 @@ data class GatewayRequest<T : Any>(
          *
          * Sert à sauvegarder le contexte de l'utilisateur tout au long de sa visite du service.
          */
-        val context: T? = null,
+        val state: T,
 
         /**
          * Touche de fonction saisie, ou évènement, ayant initié cette requête.

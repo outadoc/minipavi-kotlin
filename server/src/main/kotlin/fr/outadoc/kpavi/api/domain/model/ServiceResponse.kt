@@ -10,7 +10,7 @@ data class ServiceResponse<T: Any>(
     /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
      */
-    val context: T? = null,
+    val state: T,
 
     /**
      * Le contenu de la page videotex à afficher, encodée en Base 64

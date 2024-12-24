@@ -25,11 +25,14 @@ sealed interface HelloWorldState {
 }
 
 fun Route.helloWorld() {
-    minitelApp<HelloWorldState>(version = "0.1") { request ->
-        when (request.payload.context) {
-            null, HelloWorldState.Intro -> {
+    minitelApp<HelloWorldState>(
+        version = "0.1",
+        initialState = HelloWorldState.Intro,
+    ) { request ->
+        when (request.payload.state) {
+            HelloWorldState.Intro -> {
                 ServiceResponse(
-                    context = HelloWorldState.Text,
+                    state = HelloWorldState.Text,
                     content = buildVideotex {
                         clearScreen()
                         appendLine("Bonjour le monde !")
@@ -40,7 +43,7 @@ fun Route.helloWorld() {
 
             HelloWorldState.Text -> {
                 ServiceResponse(
-                    context = HelloWorldState.Background,
+                    state = HelloWorldState.Background,
                     content = buildVideotex {
                         clearScreen()
 
@@ -63,7 +66,7 @@ fun Route.helloWorld() {
 
             HelloWorldState.Background -> {
                 ServiceResponse(
-                    context = HelloWorldState.Intro,
+                    state = HelloWorldState.Intro,
                     content = buildVideotex {
                         clearScreen()
 
