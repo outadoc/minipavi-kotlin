@@ -2,6 +2,7 @@ package fr.outadoc.kpavi.api.server
 
 import fr.outadoc.kpavi.api.data.minitelApp
 import fr.outadoc.kpavi.api.domain.model.ServiceResponse
+import fr.outadoc.kpavi.videotex.CharacterSize
 import fr.outadoc.kpavi.videotex.TextColor
 import fr.outadoc.kpavi.videotex.buildVideotex
 import io.ktor.server.routing.*
@@ -34,7 +35,7 @@ fun Route.helloWorld() {
                 ServiceResponse(
                     state = HelloWorldState.Text,
                     content = buildVideotex {
-                        clearScreen()
+                        clearAll()
                         appendLine("Bonjour le monde !")
                         appendLine("Vous êtes ${request.payload.uniqueId}")
                     },
@@ -45,7 +46,7 @@ fun Route.helloWorld() {
                 ServiceResponse(
                     state = HelloWorldState.Background,
                     content = buildVideotex {
-                        clearScreen()
+                        clearAll()
 
                         TextColor.entries.forEach { color ->
                             withTextColor(color) {
@@ -68,7 +69,7 @@ fun Route.helloWorld() {
                 ServiceResponse(
                     state = HelloWorldState.Intro,
                     content = buildVideotex {
-                        clearScreen()
+                        clearAll()
 
                         withBlink {
                             appendLine("Texte clignotant")
@@ -76,6 +77,22 @@ fun Route.helloWorld() {
 
                         withUnderline {
                             appendLine("Texte souligné")
+                        }
+
+                        appendLine()
+
+                        withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                            appendLine("Tall boi")
+                        }
+
+                        withCharacterSize(CharacterSize.DOUBLE_WIDTH) {
+                            appendLine("Long boi")
+                        }
+
+                        appendLine()
+
+                        withCharacterSize(CharacterSize.DOUBLE_SIZE) {
+                            appendLine("Big boi")
                         }
                     },
                 )

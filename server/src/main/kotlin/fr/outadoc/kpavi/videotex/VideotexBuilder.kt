@@ -1,18 +1,5 @@
 package fr.outadoc.kpavi.videotex
 
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_BLINK
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_CLR
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_CLRLN
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_CRLF
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_CUROFF
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_FDNORM
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_FIXED
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_G2
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_POS
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_REP
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_STARTUNDERLINE
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_STOPUNDERLINE
-import fr.outadoc.kpavi.videotex.VideotextConstants.VDT_TXTWHITE
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.encodeToByteString
 
@@ -36,7 +23,7 @@ class VideotexBuilder internal constructor() {
 
     fun appendLine(text: String = "") {
         append(text)
-        append(VDT_CRLF)
+        append(VideotextConstants.VDT_CRLF)
     }
 
     /**
@@ -46,24 +33,35 @@ class VideotexBuilder internal constructor() {
      * @param line Line number (0 to 24)
      * @return The command to position the cursor
      */
-    fun setPosition(col: Int, line: Int) {
-        append(VDT_POS)
+    fun moveCursorTo(col: Int, line: Int) {
+        append(VideotextConstants.VDT_POS)
         append((64 + line).toChar())
         append((64 + col).toChar())
     }
 
-    /**
-     * Clears the entire screen.
-     *
-     * @return The command to clear the screen
-     */
+    fun moveCursorRelative(direction: CursorDirection) {
+        append(direction.code)
+    }
+
     fun clearScreen() {
-        setPosition(1, 0)
+        append(VideotextConstants.VDT_CLR)
+    }
+
+    fun clearStatus() {
+        moveCursorTo(1, 0)
         append(' ')
         repeatChar(' ', 39)
-        setPosition(1, 1)
-        append(VDT_CLR)
-        append(VDT_CUROFF)
+        moveCursorTo(1, 1)
+    }
+
+    fun clearAll() {
+        clearScreen()
+        clearStatus()
+        showCursor(false)
+    }
+
+    fun clearLine() {
+        append(VideotextConstants.VDT_CLRLN)
     }
 
     /**
@@ -75,148 +73,9 @@ class VideotexBuilder internal constructor() {
      */
     fun repeatChar(char: Char, num: Int) {
         append(char)
-        append(VDT_REP)
+        append(VideotextConstants.VDT_REP)
         append((63 + num).toChar())
     }
-
-    /**
-     * Generates a Videotex command to display a YouTube video on WebMedia.
-     *
-     * @param youtubeId The YouTube video ID
-     * @return The command to display the YouTube video
-     */
-    fun webMediaYoutube(youtubeId: String) {
-        setPosition(1, 0)
-        append("\u001B@\u0014#DYT:$youtubeId\u0014#F")
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    /**
-     * Generates a Videotex command to display a video from a URL on WebMedia.
-     *
-     * @param url The URL of the video
-     * @return The command to display the video
-     */
-    fun webMediaVideo(url: String) {
-        setPosition(1, 0)
-        append("\u001B@\u0014#DVID:$url\u0014#F")
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    /**
-     * Generates a Videotex command to play a sound from a URL on WebMedia.
-     *
-     * @param url The URL of the sound
-     * @return The command to play the sound
-     */
-    fun webMediaSound(url: String) {
-        setPosition(1, 0)
-        append("\u001B@\u0014#DSND:$url\u0014#F")
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    /**
-     * Generates a Videotex command to display an image from a URL on WebMedia.
-     *
-     * @param url The URL of the image
-     * @return The command to display the image
-     */
-    fun webMediaImg(url: String) {
-        setPosition(1, 0)
-        append("\u001B@\u0014#DIMG:$url\u0014#F")
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    /**
-     * Generates a Videotex command to create a link to a URL on WebMedia.
-     *
-     * @param url The URL to link to
-     * @return The command to create the link
-     */
-    fun webMediaUrl(url: String) {
-        setPosition(1, 0)
-        append("\u001B@\u0014#DURL:$url\u0014#F")
-        append(VDT_CLRLN)
-        appendLine()
-    }
-
-    fun build(): ByteString {
-        return sb.toString().encodeToByteString()
-    }
-
-    /**
-     * Converts special characters to their G2 equivalents.
-     *
-     * @receiver The string to convert
-     * @return The converted string
-     */
-    private fun String.toG2(): String {
-        return this
-            .map { char ->
-                g2Map.getOrDefault(char, char.toString())
-            }
-            .joinToString("")
-    }
-
-    private val g2Map = mapOf(
-        'é' to "${VDT_G2}\u0042e",
-        'è' to "${VDT_G2}\u0041e",
-        'à' to "${VDT_G2}\u0041a",
-        'ç' to "${VDT_G2}\u004B\u0063",
-        'ê' to "${VDT_G2}\u0043e",
-        'É' to "${VDT_G2}\u0042E",
-        'È' to "${VDT_G2}\u0041E",
-        'À' to "${VDT_G2}\u0041A",
-        'Ç' to "${VDT_G2}\u004B\u0063",
-        'Ê' to "${VDT_G2}\u0043E",
-        'β' to "${VDT_G2}\u007B",
-        'ß' to "${VDT_G2}\u007B",
-        'œ' to "${VDT_G2}\u007A",
-        'Œ' to "${VDT_G2}\u006A",
-        'ü' to "${VDT_G2}\u0048\u0075",
-        'û' to "${VDT_G2}\u0043\u0075",
-        'ú' to "${VDT_G2}\u0042\u0075",
-        'ù' to "${VDT_G2}\u0041\u0075",
-        'ö' to "${VDT_G2}\u0048\u006F",
-        'ô' to "${VDT_G2}\u0043\u006F",
-        'ó' to "${VDT_G2}\u0042\u006F",
-        'ò' to "${VDT_G2}\u0041\u006F",
-        'ï' to "${VDT_G2}\u0048\u0069",
-        'î' to "${VDT_G2}\u0043\u0069",
-        'í' to "${VDT_G2}\u0042\u0069",
-        'ì' to "${VDT_G2}\u0041\u0069",
-        'ë' to "${VDT_G2}\u0048\u0065",
-        'ä' to "${VDT_G2}\u0048\u0061",
-        'â' to "${VDT_G2}\u0043\u0061",
-        'á' to "${VDT_G2}\u0042\u0061",
-        '£' to "${VDT_G2}\u0023",
-        '°' to "${VDT_G2}\u0030",
-        '±' to "${VDT_G2}\u0031",
-        '←' to "${VDT_G2}\u002C",
-        '↑' to "${VDT_G2}\u002D",
-        '→' to "${VDT_G2}\u002E",
-        '↓' to "${VDT_G2}\u002F",
-        '¼' to "${VDT_G2}\u003C",
-        '½' to "${VDT_G2}\u003D",
-        '¾' to "${VDT_G2}\u003E",
-        'Â' to "${VDT_G2}\u0043A",
-        'Î' to "I",
-        'ō' to "o",
-        'á' to "a",
-        '’' to "'",
-        '\u00A0' to " ",
-        'ň' to "n",
-        'ć' to "c",
-        'ř' to "r",
-        'ý' to "y",
-        'š' to "s",
-        'í' to "i",
-        'ą' to "a"
-    )
 
     fun withTextColor(
         color: TextColor,
@@ -224,7 +83,7 @@ class VideotexBuilder internal constructor() {
     ) {
         append(color.code)
         block()
-        append(VDT_TXTWHITE)
+        append(VideotextConstants.VDT_TXTWHITE)
     }
 
     fun withBackgroundColor(
@@ -233,19 +92,19 @@ class VideotexBuilder internal constructor() {
     ) {
         append(color.code)
         block()
-        append(VDT_FDNORM)
+        append(VideotextConstants.VDT_FDNORM)
     }
 
     fun withBlink(block: VideotexBuilder.() -> Unit) {
-        append(VDT_BLINK)
+        append(VideotextConstants.VDT_BLINK)
         block()
-        append(VDT_FIXED)
+        append(VideotextConstants.VDT_FIXED)
     }
 
     fun withUnderline(block: VideotexBuilder.() -> Unit) {
-        append(VDT_STARTUNDERLINE)
+        append(VideotextConstants.VDT_STARTUNDERLINE)
         block()
-        append(VDT_STOPUNDERLINE)
+        append(VideotextConstants.VDT_STOPUNDERLINE)
     }
 
     fun withRouleau(block: VideotexBuilder.() -> Unit) {
@@ -258,5 +117,111 @@ class VideotexBuilder internal constructor() {
         append(VideotextConstants.VDT_FDINV)
         block()
         append(VideotextConstants.VDT_FDNORM)
+    }
+
+    fun withCharacterSize(
+        size: CharacterSize,
+        block: VideotexBuilder.() -> Unit
+    ) {
+        append(size.code)
+        block()
+        append(CharacterSize.NORMAL.code)
+    }
+
+    fun showCursor(show: Boolean) {
+        append(
+            if (show) {
+                VideotextConstants.VDT_CURON
+            } else {
+                VideotextConstants.VDT_CUROFF
+            }
+        )
+    }
+
+    fun setLocalEcho(enabled: Boolean) {
+        append(
+            if (enabled) {
+                VideotextConstants.PRO_LOCALECHO_ON
+            } else {
+                VideotextConstants.PRO_LOCALECHO_OFF
+            }
+        )
+    }
+
+    fun build(): ByteString {
+        return sb.toString().encodeToByteString()
+    }
+
+    companion object {
+
+        /**
+         * Converts special characters to their G2 equivalents.
+         *
+         * @receiver The string to convert
+         * @return The converted string
+         */
+        private fun String.toG2(): String {
+            return this
+                .map { char ->
+                    g2Map.getOrDefault(char, char.toString())
+                }
+                .joinToString("")
+        }
+
+        private val g2Map = mapOf(
+            'é' to "${VideotextConstants.VDT_G2}\u0042e",
+            'è' to "${VideotextConstants.VDT_G2}\u0041e",
+            'à' to "${VideotextConstants.VDT_G2}\u0041a",
+            'ç' to "${VideotextConstants.VDT_G2}\u004B\u0063",
+            'ê' to "${VideotextConstants.VDT_G2}\u0043e",
+            'É' to "${VideotextConstants.VDT_G2}\u0042E",
+            'È' to "${VideotextConstants.VDT_G2}\u0041E",
+            'À' to "${VideotextConstants.VDT_G2}\u0041A",
+            'Ç' to "${VideotextConstants.VDT_G2}\u004B\u0063",
+            'Ê' to "${VideotextConstants.VDT_G2}\u0043E",
+            'β' to "${VideotextConstants.VDT_G2}\u007B",
+            'ß' to "${VideotextConstants.VDT_G2}\u007B",
+            'œ' to "${VideotextConstants.VDT_G2}\u007A",
+            'Œ' to "${VideotextConstants.VDT_G2}\u006A",
+            'ü' to "${VideotextConstants.VDT_G2}\u0048\u0075",
+            'û' to "${VideotextConstants.VDT_G2}\u0043\u0075",
+            'ú' to "${VideotextConstants.VDT_G2}\u0042\u0075",
+            'ù' to "${VideotextConstants.VDT_G2}\u0041\u0075",
+            'ö' to "${VideotextConstants.VDT_G2}\u0048\u006F",
+            'ô' to "${VideotextConstants.VDT_G2}\u0043\u006F",
+            'ó' to "${VideotextConstants.VDT_G2}\u0042\u006F",
+            'ò' to "${VideotextConstants.VDT_G2}\u0041\u006F",
+            'ï' to "${VideotextConstants.VDT_G2}\u0048\u0069",
+            'î' to "${VideotextConstants.VDT_G2}\u0043\u0069",
+            'í' to "${VideotextConstants.VDT_G2}\u0042\u0069",
+            'ì' to "${VideotextConstants.VDT_G2}\u0041\u0069",
+            'ë' to "${VideotextConstants.VDT_G2}\u0048\u0065",
+            'ä' to "${VideotextConstants.VDT_G2}\u0048\u0061",
+            'â' to "${VideotextConstants.VDT_G2}\u0043\u0061",
+            'á' to "${VideotextConstants.VDT_G2}\u0042\u0061",
+            '£' to "${VideotextConstants.VDT_G2}\u0023",
+            '°' to "${VideotextConstants.VDT_G2}\u0030",
+            '±' to "${VideotextConstants.VDT_G2}\u0031",
+            '←' to "${VideotextConstants.VDT_G2}\u002C",
+            '↑' to "${VideotextConstants.VDT_G2}\u002D",
+            '→' to "${VideotextConstants.VDT_G2}\u002E",
+            '↓' to "${VideotextConstants.VDT_G2}\u002F",
+            '¼' to "${VideotextConstants.VDT_G2}\u003C",
+            '½' to "${VideotextConstants.VDT_G2}\u003D",
+            '¾' to "${VideotextConstants.VDT_G2}\u003E",
+            'Â' to "${VideotextConstants.VDT_G2}\u0043A",
+            'Î' to "I",
+            'ō' to "o",
+            'á' to "a",
+            '’' to "'",
+            '\u00A0' to " ",
+            'ň' to "n",
+            'ć' to "c",
+            'ř' to "r",
+            'ý' to "y",
+            'š' to "s",
+            'í' to "i",
+            'ą' to "a"
+        )
     }
 }
