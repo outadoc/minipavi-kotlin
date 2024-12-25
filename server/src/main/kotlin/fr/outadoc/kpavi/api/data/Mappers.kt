@@ -181,7 +181,7 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
             remoteAddress = payload.remoteAddress,
             socketType = payload.socketType.mapToDomain(),
             minitelVersion = payload.minitelVersion,
-            content = payload.content,
+            userInput = payload.content,
             state = payload.context
                 .takeIf { context -> context.isNotEmpty() }
                 ?.let { context -> Json.decodeFromString(context) }

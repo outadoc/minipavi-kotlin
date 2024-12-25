@@ -45,7 +45,7 @@ data class GatewayRequest<T : Any>(
          * Si il s'agit d'une saisie de plusieurs lignes, chaque ligne est un élément du tableau.
          * S'il n'y a qu'une seule ligne, la saisie est à l'indice « 0 » du tableau.
          */
-        val content: List<String>,
+        val userInput: List<String>,
 
         /**
          * Données libres précédemment envoyées par le service.

@@ -17,10 +17,10 @@ data class ServiceResponse<T : Any>(
     val content: ByteString,
 
     /**
-     * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
+     * Active l'écho par la passerelle des caractères tapés par l'utilisateur,
      * pour que l'utilisateur voie ce qu'il tape.
      *
-     * Généralement, cette clé aura la valeur [Command.true].
+     * Généralement, cette clé aura la valeur `true`.
      */
     val echo: Boolean = true,
 
@@ -231,7 +231,7 @@ sealed interface Command {
     data object Disconnect : Command
 
     /**
-     * Demande à la passerelle de d'afficher un message en ligne `0` aux autres utilisateurs.
+     * Demande à la passerelle d'afficher un message en ligne `0` aux autres utilisateurs.
      */
     data class PushServiceMessage(
         /**
@@ -333,7 +333,7 @@ sealed interface Command {
          * - `true` : l'écho est activé et géré par la passerelle.
          * - `false` : l'écho est géré directement par le serveur.
          */
-        val echo: Boolean,
+        val echo: Boolean = true,
 
         /**
          * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
@@ -372,7 +372,7 @@ sealed interface Command {
          * - `true` : l'écho est activé et géré par la passerelle.
          * - `false` : l'écho est géré directement par le serveur.
          */
-        val echo: Boolean,
+        val echo: Boolean = true,
 
         /**
          * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
