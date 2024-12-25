@@ -9,14 +9,14 @@ group = "fr.outadoc.pavikt"
 version = "1.0.0"
 
 application {
-    mainClass.set("fr.outadoc.pavikt.api.server.ApplicationKt")
+    mainClass.set("fr.outadoc.pavikt.server.ApplicationKt")
     applicationDefaultJvmArgs = listOf(
         "-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}"
     )
 }
 
 dependencies {
-    implementation(projects.minipavi)
+    implementation(projects.minipaviKtor)
     implementation(projects.videotex)
 
     implementation(libs.logback)

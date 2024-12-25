@@ -9,7 +9,7 @@ group = "fr.outadoc.pavikt"
 version = "1.0.0"
 
 kotlin {
-    // explicitApi()
+    explicitApi()
 
     jvm {
         compilerOptions {
@@ -20,15 +20,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.kotlinx.serialization.json)
-            }
-        }
-
-        val jvmTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
+                api(projects.minipavi)
+                implementation(libs.ktor.server.core)
             }
         }
     }
