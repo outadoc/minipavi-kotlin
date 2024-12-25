@@ -6,7 +6,7 @@ import org.intellij.lang.annotations.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GatewayRequestDTOTest {
+class GatewayRequestDeserializationTest {
 
     @Test
     fun `When the user connects to the gateway via the web, then we correctly decode the request`() {

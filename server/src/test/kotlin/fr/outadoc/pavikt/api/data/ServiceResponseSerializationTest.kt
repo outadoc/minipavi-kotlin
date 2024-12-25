@@ -9,7 +9,7 @@ import org.intellij.lang.annotations.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ServiceResponseDTOTest {
+class ServiceResponseSerializationTest {
 
     @Test
     fun `Correctly encode InputMessage command`() {
