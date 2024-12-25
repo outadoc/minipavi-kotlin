@@ -203,7 +203,7 @@ public class VideotexBuilder internal constructor() {
     ) {
         bs.append(size.code)
         block()
-        bs.append(CharacterSize.NORMAL.code)
+        bs.append(CharacterSize.Normal.code)
     }
 
     /**

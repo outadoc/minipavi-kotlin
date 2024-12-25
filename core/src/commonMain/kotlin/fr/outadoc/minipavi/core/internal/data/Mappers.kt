@@ -141,19 +141,19 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
 
 internal fun ServiceResponse.Command.FunctionKey.mapToDTO(): ServiceResponseDTO.Command.FunctionKey {
     return when (this) {
-        ServiceResponse.Command.FunctionKey.SOMMAIRE -> ServiceResponseDTO.Command.FunctionKey.SOMMAIRE
-        ServiceResponse.Command.FunctionKey.RETOUR -> ServiceResponseDTO.Command.FunctionKey.RETOUR
-        ServiceResponse.Command.FunctionKey.REPETITION -> ServiceResponseDTO.Command.FunctionKey.REPETITION
-        ServiceResponse.Command.FunctionKey.GUIDE -> ServiceResponseDTO.Command.FunctionKey.GUIDE
-        ServiceResponse.Command.FunctionKey.SUITE -> ServiceResponseDTO.Command.FunctionKey.SUITE
-        ServiceResponse.Command.FunctionKey.ENVOI -> ServiceResponseDTO.Command.FunctionKey.ENVOI
+        ServiceResponse.Command.FunctionKey.Sommaire -> ServiceResponseDTO.Command.FunctionKey.SOMMAIRE
+        ServiceResponse.Command.FunctionKey.Retour -> ServiceResponseDTO.Command.FunctionKey.RETOUR
+        ServiceResponse.Command.FunctionKey.Repetition -> ServiceResponseDTO.Command.FunctionKey.REPETITION
+        ServiceResponse.Command.FunctionKey.Guide -> ServiceResponseDTO.Command.FunctionKey.GUIDE
+        ServiceResponse.Command.FunctionKey.Suite -> ServiceResponseDTO.Command.FunctionKey.SUITE
+        ServiceResponse.Command.FunctionKey.Envoi -> ServiceResponseDTO.Command.FunctionKey.ENVOI
     }
 }
 
 internal fun ServiceResponse.Command.Case.mapToDTO(): ServiceResponseDTO.Command.Case {
     return when (this) {
-        ServiceResponse.Command.Case.LOWER -> ServiceResponseDTO.Command.Case.LOWER
-        ServiceResponse.Command.Case.UPPER -> ServiceResponseDTO.Command.Case.UPPER
+        ServiceResponse.Command.Case.Lower -> ServiceResponseDTO.Command.Case.LOWER
+        ServiceResponse.Command.Case.Upper -> ServiceResponseDTO.Command.Case.UPPER
     }
 }
 
@@ -167,9 +167,9 @@ internal fun Boolean.mapToDTO(): ServiceResponseDTO.Command.OnOff {
 
 internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.DirectCallSetting {
     return when (this) {
-        ServiceResponse.DirectCallSetting.YES -> ServiceResponseDTO.DirectCallSetting.YES
-        ServiceResponse.DirectCallSetting.NO -> ServiceResponseDTO.DirectCallSetting.NO
-        ServiceResponse.DirectCallSetting.YES_CNX -> ServiceResponseDTO.DirectCallSetting.YES_CNX
+        ServiceResponse.DirectCallSetting.Yes -> ServiceResponseDTO.DirectCallSetting.YES
+        ServiceResponse.DirectCallSetting.No -> ServiceResponseDTO.DirectCallSetting.NO
+        ServiceResponse.DirectCallSetting.YesCnx -> ServiceResponseDTO.DirectCallSetting.YES_CNX
     }
 }
 
@@ -197,22 +197,22 @@ internal fun <T : Any> GatewayRequestDTO.mapToDomain(
 
 internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Function {
     return when (this) {
-        GatewayRequestDTO.Function.ENVOI -> GatewayRequest.Function.ENVOI
-        GatewayRequestDTO.Function.SUITE -> GatewayRequest.Function.SUITE
-        GatewayRequestDTO.Function.RETOUR -> GatewayRequest.Function.RETOUR
-        GatewayRequestDTO.Function.ANNULATION -> GatewayRequest.Function.ANNULATION
-        GatewayRequestDTO.Function.CORRECTION -> GatewayRequest.Function.CORRECTION
-        GatewayRequestDTO.Function.GUIDE -> GatewayRequest.Function.GUIDE
-        GatewayRequestDTO.Function.REPETITION -> GatewayRequest.Function.REPETITION
-        GatewayRequestDTO.Function.SOMMAIRE -> GatewayRequest.Function.SOMMAIRE
-        GatewayRequestDTO.Function.CONNECTION -> GatewayRequest.Function.CONNECTION
-        GatewayRequestDTO.Function.FIN -> GatewayRequest.Function.FIN
-        GatewayRequestDTO.Function.DIRECT -> GatewayRequest.Function.DIRECT
-        GatewayRequestDTO.Function.DIRECT_CONNECTION -> GatewayRequest.Function.DIRECT_CONNECTION
-        GatewayRequestDTO.Function.DIRECT_CALL_FAILED -> GatewayRequest.Function.DIRECT_CALL_FAILED
-        GatewayRequestDTO.Function.DIRECT_CALL_ENDED -> GatewayRequest.Function.DIRECT_CALL_ENDED
-        GatewayRequestDTO.Function.BACKGROUND_CALL -> GatewayRequest.Function.BACKGROUND_CALL
-        GatewayRequestDTO.Function.SIMULATED_BACKGROUND_CALL -> GatewayRequest.Function.SIMULATED_BACKGROUND_CALL
+        GatewayRequestDTO.Function.ENVOI -> GatewayRequest.Function.Envoi
+        GatewayRequestDTO.Function.SUITE -> GatewayRequest.Function.Suite
+        GatewayRequestDTO.Function.RETOUR -> GatewayRequest.Function.Retour
+        GatewayRequestDTO.Function.ANNULATION -> GatewayRequest.Function.Annulation
+        GatewayRequestDTO.Function.CORRECTION -> GatewayRequest.Function.Correction
+        GatewayRequestDTO.Function.GUIDE -> GatewayRequest.Function.Guide
+        GatewayRequestDTO.Function.REPETITION -> GatewayRequest.Function.Repetition
+        GatewayRequestDTO.Function.SOMMAIRE -> GatewayRequest.Function.Sommaire
+        GatewayRequestDTO.Function.CONNECTION -> GatewayRequest.Function.Connection
+        GatewayRequestDTO.Function.FIN -> GatewayRequest.Function.Fin
+        GatewayRequestDTO.Function.DIRECT -> GatewayRequest.Function.Direct
+        GatewayRequestDTO.Function.DIRECT_CONNECTION -> GatewayRequest.Function.DirectConnection
+        GatewayRequestDTO.Function.DIRECT_CALL_FAILED -> GatewayRequest.Function.DirectCallFailed
+        GatewayRequestDTO.Function.DIRECT_CALL_ENDED -> GatewayRequest.Function.DirectCallEnded
+        GatewayRequestDTO.Function.BACKGROUND_CALL -> GatewayRequest.Function.BackgroundCall
+        GatewayRequestDTO.Function.SIMULATED_BACKGROUND_CALL -> GatewayRequest.Function.BackgroundCallSimulated
     }
 }
 

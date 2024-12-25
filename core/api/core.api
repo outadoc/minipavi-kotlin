@@ -17,22 +17,22 @@ public final class fr/outadoc/minipavi/core/model/GatewayRequest {
 }
 
 public final class fr/outadoc/minipavi/core/model/GatewayRequest$Function : java/lang/Enum {
-	public static final field ANNULATION Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field BACKGROUND_CALL Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field CONNECTION Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field CORRECTION Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field DIRECT Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field DIRECT_CALL_ENDED Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field DIRECT_CALL_FAILED Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field DIRECT_CONNECTION Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field ENVOI Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field FIN Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field GUIDE Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field REPETITION Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field RETOUR Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field SIMULATED_BACKGROUND_CALL Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field SOMMAIRE Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
-	public static final field SUITE Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Annulation Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field BackgroundCall Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field BackgroundCallSimulated Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Connection Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Correction Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Direct Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field DirectCallEnded Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field DirectCallFailed Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field DirectConnection Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Envoi Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Fin Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Guide Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Repetition Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Retour Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Sommaire Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
+	public static final field Suite Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
 	public static fun values ()[Lfr/outadoc/minipavi/core/model/GatewayRequest$Function;
@@ -116,8 +116,8 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Backgr
 }
 
 public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Case : java/lang/Enum {
-	public static final field LOWER Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
-	public static final field UPPER Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
+	public static final field Lower Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
+	public static final field Upper Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
 	public static fun values ()[Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Case;
@@ -203,12 +203,12 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Duplic
 }
 
 public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey : java/lang/Enum {
-	public static final field ENVOI Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
-	public static final field GUIDE Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
-	public static final field REPETITION Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
-	public static final field RETOUR Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
-	public static final field SOMMAIRE Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
-	public static final field SUITE Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Envoi Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Guide Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Repetition Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Retour Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Sommaire Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
+	public static final field Suite Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
 	public static fun values ()[Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$FunctionKey;
@@ -304,9 +304,9 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$PushSe
 }
 
 public final class fr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting : java/lang/Enum {
-	public static final field NO Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
-	public static final field YES Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
-	public static final field YES_CNX Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
+	public static final field No Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
+	public static final field Yes Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
+	public static final field YesCnx Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;
 	public static fun values ()[Lfr/outadoc/minipavi/core/model/ServiceResponse$DirectCallSetting;

@@ -29,12 +29,12 @@ public data class ServiceResponse<T : Any>(
      * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
      * [nextUrl], sans attendre une action de l'utilisateur.
      *
-     * - Si la valeur est [DirectCallSetting.YES], l'appel au service aura la clé [GatewayRequest.Payload.function]
-     * à la valeur [GatewayRequest.Function.DIRECT].
-     * - Si la valeur est [DirectCallSetting.YES_CNX], l'appel au service aura la clé [GatewayRequest.Payload.function]
-     * à la valeur  [GatewayRequest.Function.DIRECT_CONNECTION].
+     * - Si la valeur est [DirectCallSetting.Yes], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * à la valeur [GatewayRequest.Function.Direct].
+     * - Si la valeur est [DirectCallSetting.YesCnx], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * à la valeur  [GatewayRequest.Function.DirectConnection].
      */
-    val directCall: DirectCallSetting = DirectCallSetting.NO,
+    val directCall: DirectCallSetting = DirectCallSetting.No,
 
     /**
      * Prochaine URL du service qui devra être appelée par la passerelle.
@@ -48,11 +48,9 @@ public data class ServiceResponse<T : Any>(
     val command: Command? = null,
 ) {
     public enum class DirectCallSetting {
-        NO,
-
-        YES,
-
-        YES_CNX
+        No,
+        Yes,
+        YesCnx
     }
 
     public sealed interface Command {
@@ -109,14 +107,14 @@ public data class ServiceResponse<T : Any>(
              * par l'utilisateur.
              *
              * Valeurs possibles :
-             * - [FunctionKey.SOMMAIRE]
-             * - [FunctionKey.RETOUR]
-             * - [FunctionKey.REPETITION]
-             * - [FunctionKey.GUIDE]
-             * - [FunctionKey.SUITE]
-             * - [FunctionKey.ENVOI]
+             * - [FunctionKey.Sommaire]
+             * - [FunctionKey.Retour]
+             * - [FunctionKey.Repetition]
+             * - [FunctionKey.Guide]
+             * - [FunctionKey.Suite]
+             * - [FunctionKey.Envoi]
              */
-            val submitWith: Set<FunctionKey> = setOf(FunctionKey.ENVOI),
+            val submitWith: Set<FunctionKey> = setOf(FunctionKey.Envoi),
         ) : Command
 
         public data class InputMessage(
@@ -158,7 +156,7 @@ public data class ServiceResponse<T : Any>(
 
             /**
              * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
-             * (par exemple la touche [FunctionKey.ENVOI]).
+             * (par exemple la touche [FunctionKey.Envoi]).
              *
              * Les touches Correction et Annulation ne peuvent être définies, car
              * gérées directement par la passerelle pour la correction de la saisie
@@ -167,12 +165,12 @@ public data class ServiceResponse<T : Any>(
              * pour le changement de ligne dans la zone de saisie.
              *
              * Valeurs possibles :
-             * - [FunctionKey.SOMMAIRE]
-             * - [FunctionKey.REPETITION]
-             * - [FunctionKey.GUIDE]
-             * - [FunctionKey.ENVOI]
+             * - [FunctionKey.Sommaire]
+             * - [FunctionKey.Repetition]
+             * - [FunctionKey.Guide]
+             * - [FunctionKey.Envoi]
              */
-            val submitWith: Set<FunctionKey> = setOf(FunctionKey.ENVOI),
+            val submitWith: Set<FunctionKey> = setOf(FunctionKey.Envoi),
         ) : Command
 
         public data class InputForm(
@@ -210,7 +208,7 @@ public data class ServiceResponse<T : Any>(
 
             /**
              * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
-             * (par exemple la touche [FunctionKey.ENVOI]).
+             * (par exemple la touche [FunctionKey.Envoi]).
              *
              * Les touches Correction et Annulation ne peuvent être définies, car
              * gérées directement par la passerelle pour la correction de la saisie
@@ -219,12 +217,12 @@ public data class ServiceResponse<T : Any>(
              * pour le changement de ligne dans la zone de saisie.
              *
              * Valeurs possibles :
-             * - [FunctionKey.SOMMAIRE]
-             * - [FunctionKey.REPETITION]
-             * - [FunctionKey.GUIDE]
-             * - [FunctionKey.ENVOI]
+             * - [FunctionKey.Sommaire]
+             * - [FunctionKey.Repetition]
+             * - [FunctionKey.Guide]
+             * - [FunctionKey.Envoi]
              */
-            val submitWith: Set<FunctionKey> = setOf(FunctionKey.ENVOI),
+            val submitWith: Set<FunctionKey> = setOf(FunctionKey.Envoi),
         ) : Command
 
         /**
@@ -264,7 +262,7 @@ public data class ServiceResponse<T : Any>(
              * Si `false`, l'appel sera effectué vers l'URL indiquée en paramètres.
              * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
              * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
-             * [GatewayRequest.Function.BACKGROUND_CALL].
+             * [GatewayRequest.Function.BackgroundCall].
              * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
              * à la passerelle.
              *
@@ -273,7 +271,7 @@ public data class ServiceResponse<T : Any>(
              * (ci-dessous).
              *
              * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
-             * [GatewayRequest.Function.SIMULATED_BACKGROUND_CALL].
+             * [GatewayRequest.Function.BackgroundCallSimulated].
              * Cet appel devra être vu par le service comme une action de l'utilisateur.
              * En retour, le service peut envoyer toutes commandes et tout contenu,
              * qui sera alors envoyé à l'utilisateur.
@@ -302,8 +300,8 @@ public data class ServiceResponse<T : Any>(
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Websocket.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -342,8 +340,8 @@ public data class ServiceResponse<T : Any>(
             val echo: Boolean = true,
 
             /**
-             * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
-             * - [Case.UPPER] : force le clavier de l'utilisateur en majuscules.
+             * - [Case.Lower] : force le clavier de l'utilisateur en minuscules.
+             * - [Case.Upper] : force le clavier de l'utilisateur en majuscules.
              */
             val case: Case,
         ) : Command
@@ -352,8 +350,8 @@ public data class ServiceResponse<T : Any>(
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Telnet.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -381,8 +379,8 @@ public data class ServiceResponse<T : Any>(
             val echo: Boolean = true,
 
             /**
-             * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
-             * - [Case.UPPER] : force le clavier de l'utilisateur en majuscules.
+             * - [Case.Lower] : force le clavier de l'utilisateur en minuscules.
+             * - [Case.Upper] : force le clavier de l'utilisateur en majuscules.
              */
             val case: Case,
 
@@ -397,8 +395,8 @@ public data class ServiceResponse<T : Any>(
          * accessible par téléphone.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -433,8 +431,8 @@ public data class ServiceResponse<T : Any>(
          * ce que voit l'utilisateur B).
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -452,17 +450,17 @@ public data class ServiceResponse<T : Any>(
         ) : Command
 
         public enum class Case {
-            UPPER,
-            LOWER
+            Upper,
+            Lower
         }
 
         public enum class FunctionKey {
-            SOMMAIRE,
-            RETOUR,
-            REPETITION,
-            GUIDE,
-            SUITE,
-            ENVOI
+            Sommaire,
+            Retour,
+            Repetition,
+            Guide,
+            Suite,
+            Envoi
         }
     }
 }

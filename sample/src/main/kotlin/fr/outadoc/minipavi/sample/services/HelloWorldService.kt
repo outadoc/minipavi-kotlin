@@ -42,28 +42,28 @@ fun Application.helloWorld() {
                             clearAll()
                             appendLine()
 
-                            withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                            withCharacterSize(CharacterSize.DoubleHeight) {
                                 appendLine(" Bonjour le monde !")
                             }
                             appendLine()
 
                             append(" Vous êtes ")
-                            withTextColor(TextColor.RED) {
+                            withTextColor(TextColor.Red) {
                                 appendLine(request.payload.sessionId)
                             }
 
                             append(" ou ")
-                            withTextColor(TextColor.GREEN) {
+                            withTextColor(TextColor.Green) {
                                 appendLine(request.payload.remoteAddress)
                             }
 
                             append(" Connecté.e via ")
-                            withTextColor(TextColor.BLUE) {
+                            withTextColor(TextColor.Blue) {
                                 appendLine(request.payload.socketType.toString())
                             }
 
                             append(" À l'aide d'un Minitel ")
-                            withTextColor(TextColor.YELLOW) {
+                            withTextColor(TextColor.Yellow) {
                                 appendLine(request.payload.minitelVersion)
                             }
                         },
@@ -120,17 +120,17 @@ fun Application.helloWorld() {
 
                             appendLine()
 
-                            withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                            withCharacterSize(CharacterSize.DoubleHeight) {
                                 appendLine(" Tall boi")
                             }
 
-                            withCharacterSize(CharacterSize.DOUBLE_WIDTH) {
+                            withCharacterSize(CharacterSize.DoubleWidth) {
                                 appendLine(" Long boi")
                             }
 
                             appendLine()
 
-                            withCharacterSize(CharacterSize.DOUBLE_SIZE) {
+                            withCharacterSize(CharacterSize.DoubleSize) {
                                 appendLine(" Big boi")
                             }
 
