@@ -1,6 +1,7 @@
 package fr.outadoc.kpavi.api.server
 
 import fr.outadoc.kpavi.api.data.minitelApp
+import fr.outadoc.kpavi.api.domain.model.Command
 import fr.outadoc.kpavi.api.domain.model.ServiceResponse
 import fr.outadoc.kpavi.videotex.CharacterSize
 import fr.outadoc.kpavi.videotex.TextColor
@@ -69,6 +70,11 @@ fun Route.helloWorld() {
             HelloWorldState.Text -> {
                 ServiceResponse(
                     state = HelloWorldState.Background,
+                    command = Command.InputForm(
+                        x = listOf(1),
+                        y = listOf(19),
+                        length = listOf(30),
+                    ),
                     content = buildVideotex {
                         clearAll()
 
@@ -85,6 +91,9 @@ fun Route.helloWorld() {
                                 }
                             }
                         }
+
+                        appendLine()
+                        appendLine("Test de l'entrée utilisateur :")
                     },
                 )
             }
@@ -117,6 +126,12 @@ fun Route.helloWorld() {
 
                         withCharacterSize(CharacterSize.DOUBLE_SIZE) {
                             appendLine(" Big boi")
+                        }
+
+                        appendLine()
+                        appendLine("Entrée utilisateur : ")
+                        request.payload.userInput.forEach { line ->
+                            appendLine(line)
                         }
                     },
                 )
