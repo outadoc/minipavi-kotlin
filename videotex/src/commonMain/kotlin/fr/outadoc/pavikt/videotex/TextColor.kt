@@ -1,14 +1,16 @@
 package fr.outadoc.pavikt.videotex
 
+import kotlinx.io.bytestring.ByteString
+
 public enum class TextColor(
-    internal val code: String
+    internal val code: ByteString
 ) {
-    BLACK(VideotextConstants.VDT_TXTBLACK),
-    RED(VideotextConstants.VDT_TXTRED),
-    GREEN(VideotextConstants.VDT_TXTGREEN),
-    YELLOW(VideotextConstants.VDT_TXTYELLOW),
-    BLUE(VideotextConstants.VDT_TXTBLUE),
-    MAGENTA(VideotextConstants.VDT_TXTMAGENTA),
-    CYAN(VideotextConstants.VDT_TXTCYAN),
-    WHITE(VideotextConstants.VDT_TXTWHITE)
+    BLACK(VdtConstants.VDT_TXTBLACK),
+    RED(VdtConstants.VDT_TXTRED),
+    GREEN(VdtConstants.VDT_TXTGREEN),
+    YELLOW(VdtConstants.VDT_TXTYELLOW),
+    BLUE(VdtConstants.VDT_TXTBLUE),
+    MAGENTA(VdtConstants.VDT_TXTMAGENTA),
+    CYAN(VdtConstants.VDT_TXTCYAN),
+    WHITE(VdtConstants.VDT_TXTWHITE)
 }

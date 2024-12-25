@@ -1,11 +1,11 @@
 package fr.outadoc.pavikt.videotex
 
 public enum class CursorDirection(
-    internal val code: String
+    internal val code: Byte
 ) {
-    LEFT(VideotextConstants.VDT_LEFT),
-    RIGHT(VideotextConstants.VDT_RIGHT),
-    DOWN(VideotextConstants.VDT_DOWN),
-    UP(VideotextConstants.VDT_UP),
-    LINE_START(VideotextConstants.VDT_CR),
+    LEFT(VdtConstants.VDT_LEFT),
+    RIGHT(VdtConstants.VDT_RIGHT),
+    DOWN(VdtConstants.VDT_DOWN),
+    UP(VdtConstants.VDT_UP),
+    LINE_START(VdtConstants.VDT_CR),
 }

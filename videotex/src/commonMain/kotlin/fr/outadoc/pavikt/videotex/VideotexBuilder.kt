@@ -1,7 +1,8 @@
 package fr.outadoc.pavikt.videotex
 
 import kotlinx.io.bytestring.ByteString
-import kotlinx.io.bytestring.encodeToByteString
+import kotlinx.io.bytestring.ByteStringBuilder
+import kotlinx.io.bytestring.append
 
 public fun buildVideotex(block: VideotexBuilder.() -> Unit): ByteString {
     return VideotexBuilder()
@@ -11,10 +12,10 @@ public fun buildVideotex(block: VideotexBuilder.() -> Unit): ByteString {
 
 public class VideotexBuilder internal constructor() {
 
-    private val sb = StringBuilder()
+    private val bs = ByteStringBuilder()
 
     public fun append(text: String) {
-        sb.append(text.toG2())
+        bs.appendNormalizedText(text)
     }
 
     public fun append(char: Char) {
@@ -23,7 +24,11 @@ public class VideotexBuilder internal constructor() {
 
     public fun appendLine(text: String = "") {
         append(text)
-        append(VideotextConstants.VDT_CRLF)
+        bs.append(VdtConstants.VDT_CRLF)
+    }
+
+    public fun appendRawVideotex(bytes: ByteString) {
+        bs.append(bytes)
     }
 
     /**
@@ -34,17 +39,20 @@ public class VideotexBuilder internal constructor() {
      * @return The command to position the cursor
      */
     public fun moveCursorTo(col: Int, line: Int) {
-        append(VideotextConstants.VDT_POS)
-        append((64 + line).toChar())
-        append((64 + col).toChar())
+        check(col in 1..40) { "Column must be between 1 and 40" }
+        check(line in 0..24) { "Line must be between 0 and 24" }
+
+        bs.append(VdtConstants.VDT_POS)
+        bs.append((64 + line).toByte())
+        bs.append((64 + col).toByte())
     }
 
     public fun moveCursorRelative(direction: CursorDirection) {
-        append(direction.code)
+        bs.append(direction.code)
     }
 
     public fun clearScreen() {
-        append(VideotextConstants.VDT_CLR)
+        bs.append(VdtConstants.VDT_CLR)
     }
 
     public fun clearStatus() {
@@ -61,7 +69,7 @@ public class VideotexBuilder internal constructor() {
     }
 
     public fun clearLine() {
-        append(VideotextConstants.VDT_CLRLN)
+        bs.append(VdtConstants.VDT_CLRLN)
     }
 
     /**
@@ -72,156 +80,161 @@ public class VideotexBuilder internal constructor() {
      * @return The command to repeat the character
      */
     public fun repeatChar(char: Char, num: Int) {
+        check(63 + num < Byte.MAX_VALUE) {
+            "Cannot repeat character $char $num times: exceeds maximum value"
+        }
+
         append(char)
-        append(VideotextConstants.VDT_REP)
-        append((63 + num).toChar())
+        bs.append(VdtConstants.VDT_REP)
+        bs.append((63 + num).toByte())
     }
 
     public fun withTextColor(
         color: TextColor,
         block: VideotexBuilder.() -> Unit
     ) {
-        append(color.code)
+        bs.append(color.code)
         block()
-        append(VideotextConstants.VDT_TXTWHITE)
+        bs.append(VdtConstants.VDT_TXTWHITE)
     }
 
     public fun withBackgroundColor(
         color: BackgroundColor,
         block: VideotexBuilder.() -> Unit
     ) {
-        append(color.code)
+        bs.append(color.code)
         block()
-        append(VideotextConstants.VDT_FDNORM)
+        bs.append(VdtConstants.VDT_FDNORM)
     }
 
     public fun withBlink(block: VideotexBuilder.() -> Unit) {
-        append(VideotextConstants.VDT_BLINK)
+        bs.append(VdtConstants.VDT_BLINK)
         block()
-        append(VideotextConstants.VDT_FIXED)
+        bs.append(VdtConstants.VDT_FIXED)
     }
 
     public fun withUnderline(block: VideotexBuilder.() -> Unit) {
-        append(VideotextConstants.VDT_STARTUNDERLINE)
+        bs.append(VdtConstants.VDT_STARTUNDERLINE)
         block()
-        append(VideotextConstants.VDT_STOPUNDERLINE)
+        bs.append(VdtConstants.VDT_STOPUNDERLINE)
     }
 
     public fun withRouleau(block: VideotexBuilder.() -> Unit) {
-        append(VideotextConstants.PRO_ROULEAU_ON)
+        bs.append(VdtConstants.PRO_ROULEAU_ON)
         block()
-        append(VideotextConstants.PRO_ROULEAU_OFF)
+        bs.append(VdtConstants.PRO_ROULEAU_OFF)
     }
 
     public fun withInvertedBackground(block: VideotexBuilder.() -> Unit) {
-        append(VideotextConstants.VDT_FDINV)
+        bs.append(VdtConstants.VDT_FDINV)
         block()
-        append(VideotextConstants.VDT_FDNORM)
+        bs.append(VdtConstants.VDT_FDNORM)
     }
 
     public fun withCharacterSize(
         size: CharacterSize,
         block: VideotexBuilder.() -> Unit
     ) {
-        append(size.code)
+        bs.append(size.code)
         block()
-        append(CharacterSize.NORMAL.code)
+        bs.append(CharacterSize.NORMAL.code)
     }
 
     public fun showCursor(show: Boolean) {
-        append(
+        bs.append(
             if (show) {
-                VideotextConstants.VDT_CURON
+                VdtConstants.VDT_CURON
             } else {
-                VideotextConstants.VDT_CUROFF
+                VdtConstants.VDT_CUROFF
             }
         )
     }
 
     public fun setLocalEcho(enabled: Boolean) {
-        append(
+        bs.append(
             if (enabled) {
-                VideotextConstants.PRO_LOCALECHO_ON
+                VdtConstants.PRO_LOCALECHO_ON
             } else {
-                VideotextConstants.PRO_LOCALECHO_OFF
+                VdtConstants.PRO_LOCALECHO_OFF
             }
         )
     }
 
     public fun build(): ByteString {
-        return sb.toString().encodeToByteString()
+        return bs.toByteString()
     }
 
     private companion object {
 
         /**
-         * Converts special characters to their G2 equivalents.
-         *
-         * @receiver The string to convert
-         * @return The converted string
+         * Appends the [text] to the [ByteStringBuilder], converting special characters
+         * to their Videotex equivalent.
          */
-        private fun String.toG2(): String {
-            return this
-                .map { char ->
-                    g2Map.getOrDefault(char, char.toString())
-                }
-                .joinToString("")
+        private fun ByteStringBuilder.appendNormalizedText(text: String) {
+            text.forEach { char ->
+                append(
+                    g2Map.getOrDefault(
+                        key = char,
+                        defaultValue = ByteString(char.code.toByte())
+                    )
+                )
+            }
         }
 
-        private val g2Map = mapOf(
-            'é' to "${VideotextConstants.VDT_G2}\u0042e",
-            'è' to "${VideotextConstants.VDT_G2}\u0041e",
-            'à' to "${VideotextConstants.VDT_G2}\u0041a",
-            'ç' to "${VideotextConstants.VDT_G2}\u004B\u0063",
-            'ê' to "${VideotextConstants.VDT_G2}\u0043e",
-            'É' to "${VideotextConstants.VDT_G2}\u0042E",
-            'È' to "${VideotextConstants.VDT_G2}\u0041E",
-            'À' to "${VideotextConstants.VDT_G2}\u0041A",
-            'Ç' to "${VideotextConstants.VDT_G2}\u004B\u0063",
-            'Ê' to "${VideotextConstants.VDT_G2}\u0043E",
-            'β' to "${VideotextConstants.VDT_G2}\u007B",
-            'ß' to "${VideotextConstants.VDT_G2}\u007B",
-            'œ' to "${VideotextConstants.VDT_G2}\u007A",
-            'Œ' to "${VideotextConstants.VDT_G2}\u006A",
-            'ü' to "${VideotextConstants.VDT_G2}\u0048\u0075",
-            'û' to "${VideotextConstants.VDT_G2}\u0043\u0075",
-            'ú' to "${VideotextConstants.VDT_G2}\u0042\u0075",
-            'ù' to "${VideotextConstants.VDT_G2}\u0041\u0075",
-            'ö' to "${VideotextConstants.VDT_G2}\u0048\u006F",
-            'ô' to "${VideotextConstants.VDT_G2}\u0043\u006F",
-            'ó' to "${VideotextConstants.VDT_G2}\u0042\u006F",
-            'ò' to "${VideotextConstants.VDT_G2}\u0041\u006F",
-            'ï' to "${VideotextConstants.VDT_G2}\u0048\u0069",
-            'î' to "${VideotextConstants.VDT_G2}\u0043\u0069",
-            'í' to "${VideotextConstants.VDT_G2}\u0042\u0069",
-            'ì' to "${VideotextConstants.VDT_G2}\u0041\u0069",
-            'ë' to "${VideotextConstants.VDT_G2}\u0048\u0065",
-            'ä' to "${VideotextConstants.VDT_G2}\u0048\u0061",
-            'â' to "${VideotextConstants.VDT_G2}\u0043\u0061",
-            'á' to "${VideotextConstants.VDT_G2}\u0042\u0061",
-            '£' to "${VideotextConstants.VDT_G2}\u0023",
-            '°' to "${VideotextConstants.VDT_G2}\u0030",
-            '±' to "${VideotextConstants.VDT_G2}\u0031",
-            '←' to "${VideotextConstants.VDT_G2}\u002C",
-            '↑' to "${VideotextConstants.VDT_G2}\u002D",
-            '→' to "${VideotextConstants.VDT_G2}\u002E",
-            '↓' to "${VideotextConstants.VDT_G2}\u002F",
-            '¼' to "${VideotextConstants.VDT_G2}\u003C",
-            '½' to "${VideotextConstants.VDT_G2}\u003D",
-            '¾' to "${VideotextConstants.VDT_G2}\u003E",
-            'Â' to "${VideotextConstants.VDT_G2}\u0043A",
-            'Î' to "I",
-            'ō' to "o",
-            'á' to "a",
-            '’' to "'",
-            '\u00A0' to " ",
-            'ň' to "n",
-            'ć' to "c",
-            'ř' to "r",
-            'ý' to "y",
-            'š' to "s",
-            'í' to "i",
-            'ą' to "a"
+        private val g2Map: Map<Char, ByteString> = mapOf(
+            'é' to ByteString(VdtConstants.VDT_G2, 0x42, 0x65),
+            'è' to ByteString(VdtConstants.VDT_G2, 0x41, 0x65),
+            'à' to ByteString(VdtConstants.VDT_G2, 0x41, 0x61),
+            'ç' to ByteString(VdtConstants.VDT_G2, 0x4B, 0x63),
+            'ê' to ByteString(VdtConstants.VDT_G2, 0x43, 0x65),
+            'É' to ByteString(VdtConstants.VDT_G2, 0x42, 0x45),
+            'È' to ByteString(VdtConstants.VDT_G2, 0x41, 0x45),
+            'À' to ByteString(VdtConstants.VDT_G2, 0x41, 0x41),
+            'Ç' to ByteString(VdtConstants.VDT_G2, 0x4B, 0x63),
+            'Ê' to ByteString(VdtConstants.VDT_G2, 0x43, 0x45),
+            'β' to ByteString(VdtConstants.VDT_G2, 0x7B),
+            'ß' to ByteString(VdtConstants.VDT_G2, 0x7B),
+            'œ' to ByteString(VdtConstants.VDT_G2, 0x7A),
+            'Œ' to ByteString(VdtConstants.VDT_G2, 0x6A),
+            'ü' to ByteString(VdtConstants.VDT_G2, 0x48, 0x75),
+            'û' to ByteString(VdtConstants.VDT_G2, 0x43, 0x75),
+            'ú' to ByteString(VdtConstants.VDT_G2, 0x42, 0x75),
+            'ù' to ByteString(VdtConstants.VDT_G2, 0x41, 0x75),
+            'ö' to ByteString(VdtConstants.VDT_G2, 0x48, 0x6F),
+            'ô' to ByteString(VdtConstants.VDT_G2, 0x43, 0x6F),
+            'ó' to ByteString(VdtConstants.VDT_G2, 0x42, 0x6F),
+            'ò' to ByteString(VdtConstants.VDT_G2, 0x41, 0x6F),
+            'ï' to ByteString(VdtConstants.VDT_G2, 0x48, 0x69),
+            'î' to ByteString(VdtConstants.VDT_G2, 0x43, 0x69),
+            'í' to ByteString(VdtConstants.VDT_G2, 0x42, 0x69),
+            'ì' to ByteString(VdtConstants.VDT_G2, 0x41, 0x69),
+            'ë' to ByteString(VdtConstants.VDT_G2, 0x48, 0x65),
+            'ä' to ByteString(VdtConstants.VDT_G2, 0x48, 0x61),
+            'â' to ByteString(VdtConstants.VDT_G2, 0x43, 0x61),
+            'á' to ByteString(VdtConstants.VDT_G2, 0x42, 0x61),
+            '£' to ByteString(VdtConstants.VDT_G2, 0x23),
+            '°' to ByteString(VdtConstants.VDT_G2, 0x30),
+            '±' to ByteString(VdtConstants.VDT_G2, 0x31),
+            '←' to ByteString(VdtConstants.VDT_G2, 0x2C),
+            '↑' to ByteString(VdtConstants.VDT_G2, 0x2D),
+            '→' to ByteString(VdtConstants.VDT_G2, 0x2E),
+            '↓' to ByteString(VdtConstants.VDT_G2, 0x2F),
+            '¼' to ByteString(VdtConstants.VDT_G2, 0x3C),
+            '½' to ByteString(VdtConstants.VDT_G2, 0x3D),
+            '¾' to ByteString(VdtConstants.VDT_G2, 0x3E),
+            'Â' to ByteString(VdtConstants.VDT_G2, 0x43, 0x41),
+            'Î' to ByteString(0x49),
+            'ō' to ByteString(0x6F),
+            'á' to ByteString(0x61),
+            '’' to ByteString(0x27),
+            '\u00A0' to ByteString(0x20),
+            'ň' to ByteString(0x6E),
+            'ć' to ByteString(0x63),
+            'ř' to ByteString(0x72),
+            'ý' to ByteString(0x79),
+            'š' to ByteString(0x73),
+            'í' to ByteString(0x69),
+            'ą' to ByteString(0x61),
         )
     }
 }

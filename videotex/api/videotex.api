@@ -52,6 +52,7 @@ public final class fr/outadoc/pavikt/videotex/VideotexBuilder {
 	public final fun append (Ljava/lang/String;)V
 	public final fun appendLine (Ljava/lang/String;)V
 	public static synthetic fun appendLine$default (Lfr/outadoc/pavikt/videotex/VideotexBuilder;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun appendRawVideotex (Lkotlinx/io/bytestring/ByteString;)V
 	public final fun build ()Lkotlinx/io/bytestring/ByteString;
 	public final fun clearAll ()V
 	public final fun clearLine ()V

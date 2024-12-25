@@ -1,10 +1,12 @@
 package fr.outadoc.pavikt.videotex
 
+import kotlinx.io.bytestring.ByteString
+
 public enum class CharacterSize(
-    internal val code: String
+    internal val code: ByteString
 ) {
-    NORMAL(VideotextConstants.VDT_SZNORM),
-    DOUBLE_WIDTH(VideotextConstants.VDT_SZDBLW),
-    DOUBLE_HEIGHT(VideotextConstants.VDT_SZDBLH),
-    DOUBLE_SIZE(VideotextConstants.VDT_SZDBLHW)
+    NORMAL(VdtConstants.VDT_SZNORM),
+    DOUBLE_WIDTH(VdtConstants.VDT_SZDBLW),
+    DOUBLE_HEIGHT(VdtConstants.VDT_SZDBLH),
+    DOUBLE_SIZE(VdtConstants.VDT_SZDBLHW)
 }

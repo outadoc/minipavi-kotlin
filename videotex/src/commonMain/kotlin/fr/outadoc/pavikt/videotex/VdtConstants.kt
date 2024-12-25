@@ -1,244 +1,246 @@
 package fr.outadoc.pavikt.videotex
 
-internal object VideotextConstants {
+import kotlinx.io.bytestring.ByteString
+
+internal object VdtConstants {
 
     /**
      * Déplacement curseur vers la gauche.
      */
-    const val VDT_LEFT = "\u0008"
+    val VDT_LEFT: Byte = 0x08
 
     /**
      * Déplacement curseur vers la droite.
      */
-    const val VDT_RIGHT = "\u0009"
+    val VDT_RIGHT: Byte = 0x09
 
     /**
      * Déplacement curseur vers le bas.
      */
-    const val VDT_DOWN = "\u000A"
+    val VDT_DOWN: Byte = 0x0A
 
     /**
      * Déplacement curseur vers le haut.
      */
-    const val VDT_UP = "\u000B"
+    val VDT_UP: Byte = 0x0B
 
     /**
      * Retour charriot (début de ligne).
      */
-    const val VDT_CR = "\u000D"
+    val VDT_CR: Byte = 0x0D
 
     /**
      * Retour charriot + déplacement vers le bas.
      */
-    const val VDT_CRLF = "\u000D\u000A"
+    val VDT_CRLF = ByteString(0x0D, 0x0A)
 
     /**
      * Effacement écran.
      */
-    const val VDT_CLR = "\u000C"
+    val VDT_CLR: Byte = 0x0C
 
     /**
      * Jeu de caractères G0.
      */
-    const val VDT_G0 = "\u000F"
+    val VDT_G0: Byte = 0x0F
 
     /**
      * Jeu de caractères G1.
      */
-    const val VDT_G1 = "\u000E"
+    val VDT_G1: Byte = 0x0E
 
     /**
      * Jeu de caractères G2.
      */
-    const val VDT_G2 = "\u0019"
+    val VDT_G2: Byte = 0x19
 
     /**
      * Positionnement du curseur.
      */
-    const val VDT_POS = "\u001F"
+    val VDT_POS: Byte = 0x1F
 
     /**
      * Répétition caractère.
      */
-    const val VDT_REP = "\u0012"
+    val VDT_REP: Byte = 0x12
 
     /**
      * Curseur allumé.
      */
-    const val VDT_CURON = "\u0011"
+    val VDT_CURON: Byte = 0x11
 
     /**
      * Curseur éteint.
      */
-    const val VDT_CUROFF = "\u0014"
+    val VDT_CUROFF: Byte = 0x14
 
     /**
      * Effacement fin de ligne.
      */
-    const val VDT_CLRLN = "\u0018"
+    val VDT_CLRLN: Byte = 0x18
 
     /**
      * Taille des caractères normale.
      */
-    const val VDT_SZNORM = "\u001B\u004C"
+    val VDT_SZNORM = ByteString(0x1B, 0x4C)
 
     /**
      * Taille des caractères double hauteur.
      */
-    const val VDT_SZDBLH = "\u001B\u004D"
+    val VDT_SZDBLH = ByteString(0x1B, 0x4D)
 
     /**
      * Taille des caractères double largeur.
      */
-    const val VDT_SZDBLW = "\u001B\u004E"
+    val VDT_SZDBLW = ByteString(0x1B, 0x4E)
 
     /**
      * Taille des caractères double hauteur + double largeur.
      */
-    const val VDT_SZDBLHW = "\u001B\u004F"
+    val VDT_SZDBLHW = ByteString(0x1B, 0x4F)
 
     /**
      * Couleur texte noir.
      */
-    const val VDT_TXTBLACK = "\u001B@"
+    val VDT_TXTBLACK = ByteString(0x1B, 0x40)
 
     /**
      * Couleur texte rouge.
      */
-    const val VDT_TXTRED = "\u001BA"
+    val VDT_TXTRED = ByteString(0x1B, 0x41)
 
     /**
      * Couleur texte vert.
      */
-    const val VDT_TXTGREEN = "\u001BB"
+    val VDT_TXTGREEN = ByteString(0x1B, 0x42)
 
     /**
      * Couleur texte jaune.
      */
-    const val VDT_TXTYELLOW = "\u001BC"
+    val VDT_TXTYELLOW = ByteString(0x1B, 0x43)
 
     /**
      * Couleur texte bleu.
      */
-    const val VDT_TXTBLUE = "\u001BD"
+    val VDT_TXTBLUE = ByteString(0x1B, 0x44)
 
     /**
      * Couleur texte magenta.
      */
-    const val VDT_TXTMAGENTA = "\u001BE"
+    val VDT_TXTMAGENTA = ByteString(0x1B, 0x45)
 
     /**
      * Couleur texte cyan.
      */
-    const val VDT_TXTCYAN = "\u001BF"
+    val VDT_TXTCYAN = ByteString(0x1B, 0x46)
 
     /**
      * Couleur texte blanc.
      */
-    const val VDT_TXTWHITE = "\u001BG"
+    val VDT_TXTWHITE = ByteString(0x1B, 0x47)
 
     /**
      * Couleur fond noir.
      */
-    const val VDT_BGBLACK = "\u001BP"
+    val VDT_BGBLACK = ByteString(0x1B, 0x50)
 
     /**
      * Couleur fond rouge.
      */
-    const val VDT_BGRED = "\u001BQ"
+    val VDT_BGRED = ByteString(0x1B, 0x51)
 
     /**
      * Couleur fond vert.
      */
-    const val VDT_BGGREEN = "\u001BR"
+    val VDT_BGGREEN = ByteString(0x1B, 0x52)
 
     /**
      * Couleur fond jaune.
      */
-    const val VDT_BGYELLOW = "\u001BS"
+    val VDT_BGYELLOW = ByteString(0x1B, 0x53)
 
     /**
      * Couleur fond bleu.
      */
-    const val VDT_BGBLUE = "\u001BT"
+    val VDT_BGBLUE = ByteString(0x1B, 0x54)
 
     /**
      * Couleur fond magenta.
      */
-    const val VDT_BGMAGENTA = "\u001BU"
+    val VDT_BGMAGENTA = ByteString(0x1B, 0x55)
 
     /**
      * Couleur fond cyan.
      */
-    const val VDT_BGCYAN = "\u001BV"
+    val VDT_BGCYAN = ByteString(0x1B, 0x56)
 
     /**
      * Couleur fond blanc.
      */
-    const val VDT_BGWHITE = "\u001BW"
+    val VDT_BGWHITE = ByteString(0x1B, 0x57)
 
     /**
      * Clignotement.
      */
-    const val VDT_BLINK = "\u001BH"
+    val VDT_BLINK = ByteString(0x1B, 0x48)
 
     /**
      * Arrêt clignotement.
      */
-    const val VDT_FIXED = "\u001BI"
+    val VDT_FIXED = ByteString(0x1B, 0x49)
 
     /**
      * Arrêt soulignement.
      */
-    const val VDT_STOPUNDERLINE = "\u001BY"
+    val VDT_STOPUNDERLINE = ByteString(0x1B, 0x59)
 
     /**
      * Début soulignement.
      */
-    const val VDT_STARTUNDERLINE = "\u001BZ"
-
-    /**
-     * Fond normal.
-     */
-    const val VDT_FDNORM = "\u001B\\"
+    val VDT_STARTUNDERLINE = ByteString(0x1B, 0x5A)
 
     /**
      * Fond inversé.
      */
-    const val VDT_FDINV = "\u001B]"
+    val VDT_FDINV = ByteString(0x1B, 0x5D)
+
+    /**
+     * Fond normal.
+     */
+    val VDT_FDNORM = ByteString(0x1B, 0x5C)
 
     /**
      * Passage clavier en minuscules.
      */
-    const val PRO_MIN = "\u001B\u003A\u0069\u0045"
+    val PRO_MIN = ByteString(0x1B, 0x3A, 0x69, 0x45)
 
     /**
      * Passage clavier en majuscules.
      */
-    const val PRO_MAJ = "\u001B\u003A\u006A\u0045"
+    val PRO_MAJ = ByteString(0x1B, 0x3A, 0x6A, 0x45)
 
     /**
      * Arrêt echo local.
      */
-    const val PRO_LOCALECHO_OFF = "\u001B\u003B\u0060\u0058\u0051"
+    val PRO_LOCALECHO_OFF = ByteString(0x1B, 0x3B, 0x60, 0x58, 0x51)
 
     /**
      * Marche echo local.
      */
-    const val PRO_LOCALECHO_ON = "\u001B\u003B\u0061\u0058\u0051"
+    val PRO_LOCALECHO_ON = ByteString(0x1B, 0x3B, 0x61, 0x58, 0x51)
 
     /**
      * Mode rouleau actif.
      */
-    const val PRO_ROULEAU_ON = "\u001B\u003A\u0069\u0043"
+    val PRO_ROULEAU_ON = ByteString(0x1B, 0x3A, 0x69, 0x43)
 
     /**
      * Mode rouleau inactif.
      */
-    const val PRO_ROULEAU_OFF = "\u001B\u003A\u006A\u0043"
+    val PRO_ROULEAU_OFF = ByteString(0x1B, 0x3A, 0x6A, 0x43)
 
     /**
      * "Réinitialisation" des jeux de caractères normaux.
      */
-    const val VDT_RESET_DRCS = "\u001B\u0028\u0040\u001B\u0029\u0063"
+    val VDT_RESET_DRCS = ByteString(0x1B, 0x28, 0x40, 0x1B, 0x29, 0x63)
 }
