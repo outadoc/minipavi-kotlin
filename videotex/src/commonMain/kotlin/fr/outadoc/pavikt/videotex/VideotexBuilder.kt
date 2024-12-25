@@ -4,39 +4,63 @@ import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.ByteStringBuilder
 import kotlinx.io.bytestring.append
 
+/**
+ * Permet de construire facilement un document Vidéotex.
+ */
 public fun buildVideotex(block: VideotexBuilder.() -> Unit): ByteString {
     return VideotexBuilder()
         .apply { block() }
         .build()
 }
 
+/**
+ * Builder permettant de construire facilement un document Vidéotex.
+ *
+ * Utilisez les méthodes de cette classe pour ajouter du texte, des commandes,
+ * des styles, etc. au document, puis appelez [build] pour obtenir le document finalisé.
+ */
 public class VideotexBuilder internal constructor() {
 
     private val bs = ByteStringBuilder()
 
+    /**
+     * Ajoute le texte spécifié au document, en convertissant
+     * les caractères spéciaux si nécessaire.
+     */
     public fun append(text: String) {
         bs.appendNormalizedText(text)
     }
 
+    /**
+     * Ajoute un caractère au document.
+     */
     public fun append(char: Char) {
         append(char.toString())
     }
 
+    /**
+     * Ajoute le texte spécifié au document, en terminant par un retour
+     * à la ligne et en convertissant les caractères spéciaux si nécessaire.
+     */
     public fun appendLine(text: String = "") {
         append(text)
         bs.append(VdtConstants.VDT_CRLF)
     }
 
+    /**
+     * Ajoute un flux Vidéotex brut au document.
+     */
     public fun appendRawVideotex(bytes: ByteString) {
         bs.append(bytes)
     }
 
     /**
-     * Positions the cursor at the specified column and line.
+     * Positionne le curseur aux coordonnées spécifiées.
      *
-     * @param col Column number (1 to 40)
-     * @param line Line number (0 to 24)
-     * @return The command to position the cursor
+     * @param col Colonne (1 à 40)
+     * @param line Ligne (0 à 24)
+     *
+     * @throws IllegalArgumentException Si les coordonnées sont invalides.
      */
     public fun moveCursorTo(col: Int, line: Int) {
         check(col in 1..40) { "Column must be between 1 and 40" }
@@ -47,14 +71,23 @@ public class VideotexBuilder internal constructor() {
         bs.append((64 + col).toByte())
     }
 
+    /**
+     * Déplace le curseur dans la direction spécifiée.
+     */
     public fun moveCursorRelative(direction: CursorDirection) {
         bs.append(direction.code)
     }
 
+    /**
+     * Efface l'écran.
+     */
     public fun clearScreen() {
         bs.append(VdtConstants.VDT_CLR)
     }
 
+    /**
+     * Efface la ligne de statut.
+     */
     public fun clearStatus() {
         moveCursorTo(1, 0)
         append(' ')
@@ -62,37 +95,48 @@ public class VideotexBuilder internal constructor() {
         moveCursorTo(1, 1)
     }
 
+    /**
+     * Efface l'écran, la ligne de statut, et masque le curseur.
+     */
     public fun clearAll() {
         clearScreen()
         clearStatus()
         showCursor(false)
     }
 
+    /**
+     * Efface la ligne courante.
+     */
     public fun clearLine() {
         bs.append(VdtConstants.VDT_CLRLN)
     }
 
+    /**
+     * Réinitialise les jeux de caractères.
+     */
     public fun resetCharacterSets() {
         bs.append(VdtConstants.VDT_RESET_DRCS)
     }
 
     /**
-     * Repeats a character a specified number of times.
+     * Répète un caractère un nombre spécifié de fois.
      *
-     * @param char The character to repeat
-     * @param num The number of times to repeat the character
-     * @return The command to repeat the character
+     * @param char Caractère à répéter
+     * @param repeatCount Nombre de répétitions, entre 1 et 63
      */
-    public fun repeatChar(char: Char, num: Int) {
-        check(63 + num < Byte.MAX_VALUE) {
-            "Cannot repeat character $char $num times: exceeds maximum value"
+    public fun repeatChar(char: Char, repeatCount: Int) {
+        check(repeatCount in 1..63) {
+            "Cannot repeat character $char $repeatCount times: exceeds maximum value"
         }
 
         append(char)
         bs.append(VdtConstants.VDT_REP)
-        bs.append((63 + num).toByte())
+        bs.append((63 + repeatCount).toByte())
     }
 
+    /**
+     * Applique une couleur de texte au bloc spécifié.
+     */
     public fun withTextColor(
         color: TextColor,
         block: VideotexBuilder.() -> Unit
@@ -102,6 +146,9 @@ public class VideotexBuilder internal constructor() {
         bs.append(VdtConstants.VDT_TXTWHITE)
     }
 
+    /**
+     * Applique une couleur de fond au bloc spécifié.
+     */
     public fun withBackgroundColor(
         color: BackgroundColor,
         block: VideotexBuilder.() -> Unit
@@ -111,30 +158,45 @@ public class VideotexBuilder internal constructor() {
         bs.append(VdtConstants.VDT_FDNORM)
     }
 
+    /**
+     * Applique un clignotement au bloc spécifié.
+     */
     public fun withBlink(block: VideotexBuilder.() -> Unit) {
         bs.append(VdtConstants.VDT_BLINK)
         block()
         bs.append(VdtConstants.VDT_FIXED)
     }
 
+    /**
+     * Applique un soulignement au bloc spécifié.
+     */
     public fun withUnderline(block: VideotexBuilder.() -> Unit) {
         bs.append(VdtConstants.VDT_STARTUNDERLINE)
         block()
         bs.append(VdtConstants.VDT_STOPUNDERLINE)
     }
 
+    /**
+     * Applique un mode rouleau au bloc spécifié.
+     */
     public fun withRouleau(block: VideotexBuilder.() -> Unit) {
         bs.append(VdtConstants.PRO_ROULEAU_ON)
         block()
         bs.append(VdtConstants.PRO_ROULEAU_OFF)
     }
 
+    /**
+     * Inverse le fond du bloc spécifié.
+     */
     public fun withInvertedBackground(block: VideotexBuilder.() -> Unit) {
         bs.append(VdtConstants.VDT_FDINV)
         block()
         bs.append(VdtConstants.VDT_FDNORM)
     }
 
+    /**
+     * Applique une taille de caractères au bloc spécifié.
+     */
     public fun withCharacterSize(
         size: CharacterSize,
         block: VideotexBuilder.() -> Unit
@@ -144,6 +206,9 @@ public class VideotexBuilder internal constructor() {
         bs.append(CharacterSize.NORMAL.code)
     }
 
+    /**
+     * Affiche ou masque le curseur.
+     */
     public fun showCursor(show: Boolean) {
         bs.append(
             if (show) {
@@ -154,6 +219,9 @@ public class VideotexBuilder internal constructor() {
         )
     }
 
+    /**
+     * Active ou désactive l'écho local.
+     */
     public fun setLocalEcho(enabled: Boolean) {
         bs.append(
             if (enabled) {
@@ -164,17 +232,16 @@ public class VideotexBuilder internal constructor() {
         )
     }
 
+    /**
+     * Construit le document Vidéotex finalisé en tant que chaîne binaire.
+     */
     public fun build(): ByteString {
         return bs.toByteString()
     }
 
     private companion object {
 
-        /**
-         * Appends the [text] to the [ByteStringBuilder], converting special characters
-         * to their Videotex equivalent.
-         */
-        private fun ByteStringBuilder.appendNormalizedText(text: String) {
+        fun ByteStringBuilder.appendNormalizedText(text: String) {
             text.forEach { char ->
                 append(
                     g2Map.getOrDefault(
@@ -185,7 +252,7 @@ public class VideotexBuilder internal constructor() {
             }
         }
 
-        private val g2Map: Map<Char, ByteString> = mapOf(
+        val g2Map: Map<Char, ByteString> = mapOf(
             'é' to ByteString(VdtConstants.VDT_G2, 0x42, 0x65),
             'è' to ByteString(VdtConstants.VDT_G2, 0x41, 0x65),
             'à' to ByteString(VdtConstants.VDT_G2, 0x41, 0x61),
