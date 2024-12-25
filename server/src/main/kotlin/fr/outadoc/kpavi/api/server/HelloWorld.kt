@@ -36,8 +36,32 @@ fun Route.helloWorld() {
                     state = HelloWorldState.Text,
                     content = buildVideotex {
                         clearAll()
-                        appendLine("Bonjour le monde !")
-                        appendLine("Vous êtes ${request.payload.uniqueId}")
+                        appendLine()
+
+                        withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                            appendLine(" Bonjour le monde !")
+                        }
+                        appendLine()
+
+                        append(" Vous êtes ")
+                        withTextColor(TextColor.RED) {
+                            appendLine(request.payload.uniqueId)
+                        }
+
+                        append(" ou ")
+                        withTextColor(TextColor.GREEN) {
+                            appendLine(request.payload.remoteAddress)
+                        }
+
+                        append(" Connecté.e via ")
+                        withTextColor(TextColor.BLUE) {
+                            appendLine(request.payload.socketType.toString())
+                        }
+
+                        append(" À l'aide d'un Minitel ")
+                        withTextColor(TextColor.YELLOW) {
+                            appendLine(request.payload.minitelVersion)
+                        }
                     },
                 )
             }
@@ -72,27 +96,27 @@ fun Route.helloWorld() {
                         clearAll()
 
                         withBlink {
-                            appendLine("Texte clignotant")
+                            appendLine(" Texte clignotant")
                         }
 
                         withUnderline {
-                            appendLine("Texte souligné")
+                            appendLine(" Texte souligné")
                         }
 
                         appendLine()
 
                         withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
-                            appendLine("Tall boi")
+                            appendLine(" Tall boi")
                         }
 
                         withCharacterSize(CharacterSize.DOUBLE_WIDTH) {
-                            appendLine("Long boi")
+                            appendLine(" Long boi")
                         }
 
                         appendLine()
 
                         withCharacterSize(CharacterSize.DOUBLE_SIZE) {
-                            appendLine("Big boi")
+                            appendLine(" Big boi")
                         }
                     },
                 )
