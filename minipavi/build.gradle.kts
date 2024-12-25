@@ -1,5 +1,6 @@
 import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.net.URL
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -52,6 +53,14 @@ tasks.withType<DokkaTaskPartial>().configureEach {
     dokkaSourceSets {
         configureEach {
             includes.from("README.md")
+
+            externalDocumentationLink {
+                url.set(URL("https://kotlinlang.org/api/kotlinx.serialization/"))
+            }
+
+            externalDocumentationLink {
+                url.set(URL("https://kotlinlang.org/api/kotlinx-io/"))
+            }
         }
     }
 }

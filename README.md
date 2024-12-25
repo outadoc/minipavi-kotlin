@@ -115,15 +115,30 @@ Ktor.
 Il ne vous reste plus qu'à construire votre réponse, en renvoyant une `ServiceResponse` :
 
 ```kotlin
+import fr.outadoc.pavikt.minipavi.ktor.minitelService
+import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.videotex.buildVideotex
+import io.ktor.server.application.Application
+import kotlinx.serialization.Serializable
 
-ServiceResponse(
-    state = EtatSimple,
-    content =
-        buildVideotex {
-            appendLine("Bonjour le monde !")
-        },
-)
+@Serializable
+object EtatSimple
+
+fun Application.helloWorld() {
+    minitelService<EtatSimple>(
+        path = "/",
+        version = "0.1",
+        initialState = EtatSimple,
+    ) { request ->
+        ServiceResponse(
+            state = EtatSimple,
+            content =
+                buildVideotex {
+                    appendLine("Bonjour le monde !")
+                },
+        )
+    }
+}
 ```
 
 La fonction `buildVideotex` vous permet de construire une réponse au format Vidéotex.
