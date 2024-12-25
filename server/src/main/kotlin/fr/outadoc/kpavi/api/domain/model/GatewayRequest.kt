@@ -11,7 +11,7 @@ data class GatewayRequest<T : Any>(
         /**
          * Version de la passerelle.
          */
-        val version: String,
+        val gatewayVersion: String,
 
         /**
          * Identifiant unique de l'utilisateur connecté au service.

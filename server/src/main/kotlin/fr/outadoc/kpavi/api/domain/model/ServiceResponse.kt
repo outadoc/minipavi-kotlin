@@ -25,11 +25,13 @@ data class ServiceResponse<T : Any>(
     val echo: Boolean = true,
 
     /**
-     * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
+     * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
      * [next], sans attendre une action de l'utilisateur.
      *
-     * - Si la valeur est [DirectCallSetting.YES], l'appel au service aura la clé `fctn` à la valeur `DIRECT`.
-     * - Si la valeur est [DirectCallSetting.YES_CNX], l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
+     * - Si la valeur est [DirectCallSetting.YES], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * à la valeur [GatewayRequest.Function.DIRECT].
+     * - Si la valeur est [DirectCallSetting.YES_CNX], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * à la valeur  [GatewayRequest.Function.DIRECT_CONNECTION].
      */
     val directCall: DirectCallSetting = DirectCallSetting.NO,
 
@@ -257,17 +259,19 @@ sealed interface Command {
         val sendAt: Instant,
 
         /**
-         * Si `false`, l'appel sera effectué vers l'url indiquée en paramètres.
+         * Si `false`, l'appel sera effectué vers l'URL indiquée en paramètres.
          * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
-         * La touche de fonction indiquée dans la clé `fctn` aura la valeur `BGCALL`.
-         * En retour, le service ne pourra qu'envoyer une commande `PushServiceMsg`
+         * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
+         * [GatewayRequest.Function.BACKGROUND_CALL].
+         * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
          * à la passerelle.
          *
          * Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
          * `nexturl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre `url`
          * (ci-dessous).
          *
-         * La touche de fonction indiquée dans la clé `fctn` aura la valeur `BGCALL-SIMU`.
+         * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
+         * [GatewayRequest.Function.SIMULATED_BACKGROUND_CALL].
          * Cet appel devra être vu par le service comme une action de l'utilisateur.
          * En retour, le service peut envoyer toutes commandes et tout contenu,
          * qui sera alors envoyé à l'utilisateur.
@@ -286,8 +290,8 @@ sealed interface Command {
         val uniqueIds: List<String>,
 
         /**
-         * - Si [simulate] est `false`, indique l'url qui doit être appelée.
-         * - Si [simulate] est `true`, indique les données qui seront indiqué dans la clé `content` de l'appel de la passerelle au service.
+         * - Si [simulate] est `false`, indique l'URL qui doit être appelée.
+         * - Si [simulate] est `true`, indique les données qui seront indiquées dans la clé `content` de l'appel de la passerelle au service.
          */
         val url: String,
     ) : Command
@@ -296,8 +300,8 @@ sealed interface Command {
      * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Websocket.
      *
      * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
-     * sera appelée et la touche de fonction indiquée sera `DIRECTCALLENDED`
-     * si la connexion s'est terminée normalement ou `DIRECTCALLFAILED`
+     * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
+     * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
@@ -346,8 +350,8 @@ sealed interface Command {
      * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Telnet.
      *
      * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
-     * sera appelée et la touche de fonction indiquée sera `DIRECTCALLENDED`
-     * si la connexion s'est terminée normalement ou `DIRECTCALLFAILED`
+     * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
+     * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
@@ -391,8 +395,8 @@ sealed interface Command {
      * accessible par téléphone.
      *
      * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
-     * sera appelée et la touche de fonction indiquée sera `DIRECTCALLENDED`
-     * si la connexion s'est terminée normalement ou `DIRECTCALLFAILED`
+     * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
+     * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
@@ -427,8 +431,8 @@ sealed interface Command {
      * ce que voit l'utilisateur B).
      *
      * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
-     * sera appelée et la touche de fonction indiquée sera `DIRECTCALLENDED`
-     * si la connexion s'est terminée normalement ou `DIRECTCALLFAILED`
+     * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
+     * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */

@@ -176,7 +176,7 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
 ): GatewayRequest<T> {
     return GatewayRequest(
         payload = GatewayRequest.Payload(
-            version = payload.version,
+            gatewayVersion = payload.version,
             uniqueId = payload.uniqueId,
             remoteAddress = payload.remoteAddress,
             socketType = payload.socketType.mapToDomain(),
