@@ -21,9 +21,9 @@ data class ServiceResponse<T : Any>(
      * Active l'echo par la passerelle des caractères tapés par l'utilisateur,
      * pour que l'utilisateur voie ce qu'il tape.
      *
-     * Généralement, cette clé aura la valeur [Command.OnOff.ON].
+     * Généralement, cette clé aura la valeur [Command.true].
      */
-    val echo: Command.OnOff = Command.OnOff.ON,
+    val echo: Boolean = true,
 
     /**
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
@@ -97,9 +97,9 @@ sealed interface Command {
         val prefill: String,
 
         /**
-         * Si [OnOff.ON], le curseur sera visible, sinon [OnOff.OFF].
+         * Si `true`, le curseur sera visible, sinon `false`.
          */
-        val cursor: OnOff = OnOff.ON,
+        val cursor: Boolean = true,
 
         /**
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
@@ -153,9 +153,9 @@ sealed interface Command {
         val prefill: List<String> = emptyList(),
 
         /**
-         * Si [OnOff.ON], le curseur sera visible, sinon [OnOff.OFF].
+         * Si `true`, le curseur sera visible, sinon `false`.
          */
-        val cursor: OnOff = OnOff.ON,
+        val cursor: Boolean = true,
 
         /**
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
@@ -204,9 +204,9 @@ sealed interface Command {
         val prefill: List<String> = emptyList(),
 
         /**
-         * Si [OnOff.ON], le curseur sera visible, sinon [OnOff.OFF].
+         * Si `true`, le curseur sera visible, sinon `false`.
          */
-        val cursor: OnOff = OnOff.ON,
+        val cursor: Boolean = true,
 
         /**
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
@@ -333,10 +333,10 @@ sealed interface Command {
         val proto: String? = null,
 
         /**
-         * - [OnOff.ON] : l'écho est activé et géré par la passerelle.
-         * - [OnOff.OFF] : l'écho est géré directement par le serveur.
+         * - `true` : l'écho est activé et géré par la passerelle.
+         * - `false` : l'écho est géré directement par le serveur.
          */
-        val echo: OnOff,
+        val echo: Boolean,
 
         /**
          * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
@@ -372,10 +372,10 @@ sealed interface Command {
         val host: String,
 
         /**
-         * - [OnOff.ON] : l'écho est activé et géré par la passerelle.
-         * - [OnOff.OFF] : l'écho est géré directement par le serveur.
+         * - `true` : l'écho est activé et géré par la passerelle.
+         * - `false` : l'écho est géré directement par le serveur.
          */
-        val echo: OnOff,
+        val echo: Boolean,
 
         /**
          * - [Case.LOWER] : force le clavier de l'utilisateur en minuscules.
@@ -448,22 +448,17 @@ sealed interface Command {
         val uniqueId: String
     ) : Command
 
-    enum class OnOff {
-        ON,
-        OFF
-    }
-
     enum class Case {
         UPPER,
         LOWER
     }
 
-    enum class FunctionKey(val value: Int) {
-        SOMMAIRE(1),
-        RETOUR(4),
-        REPETITION(8),
-        GUIDE(16),
-        SUITE(64),
-        ENVOI(128)
+    enum class FunctionKey {
+        SOMMAIRE,
+        RETOUR,
+        REPETITION,
+        GUIDE,
+        SUITE,
+        ENVOI
     }
 }

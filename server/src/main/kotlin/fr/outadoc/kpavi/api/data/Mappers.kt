@@ -155,10 +155,11 @@ fun Command.Case.mapToDTO(): CommandDTO.Case {
     }
 }
 
-fun Command.OnOff.mapToDTO(): CommandDTO.OnOff {
-    return when (this) {
-        Command.OnOff.ON -> CommandDTO.OnOff.ON
-        Command.OnOff.OFF -> CommandDTO.OnOff.OFF
+fun Boolean.mapToDTO(): CommandDTO.OnOff {
+    return if (this) {
+        CommandDTO.OnOff.ON
+    } else {
+        CommandDTO.OnOff.OFF
     }
 }
 
