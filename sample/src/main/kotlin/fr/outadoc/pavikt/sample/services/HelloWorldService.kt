@@ -1,7 +1,6 @@
 package fr.outadoc.pavikt.sample.services
 
 import fr.outadoc.pavikt.minipavi.ktor.minitelService
-import fr.outadoc.pavikt.minipavi.model.Command
 import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.videotex.CharacterSize
 import fr.outadoc.pavikt.videotex.TextColor
@@ -72,7 +71,7 @@ fun Application.helloWorld() {
                 ServiceResponse(
                     state = HelloWorldState.Background,
                     command =
-                        Command.InputForm(
+                        ServiceResponse.Command.InputForm(
                             x = listOf(1),
                             y = listOf(19),
                             length = listOf(30),
