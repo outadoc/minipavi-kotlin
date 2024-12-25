@@ -44,7 +44,7 @@ class ServiceResponseSerializationTest {
             context = "a:1:{s:3:\"url\";s:0:\"\";}",
             echo = CommandDTO.OnOff.ON,
             directCall = ServiceResponseDTO.DirectCallSetting.NO,
-            next = "http://www.monsite.fr/index.php?step=20",
+            nextUrl = "http://www.monsite.fr/index.php?step=20",
             command = CommandDTO.InputMessage(
                 params = CommandDTO.InputMessage.Params(
                     x = 1,
@@ -102,7 +102,7 @@ class ServiceResponseSerializationTest {
             context = "a:0:{}",
             echo = CommandDTO.OnOff.ON,
             directCall = ServiceResponseDTO.DirectCallSetting.NO,
-            next = "http://www.monsite.fr/index.php?step=20",
+            nextUrl = "http://www.monsite.fr/index.php?step=20",
             command = CommandDTO.InputText(
                 params = CommandDTO.InputText.Params(
                     x = 2,

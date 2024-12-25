@@ -30,7 +30,7 @@ internal data class ServiceResponseDTO(
     val directCall: DirectCallSetting = DirectCallSetting.NO,
 
     @SerialName("next")
-    val next: String,
+    val nextUrl: String,
 
     @SerialName("COMMAND")
     val command: CommandDTO?,

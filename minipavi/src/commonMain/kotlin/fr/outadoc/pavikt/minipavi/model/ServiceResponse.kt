@@ -26,7 +26,7 @@ public data class ServiceResponse<T : Any>(
 
     /**
      * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
-     * [next], sans attendre une action de l'utilisateur.
+     * [nextUrl], sans attendre une action de l'utilisateur.
      *
      * - Si la valeur est [DirectCallSetting.YES], l'appel au service aura la clé [GatewayRequest.Payload.function]
      * à la valeur [GatewayRequest.Function.DIRECT].
@@ -38,7 +38,7 @@ public data class ServiceResponse<T : Any>(
     /**
      * Prochaine URL du service qui devra être appelée par la passerelle.
      */
-    val next: String = "",
+    val nextUrl: String = "",
 
     /**
      * Commande particulière que doit gérer la passerelle
@@ -269,7 +269,7 @@ public sealed interface Command {
          * à la passerelle.
          *
          * Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
-         * `nexturl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre `url`
+         * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre `url`
          * (ci-dessous).
          *
          * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
@@ -284,7 +284,7 @@ public sealed interface Command {
          * Tableau contenant la liste des identifiants uniques des utilisateurs.
          *
          * Si [simulate] est `true`, l'URL appelée sera celle indiquée dans la clé
-         * `nexturl` de l'utilisateur identifié.
+         * `nextUrl` de l'utilisateur identifié.
          *
          * Dans tous les cas, l'identifiant unique sera indiqué dans la clé `uniqueId`
          * de l'appel de la passerelle vers le service.
@@ -301,7 +301,7 @@ public sealed interface Command {
     /**
      * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Websocket.
      *
-     * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
+     * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
      * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
      * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
@@ -351,7 +351,7 @@ public sealed interface Command {
     /**
      * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Telnet.
      *
-     * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
+     * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
      * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
      * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
@@ -396,7 +396,7 @@ public sealed interface Command {
      * Demande à la passerelle de connecter l'utilisateur à un service Minitel
      * accessible par téléphone.
      *
-     * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
+     * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
      * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
      * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
@@ -432,7 +432,7 @@ public sealed interface Command {
      * transmis à un autre utilisateur B (l'utilisateur A voit
      * ce que voit l'utilisateur B).
      *
-     * En fin de connexion, l'URL indiquée dans la clé `nexturl` de la requête
+     * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
      * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DIRECT_CALL_ENDED]
      * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DIRECT_CALL_FAILED]
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion

@@ -19,7 +19,7 @@ internal fun <T : Any> ServiceResponse<T>.mapToDTO(
         context = Json.encodeToString(stateSerializer, state),
         echo = echo.mapToDTO(),
         directCall = directCall.mapToDTO(),
-        next = next,
+        nextUrl = nextUrl,
         command = command?.mapToDTO()
     )
 }
