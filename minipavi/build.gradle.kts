@@ -9,7 +9,7 @@ group = "fr.outadoc.pavikt"
 version = "1.0.0"
 
 kotlin {
-    // explicitApi()
+    explicitApi()
 
     jvm {
         compilerOptions {
@@ -23,6 +23,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.io)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.server.core)
             }
         }
 

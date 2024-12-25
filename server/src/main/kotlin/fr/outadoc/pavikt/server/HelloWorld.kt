@@ -1,7 +1,7 @@
 package fr.outadoc.pavikt.server
 
-import fr.outadoc.pavikt.minipavi.domain.model.Command
-import fr.outadoc.pavikt.minipavi.domain.model.ServiceResponse
+import fr.outadoc.pavikt.minipavi.model.Command
+import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.minipavi.ktor.minitelService
 import fr.outadoc.pavikt.videotex.CharacterSize
 import fr.outadoc.pavikt.videotex.TextColor
@@ -28,6 +28,7 @@ sealed interface HelloWorldState {
 
 fun Route.helloWorld() {
     minitelService<HelloWorldState>(
+        path = "/",
         version = "0.1",
         initialState = HelloWorldState.Intro,
     ) { request ->

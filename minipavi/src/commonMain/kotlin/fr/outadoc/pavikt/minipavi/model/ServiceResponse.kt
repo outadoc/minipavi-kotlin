@@ -1,10 +1,10 @@
-package fr.outadoc.pavikt.minipavi.domain.model
+package fr.outadoc.pavikt.minipavi.model
 
-import fr.outadoc.pavikt.minipavi.domain.model.ServiceResponse.DirectCallSetting
+import fr.outadoc.pavikt.minipavi.model.ServiceResponse.DirectCallSetting
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
 
-data class ServiceResponse<T : Any>(
+public data class ServiceResponse<T : Any>(
 
     /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle
@@ -46,7 +46,7 @@ data class ServiceResponse<T : Any>(
      */
     val command: Command? = null,
 ) {
-    enum class DirectCallSetting {
+    public enum class DirectCallSetting {
         NO,
 
         YES,
@@ -55,7 +55,7 @@ data class ServiceResponse<T : Any>(
     }
 }
 
-sealed interface Command {
+public sealed interface Command {
 
     /**
      * Demande à la passerelle de gérer la saisie par l'utilisateur d'une seule ligne de saisie,
@@ -63,7 +63,7 @@ sealed interface Command {
      *
      * Généralement utilisée pour la saisie d'un choix.
      */
-    data class InputText(
+    public data class InputText(
         /**
          * Position de la colonne (1-40) de la zone de saisie.
          */
@@ -80,7 +80,7 @@ sealed interface Command {
         val length: Int,
 
         /**
-         *  Si non vide, quel que soit la caractère tapé par l'utilisateur,
+         *  Si non vide, quel que soit le caractère tapé par l'utilisateur,
          *  ce caractère s'affichera (pour la saisie de mot de passe par exemple).
          */
         val char: String,
@@ -104,11 +104,11 @@ sealed interface Command {
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
          * (par exemple la touche Envoi).
          *
-         * Les touches Correction et Annulation ne peuvent être définies car
+         * Les touches Correction et Annulation ne peuvent être définies, car
          * gérées directement par la passerelle pour la correction de la saisie
          * par l'utilisateur.
          *
-         * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
+         * Valeurs possibles :
          * - [FunctionKey.SOMMAIRE]
          * - [FunctionKey.RETOUR]
          * - [FunctionKey.REPETITION]
@@ -119,7 +119,7 @@ sealed interface Command {
         val submitWith: Set<FunctionKey> = setOf(FunctionKey.ENVOI),
     ) : Command
 
-    data class InputMessage(
+    public data class InputMessage(
         /**
          * Position de la colonne (1-40) de la zone de saisie.
          */
@@ -175,7 +175,7 @@ sealed interface Command {
         val submitWith: Set<FunctionKey> = setOf(FunctionKey.ENVOI),
     ) : Command
 
-    data class InputForm(
+    public data class InputForm(
         /**
          * Tableau des positions de la colonne (1-40) des zones de saisie.
          */
@@ -232,12 +232,12 @@ sealed interface Command {
      *
      * L'utilisateur retourne alors au service par défaut (généralement, l'accueil de la passerelle).
      */
-    data object Disconnect : Command
+    public data object Disconnect : Command
 
     /**
      * Demande à la passerelle d'afficher un message en ligne `0` aux autres utilisateurs.
      */
-    data class PushServiceMessage(
+    public data class PushServiceMessage(
         /**
          * Tableau contenant la liste des identifiants uniques des
          * utilisateurs vers lesquels envoyer un message.
@@ -254,7 +254,7 @@ sealed interface Command {
     /**
      * Demande à la passerelle d'effectuer un appel à une url à l'heure indiquée.
      */
-    data class BackgroundCall(
+    public data class BackgroundCall(
         /**
          * Timestamp Unix de l'heure prévue de l'appel.
          */
@@ -307,7 +307,7 @@ sealed interface Command {
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
-    data class ConnectToWebSocket(
+    public data class ConnectToWebSocket(
         /**
          * Clé d'autorisation d'utilisation de cette commande
          * (configurée au niveau de la passerelle).
@@ -357,7 +357,7 @@ sealed interface Command {
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
-    data class ConnectToTelnet(
+    public data class ConnectToTelnet(
         /**
          * Clé d'autorisation d'utilisation de cette commande
          * (configurée au niveau de la passerelle).
@@ -402,7 +402,7 @@ sealed interface Command {
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
-    data class ConnectToExt(
+    public data class ConnectToExt(
         /**
          * Clé d'autorisation d'utilisation de cette commande
          * (configurée au niveau de la passerelle).
@@ -438,7 +438,7 @@ sealed interface Command {
      * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
      * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
      */
-    data class DuplicateStream(
+    public data class DuplicateStream(
         /**
          * Clé d'autorisation d'utilisation de cette commande
          * (configurée au niveau de la passerelle).
@@ -451,12 +451,12 @@ sealed interface Command {
         val uniqueId: String
     ) : Command
 
-    enum class Case {
+    public enum class Case {
         UPPER,
         LOWER
     }
 
-    enum class FunctionKey {
+    public enum class FunctionKey {
         SOMMAIRE,
         RETOUR,
         REPETITION,

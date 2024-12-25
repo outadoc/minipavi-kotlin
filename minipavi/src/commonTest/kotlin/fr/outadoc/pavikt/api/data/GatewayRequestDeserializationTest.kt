@@ -1,6 +1,6 @@
 package fr.outadoc.pavikt.api.data
 
-import fr.outadoc.pavikt.minipavi.data.model.GatewayRequestDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.GatewayRequestDTO
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
 import kotlin.test.Test

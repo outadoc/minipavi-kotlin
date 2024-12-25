@@ -1,4 +1,4 @@
-package fr.outadoc.pavikt.minipavi.data.serializer
+package fr.outadoc.pavikt.minipavi.internal.data.serializer
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer

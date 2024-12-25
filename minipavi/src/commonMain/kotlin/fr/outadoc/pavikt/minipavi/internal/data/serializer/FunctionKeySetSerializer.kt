@@ -1,6 +1,6 @@
-package fr.outadoc.pavikt.minipavi.data.serializer
+package fr.outadoc.pavikt.minipavi.internal.data.serializer
 
-import fr.outadoc.pavikt.minipavi.data.model.CommandDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.CommandDTO
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor

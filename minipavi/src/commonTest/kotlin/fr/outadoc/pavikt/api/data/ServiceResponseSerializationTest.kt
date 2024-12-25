@@ -1,7 +1,7 @@
 package fr.outadoc.pavikt.api.data
 
-import fr.outadoc.pavikt.minipavi.data.model.CommandDTO
-import fr.outadoc.pavikt.minipavi.data.model.ServiceResponseDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.CommandDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.ServiceResponseDTO
 import kotlinx.io.bytestring.encodeToByteString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json

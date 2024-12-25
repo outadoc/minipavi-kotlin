@@ -1,18 +1,22 @@
-package fr.outadoc.pavikt.minipavi.data
+package fr.outadoc.pavikt.minipavi.internal.data
 
-import fr.outadoc.pavikt.minipavi.data.model.CommandDTO
-import fr.outadoc.pavikt.minipavi.data.model.GatewayRequestDTO
-import fr.outadoc.pavikt.minipavi.data.model.ServiceResponseDTO
-import fr.outadoc.pavikt.minipavi.domain.model.Command
-import fr.outadoc.pavikt.minipavi.domain.model.GatewayRequest
-import fr.outadoc.pavikt.minipavi.domain.model.ServiceResponse
+import fr.outadoc.pavikt.minipavi.internal.data.model.CommandDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.GatewayRequestDTO
+import fr.outadoc.pavikt.minipavi.internal.data.model.ServiceResponseDTO
+import fr.outadoc.pavikt.minipavi.model.Command
+import fr.outadoc.pavikt.minipavi.model.GatewayRequest
+import fr.outadoc.pavikt.minipavi.model.ServiceResponse
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-inline fun <reified T : Any> ServiceResponse<T>.mapToDTO(version: String): ServiceResponseDTO {
+internal fun <T : Any> ServiceResponse<T>.mapToDTO(
+    stateSerializer: KSerializer<T>,
+    version: String
+): ServiceResponseDTO {
     return ServiceResponseDTO(
         version = version,
         content = content,
-        context = Json.encodeToString(state),
+        context = Json.encodeToString(stateSerializer, state),
         echo = echo.mapToDTO(),
         directCall = directCall.mapToDTO(),
         next = next,
@@ -20,11 +24,11 @@ inline fun <reified T : Any> ServiceResponse<T>.mapToDTO(version: String): Servi
     )
 }
 
-fun Command.mapToDTO(): CommandDTO {
+internal fun Command.mapToDTO(): CommandDTO {
     return when (this) {
         is Command.BackgroundCall -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.BackgroundCall(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.BackgroundCall.Params(
+            CommandDTO.BackgroundCall(
+                params = CommandDTO.BackgroundCall.Params(
                     sendAt = sendAt,
                     url = url,
                     simulate = simulate,
@@ -34,8 +38,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.ConnectToExt -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToExt(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToExt.Params(
+            CommandDTO.ConnectToExt(
+                params = CommandDTO.ConnectToExt.Params(
                     key = key,
                     telNumber = telNumber,
                     rx = rx,
@@ -45,8 +49,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.ConnectToTelnet -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToTelnet(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToTelnet.Params(
+            CommandDTO.ConnectToTelnet(
+                params = CommandDTO.ConnectToTelnet.Params(
                     host = host,
                     key = key,
                     echo = echo.mapToDTO(),
@@ -57,8 +61,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.ConnectToWebSocket -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToWebSocket(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.ConnectToWebSocket.Params(
+            CommandDTO.ConnectToWebSocket(
+                params = CommandDTO.ConnectToWebSocket.Params(
                     key = key,
                     echo = echo.mapToDTO(),
                     case = case.mapToDTO(),
@@ -70,12 +74,12 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.Disconnect -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.Disconnect
+            CommandDTO.Disconnect
         }
 
         is Command.DuplicateStream -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.DuplicateStream(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.DuplicateStream.Params(
+            CommandDTO.DuplicateStream(
+                params = CommandDTO.DuplicateStream.Params(
                     key = key,
                     uniqueId = uniqueId
                 )
@@ -83,8 +87,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.InputForm -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputForm(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputForm.Params(
+            CommandDTO.InputForm(
+                params = CommandDTO.InputForm.Params(
                     x = x,
                     y = y,
                     length = length,
@@ -97,8 +101,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.InputMessage -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputMessage(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputMessage.Params(
+            CommandDTO.InputMessage(
+                params = CommandDTO.InputMessage.Params(
                     x = x,
                     y = y,
                     width = width,
@@ -112,8 +116,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.InputText -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputText(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.InputText.Params(
+            CommandDTO.InputText(
+                params = CommandDTO.InputText.Params(
                     x = x,
                     y = y,
                     length = length,
@@ -127,8 +131,8 @@ fun Command.mapToDTO(): CommandDTO {
         }
 
         is Command.PushServiceMessage -> {
-            fr.outadoc.pavikt.minipavi.data.model.CommandDTO.PushServiceMessage(
-                params = fr.outadoc.pavikt.minipavi.data.model.CommandDTO.PushServiceMessage.Params(
+            CommandDTO.PushServiceMessage(
+                params = CommandDTO.PushServiceMessage.Params(
                     uniqueIds = uniqueIds,
                     message = message
                 )
@@ -137,25 +141,25 @@ fun Command.mapToDTO(): CommandDTO {
     }
 }
 
-fun Command.FunctionKey.mapToDTO(): CommandDTO.FunctionKey {
+internal fun Command.FunctionKey.mapToDTO(): CommandDTO.FunctionKey {
     return when (this) {
-        Command.FunctionKey.SOMMAIRE -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.SOMMAIRE
-        Command.FunctionKey.RETOUR -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.RETOUR
-        Command.FunctionKey.REPETITION -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.REPETITION
-        Command.FunctionKey.GUIDE -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.GUIDE
-        Command.FunctionKey.SUITE -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.SUITE
-        Command.FunctionKey.ENVOI -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.FunctionKey.ENVOI
+        Command.FunctionKey.SOMMAIRE -> CommandDTO.FunctionKey.SOMMAIRE
+        Command.FunctionKey.RETOUR -> CommandDTO.FunctionKey.RETOUR
+        Command.FunctionKey.REPETITION -> CommandDTO.FunctionKey.REPETITION
+        Command.FunctionKey.GUIDE -> CommandDTO.FunctionKey.GUIDE
+        Command.FunctionKey.SUITE -> CommandDTO.FunctionKey.SUITE
+        Command.FunctionKey.ENVOI -> CommandDTO.FunctionKey.ENVOI
     }
 }
 
-fun Command.Case.mapToDTO(): CommandDTO.Case {
+internal fun Command.Case.mapToDTO(): CommandDTO.Case {
     return when (this) {
-        Command.Case.LOWER -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.Case.LOWER
-        Command.Case.UPPER -> fr.outadoc.pavikt.minipavi.data.model.CommandDTO.Case.UPPER
+        Command.Case.LOWER -> CommandDTO.Case.LOWER
+        Command.Case.UPPER -> CommandDTO.Case.UPPER
     }
 }
 
-fun Boolean.mapToDTO(): CommandDTO.OnOff {
+internal fun Boolean.mapToDTO(): CommandDTO.OnOff {
     return if (this) {
         CommandDTO.OnOff.ON
     } else {
@@ -163,15 +167,16 @@ fun Boolean.mapToDTO(): CommandDTO.OnOff {
     }
 }
 
-fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.DirectCallSetting {
+internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.DirectCallSetting {
     return when (this) {
-        ServiceResponse.DirectCallSetting.YES -> fr.outadoc.pavikt.minipavi.data.model.ServiceResponseDTO.DirectCallSetting.YES
-        ServiceResponse.DirectCallSetting.NO -> fr.outadoc.pavikt.minipavi.data.model.ServiceResponseDTO.DirectCallSetting.NO
-        ServiceResponse.DirectCallSetting.YES_CNX -> fr.outadoc.pavikt.minipavi.data.model.ServiceResponseDTO.DirectCallSetting.YES_CNX
+        ServiceResponse.DirectCallSetting.YES -> ServiceResponseDTO.DirectCallSetting.YES
+        ServiceResponse.DirectCallSetting.NO -> ServiceResponseDTO.DirectCallSetting.NO
+        ServiceResponse.DirectCallSetting.YES_CNX -> ServiceResponseDTO.DirectCallSetting.YES_CNX
     }
 }
 
-inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
+internal fun <T : Any> GatewayRequestDTO.mapToDomain(
+    serializer: KSerializer<T>,
     initialState: T
 ): GatewayRequest<T> {
     return GatewayRequest(
@@ -184,7 +189,7 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
             userInput = payload.content,
             state = payload.context
                 .takeIf { context -> context.isNotEmpty() }
-                ?.let { context -> Json.decodeFromString(context) }
+                ?.let { context -> Json.decodeFromString(serializer, context) }
                 ?: initialState,
             function = payload.function.mapToDomain()
         ),
@@ -192,7 +197,7 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
     )
 }
 
-fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Function {
+internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Function {
     return when (this) {
         GatewayRequestDTO.Function.ENVOI -> GatewayRequest.Function.ENVOI
         GatewayRequestDTO.Function.SUITE -> GatewayRequest.Function.SUITE
@@ -213,7 +218,7 @@ fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Function {
     }
 }
 
-fun GatewayRequestDTO.SocketType.mapToDomain(): GatewayRequest.SocketType {
+internal fun GatewayRequestDTO.SocketType.mapToDomain(): GatewayRequest.SocketType {
     return when (this) {
         GatewayRequestDTO.SocketType.WebSocketSSL -> GatewayRequest.SocketType.WebSocketSSL
         GatewayRequestDTO.SocketType.WebSocket -> GatewayRequest.SocketType.WebSocket

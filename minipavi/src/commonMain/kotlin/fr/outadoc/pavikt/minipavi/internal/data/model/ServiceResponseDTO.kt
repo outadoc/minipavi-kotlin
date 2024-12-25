@@ -1,8 +1,8 @@
-package fr.outadoc.pavikt.minipavi.data.model
+package fr.outadoc.pavikt.minipavi.internal.data.model
 
-import fr.outadoc.pavikt.minipavi.data.serializer.Base64Serializer
-import fr.outadoc.pavikt.minipavi.data.serializer.FunctionKeySetSerializer
-import fr.outadoc.pavikt.minipavi.data.serializer.InstantUnixEpochSerializer
+import fr.outadoc.pavikt.minipavi.internal.data.serializer.Base64Serializer
+import fr.outadoc.pavikt.minipavi.internal.data.serializer.FunctionKeySetSerializer
+import fr.outadoc.pavikt.minipavi.internal.data.serializer.InstantUnixEpochSerializer
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
-data class ServiceResponseDTO(
+internal data class ServiceResponseDTO(
 
     @SerialName("version")
     val version: String,
@@ -36,7 +36,7 @@ data class ServiceResponseDTO(
     val command: CommandDTO?,
 ) {
     @Serializable
-    enum class DirectCallSetting {
+    internal enum class DirectCallSetting {
         @SerialName("no")
         NO,
 
@@ -51,7 +51,7 @@ data class ServiceResponseDTO(
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
 @JsonClassDiscriminator("name")
-sealed interface CommandDTO {
+internal sealed interface CommandDTO {
 
     @Serializable
     @SerialName("InputTxt")
@@ -61,7 +61,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("x")
             val x: Int,
@@ -98,7 +98,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("x")
             val x: Int,
@@ -135,7 +135,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("x")
             val x: List<Int>,
@@ -173,7 +173,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("uniqueid")
             val uniqueIds: List<String>,
@@ -191,7 +191,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("time")
             @Serializable(with = InstantUnixEpochSerializer::class)
@@ -216,7 +216,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("key")
             val key: String,
@@ -246,7 +246,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("key")
             val key: String,
@@ -273,7 +273,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("key")
             val key: String,
@@ -297,7 +297,7 @@ sealed interface CommandDTO {
     ) : CommandDTO {
 
         @Serializable
-        data class Params(
+        internal data class Params(
 
             @SerialName("key")
             val key: String,

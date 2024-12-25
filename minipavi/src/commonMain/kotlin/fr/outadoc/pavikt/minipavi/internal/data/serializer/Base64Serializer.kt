@@ -1,4 +1,4 @@
-package fr.outadoc.pavikt.minipavi.data.serializer
+package fr.outadoc.pavikt.minipavi.internal.data.serializer
 
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.bytestring.decodeToByteString

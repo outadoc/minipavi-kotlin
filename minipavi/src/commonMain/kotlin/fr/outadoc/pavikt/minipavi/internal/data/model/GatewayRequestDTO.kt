@@ -1,10 +1,10 @@
-package fr.outadoc.pavikt.minipavi.data.model
+package fr.outadoc.pavikt.minipavi.internal.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GatewayRequestDTO(
+internal data class GatewayRequestDTO(
     @SerialName("PAVI")
     val payload: Payload,
 
@@ -12,7 +12,7 @@ data class GatewayRequestDTO(
     val urlParams: List<String>? = null,
 ) {
     @Serializable
-    data class Payload(
+    internal data class Payload(
         @SerialName("version")
         val version: String,
 
@@ -38,7 +38,7 @@ data class GatewayRequestDTO(
         val function: Function
     )
 
-    enum class SocketType {
+    internal enum class SocketType {
         @SerialName("WS")
         WebSocket,
 
@@ -52,7 +52,7 @@ data class GatewayRequestDTO(
         Telnet,
     }
 
-    enum class Function {
+    internal enum class Function {
         @SerialName("ENVOI")
         ENVOI,
 

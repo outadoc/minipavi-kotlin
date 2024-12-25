@@ -1,13 +1,13 @@
-package fr.outadoc.pavikt.minipavi.domain.model
+package fr.outadoc.pavikt.minipavi.model
 
-data class GatewayRequest<T : Any>(
+public data class GatewayRequest<T : Any>(
     val payload: Payload<T>,
     /**
      * Tableau associatif contenant les éventuels paramètres indiqués dans l'Url.
      */
     val urlParams: List<String>? = null,
 ) {
-    data class Payload<T : Any>(
+    public data class Payload<T : Any>(
         /**
          * Version de la passerelle.
          */
@@ -60,14 +60,14 @@ data class GatewayRequest<T : Any>(
         val function: Function
     )
 
-    enum class SocketType {
+    public enum class SocketType {
         WebSocket,
         WebSocketSSL,
         Asterisk,
         Telnet,
     }
 
-    enum class Function {
+    public enum class Function {
         ENVOI,
         SUITE,
         RETOUR,

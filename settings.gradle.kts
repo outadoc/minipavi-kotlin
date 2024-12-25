@@ -30,6 +30,5 @@ dependencyResolutionManagement {
 }
 
 include(":minipavi")
-include(":minipavi-ktor")
 include(":server")
 include(":videotex")
