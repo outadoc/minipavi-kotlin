@@ -24,7 +24,7 @@ internal data class ServiceResponseDTO(
     val content: ByteString,
 
     @SerialName("echo")
-    val echo: CommandDTO.OnOff,
+    val echo: Command.OnOff,
 
     @SerialName("directcall")
     val directCall: DirectCallSetting = DirectCallSetting.NO,
@@ -33,7 +33,7 @@ internal data class ServiceResponseDTO(
     val nextUrl: String,
 
     @SerialName("COMMAND")
-    val command: CommandDTO?,
+    val command: Command?,
 ) {
     @Serializable
     internal enum class DirectCallSetting {
@@ -46,289 +46,289 @@ internal data class ServiceResponseDTO(
         @SerialName("yes-cnx")
         YES_CNX
     }
-}
 
-@OptIn(ExperimentalSerializationApi::class)
-@Serializable
-@JsonClassDiscriminator("name")
-internal sealed interface CommandDTO {
-
+    @OptIn(ExperimentalSerializationApi::class)
     @Serializable
-    @SerialName("InputTxt")
-    data class InputText(
-        @SerialName("param")
-        val params: Params,
-    ) : CommandDTO {
+    @JsonClassDiscriminator("name")
+    internal sealed interface Command {
 
         @Serializable
-        internal data class Params(
+        @SerialName("InputTxt")
+        data class InputText(
+            @SerialName("param")
+            val params: Params,
+        ) : Command {
 
-            @SerialName("x")
-            val x: Int,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("y")
-            val y: Int,
+                @SerialName("x")
+                val x: Int,
 
-            @SerialName("l")
-            val length: Int,
+                @SerialName("y")
+                val y: Int,
 
-            @SerialName("char")
-            val char: String,
+                @SerialName("l")
+                val length: Int,
 
-            @SerialName("spacechar")
-            val spaceChar: String,
+                @SerialName("char")
+                val char: String,
 
-            @SerialName("prefill")
-            val prefill: String,
+                @SerialName("spacechar")
+                val spaceChar: String,
 
-            @SerialName("cursor")
-            val cursor: OnOff,
+                @SerialName("prefill")
+                val prefill: String,
 
-            @SerialName("validwith")
-            @Serializable(with = FunctionKeySetSerializer::class)
-            val submitWith: Set<FunctionKey>,
-        )
-    }
+                @SerialName("cursor")
+                val cursor: OnOff,
 
-    @Serializable
-    @SerialName("InputMsg")
-    data class InputMessage(
-        @SerialName("param")
-        val params: Params,
-    ) : CommandDTO {
-
-        @Serializable
-        internal data class Params(
-
-            @SerialName("x")
-            val x: Int,
-
-            @SerialName("y")
-            val y: Int,
-
-            @SerialName("w")
-            val width: Int,
-
-            @SerialName("h")
-            val height: Int,
-
-            @SerialName("spacechar")
-            val spaceChar: String,
-
-            @SerialName("prefill")
-            val prefill: List<String>,
-
-            @SerialName("cursor")
-            val cursor: OnOff,
-
-            @SerialName("validwith")
-            @Serializable(with = FunctionKeySetSerializer::class)
-            val submitWith: Set<FunctionKey>,
-        )
-    }
-
-    @Serializable
-    @SerialName("InputForm")
-    data class InputForm(
-        @SerialName("param")
-        val params: Params,
-    ) : CommandDTO {
+                @SerialName("validwith")
+                @Serializable(with = FunctionKeySetSerializer::class)
+                val submitWith: Set<FunctionKey>,
+            )
+        }
 
         @Serializable
-        internal data class Params(
+        @SerialName("InputMsg")
+        data class InputMessage(
+            @SerialName("param")
+            val params: Params,
+        ) : Command {
 
-            @SerialName("x")
-            val x: List<Int>,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("y")
-            val y: List<Int>,
+                @SerialName("x")
+                val x: Int,
 
-            @SerialName("l")
-            val length: List<Int>,
+                @SerialName("y")
+                val y: Int,
 
-            @SerialName("spacechar")
-            val spaceChar: String,
+                @SerialName("w")
+                val width: Int,
 
-            @SerialName("prefill")
-            val prefill: List<String>,
+                @SerialName("h")
+                val height: Int,
 
-            @SerialName("cursor")
-            val cursor: OnOff,
+                @SerialName("spacechar")
+                val spaceChar: String,
 
-            @SerialName("validwith")
-            @Serializable(with = FunctionKeySetSerializer::class)
-            val submitWith: Set<FunctionKey>,
-        )
-    }
+                @SerialName("prefill")
+                val prefill: List<String>,
 
-    @SerialName("libCnx")
-    @Serializable
-    data object Disconnect : CommandDTO
+                @SerialName("cursor")
+                val cursor: OnOff,
 
-    @Serializable
-    @SerialName("PushServiceMsg")
-    data class PushServiceMessage(
-        @SerialName("param")
-        val params: Params,
-    ) : CommandDTO {
-
-        @Serializable
-        internal data class Params(
-
-            @SerialName("uniqueid")
-            val uniqueIds: List<String>,
-
-            @SerialName("message")
-            val message: List<String>,
-        )
-    }
-
-    @Serializable
-    @SerialName("BackgroundCall")
-    data class BackgroundCall(
-        @SerialName("param")
-        val params: Params
-    ) : CommandDTO {
+                @SerialName("validwith")
+                @Serializable(with = FunctionKeySetSerializer::class)
+                val submitWith: Set<FunctionKey>,
+            )
+        }
 
         @Serializable
-        internal data class Params(
+        @SerialName("InputForm")
+        data class InputForm(
+            @SerialName("param")
+            val params: Params,
+        ) : Command {
 
-            @SerialName("time")
-            @Serializable(with = InstantUnixEpochSerializer::class)
-            val sendAt: Instant,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("simulate")
-            val simulate: Boolean,
+                @SerialName("x")
+                val x: List<Int>,
 
-            @SerialName("uniqueid")
-            val uniqueIds: List<String>,
+                @SerialName("y")
+                val y: List<Int>,
 
-            @SerialName("url")
-            val url: String,
-        )
-    }
+                @SerialName("l")
+                val length: List<Int>,
 
-    @Serializable
-    @SerialName("connectToWs")
-    data class ConnectToWebSocket(
-        @SerialName("param")
-        val params: Params
-    ) : CommandDTO {
+                @SerialName("spacechar")
+                val spaceChar: String,
+
+                @SerialName("prefill")
+                val prefill: List<String>,
+
+                @SerialName("cursor")
+                val cursor: OnOff,
+
+                @SerialName("validwith")
+                @Serializable(with = FunctionKeySetSerializer::class)
+                val submitWith: Set<FunctionKey>,
+            )
+        }
+
+        @SerialName("libCnx")
+        @Serializable
+        data object Disconnect : Command
 
         @Serializable
-        internal data class Params(
+        @SerialName("PushServiceMsg")
+        data class PushServiceMessage(
+            @SerialName("param")
+            val params: Params,
+        ) : Command {
 
-            @SerialName("key")
-            val key: String,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("host")
-            val host: String,
+                @SerialName("uniqueid")
+                val uniqueIds: List<String>,
 
-            @SerialName("path")
-            val path: String?,
-
-            @SerialName("proto")
-            val proto: String?,
-
-            @SerialName("echo")
-            val echo: OnOff,
-
-            @SerialName("case")
-            val case: Case,
-        )
-    }
-
-    @Serializable
-    @SerialName("connectToTln")
-    data class ConnectToTelnet(
-        @SerialName("param")
-        val params: Params
-    ) : CommandDTO {
+                @SerialName("message")
+                val message: List<String>,
+            )
+        }
 
         @Serializable
-        internal data class Params(
+        @SerialName("BackgroundCall")
+        data class BackgroundCall(
+            @SerialName("param")
+            val params: Params
+        ) : Command {
 
-            @SerialName("key")
-            val key: String,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("host")
-            val host: String,
+                @SerialName("time")
+                @Serializable(with = InstantUnixEpochSerializer::class)
+                val sendAt: Instant,
 
-            @SerialName("echo")
-            val echo: OnOff,
+                @SerialName("simulate")
+                val simulate: Boolean,
 
-            @SerialName("case")
-            val case: Case,
+                @SerialName("uniqueid")
+                val uniqueIds: List<String>,
 
-            @SerialName("startseq")
-            val startSequence: String,
-        )
-    }
-
-    @Serializable
-    @SerialName("connectToExt")
-    data class ConnectToExt(
-        @SerialName("param")
-        val params: Params
-    ) : CommandDTO {
+                @SerialName("url")
+                val url: String,
+            )
+        }
 
         @Serializable
-        internal data class Params(
+        @SerialName("connectToWs")
+        data class ConnectToWebSocket(
+            @SerialName("param")
+            val params: Params
+        ) : Command {
 
-            @SerialName("key")
-            val key: String,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("number")
-            val telNumber: String,
+                @SerialName("key")
+                val key: String,
 
-            @SerialName("RX")
-            val rx: Int,
+                @SerialName("host")
+                val host: String,
 
-            @SerialName("TX")
-            val tx: Int
-        )
-    }
+                @SerialName("path")
+                val path: String?,
 
-    @Serializable
-    @SerialName("duplicateStream")
-    data class DuplicateStream(
-        @SerialName("param")
-        val params: Params
-    ) : CommandDTO {
+                @SerialName("proto")
+                val proto: String?,
+
+                @SerialName("echo")
+                val echo: OnOff,
+
+                @SerialName("case")
+                val case: Case,
+            )
+        }
 
         @Serializable
-        internal data class Params(
+        @SerialName("connectToTln")
+        data class ConnectToTelnet(
+            @SerialName("param")
+            val params: Params
+        ) : Command {
 
-            @SerialName("key")
-            val key: String,
+            @Serializable
+            internal data class Params(
 
-            @SerialName("uniqueid")
-            val uniqueId: String
-        )
-    }
+                @SerialName("key")
+                val key: String,
 
-    enum class OnOff {
-        @SerialName("on")
-        ON,
+                @SerialName("host")
+                val host: String,
 
-        @SerialName("off")
-        OFF
-    }
+                @SerialName("echo")
+                val echo: OnOff,
 
-    enum class Case {
-        @SerialName("upper")
-        UPPER,
+                @SerialName("case")
+                val case: Case,
 
-        @SerialName("lower")
-        LOWER
-    }
+                @SerialName("startseq")
+                val startSequence: String,
+            )
+        }
 
-    enum class FunctionKey(val value: Int) {
-        SOMMAIRE(1),
-        RETOUR(4),
-        REPETITION(8),
-        GUIDE(16),
-        SUITE(64),
-        ENVOI(128)
+        @Serializable
+        @SerialName("connectToExt")
+        data class ConnectToExt(
+            @SerialName("param")
+            val params: Params
+        ) : Command {
+
+            @Serializable
+            internal data class Params(
+
+                @SerialName("key")
+                val key: String,
+
+                @SerialName("number")
+                val telNumber: String,
+
+                @SerialName("RX")
+                val rx: Int,
+
+                @SerialName("TX")
+                val tx: Int
+            )
+        }
+
+        @Serializable
+        @SerialName("duplicateStream")
+        data class DuplicateStream(
+            @SerialName("param")
+            val params: Params
+        ) : Command {
+
+            @Serializable
+            internal data class Params(
+
+                @SerialName("key")
+                val key: String,
+
+                @SerialName("uniqueid")
+                val uniqueId: String
+            )
+        }
+
+        enum class OnOff {
+            @SerialName("on")
+            ON,
+
+            @SerialName("off")
+            OFF
+        }
+
+        enum class Case {
+            @SerialName("upper")
+            UPPER,
+
+            @SerialName("lower")
+            LOWER
+        }
+
+        enum class FunctionKey(val value: Int) {
+            SOMMAIRE(1),
+            RETOUR(4),
+            REPETITION(8),
+            GUIDE(16),
+            SUITE(64),
+            ENVOI(128)
+        }
     }
 }

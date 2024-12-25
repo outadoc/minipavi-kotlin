@@ -1,9 +1,7 @@
 package fr.outadoc.pavikt.minipavi.internal.data
 
-import fr.outadoc.pavikt.minipavi.internal.data.model.CommandDTO
 import fr.outadoc.pavikt.minipavi.internal.data.model.GatewayRequestDTO
 import fr.outadoc.pavikt.minipavi.internal.data.model.ServiceResponseDTO
-import fr.outadoc.pavikt.minipavi.model.Command
 import fr.outadoc.pavikt.minipavi.model.GatewayRequest
 import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import kotlinx.serialization.KSerializer
@@ -24,11 +22,11 @@ internal fun <T : Any> ServiceResponse<T>.mapToDTO(
     )
 }
 
-internal fun Command.mapToDTO(): CommandDTO {
+internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
     return when (this) {
-        is Command.BackgroundCall -> {
-            CommandDTO.BackgroundCall(
-                params = CommandDTO.BackgroundCall.Params(
+        is ServiceResponse.Command.BackgroundCall -> {
+            ServiceResponseDTO.Command.BackgroundCall(
+                params = ServiceResponseDTO.Command.BackgroundCall.Params(
                     sendAt = sendAt,
                     url = url,
                     simulate = simulate,
@@ -37,9 +35,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.ConnectToExt -> {
-            CommandDTO.ConnectToExt(
-                params = CommandDTO.ConnectToExt.Params(
+        is ServiceResponse.Command.ConnectToExt -> {
+            ServiceResponseDTO.Command.ConnectToExt(
+                params = ServiceResponseDTO.Command.ConnectToExt.Params(
                     key = key,
                     telNumber = telNumber,
                     rx = rx,
@@ -48,9 +46,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.ConnectToTelnet -> {
-            CommandDTO.ConnectToTelnet(
-                params = CommandDTO.ConnectToTelnet.Params(
+        is ServiceResponse.Command.ConnectToTelnet -> {
+            ServiceResponseDTO.Command.ConnectToTelnet(
+                params = ServiceResponseDTO.Command.ConnectToTelnet.Params(
                     host = host,
                     key = key,
                     echo = echo.mapToDTO(),
@@ -60,9 +58,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.ConnectToWebSocket -> {
-            CommandDTO.ConnectToWebSocket(
-                params = CommandDTO.ConnectToWebSocket.Params(
+        is ServiceResponse.Command.ConnectToWebSocket -> {
+            ServiceResponseDTO.Command.ConnectToWebSocket(
+                params = ServiceResponseDTO.Command.ConnectToWebSocket.Params(
                     key = key,
                     echo = echo.mapToDTO(),
                     case = case.mapToDTO(),
@@ -73,22 +71,22 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.Disconnect -> {
-            CommandDTO.Disconnect
+        is ServiceResponse.Command.Disconnect -> {
+            ServiceResponseDTO.Command.Disconnect
         }
 
-        is Command.DuplicateStream -> {
-            CommandDTO.DuplicateStream(
-                params = CommandDTO.DuplicateStream.Params(
+        is ServiceResponse.Command.DuplicateStream -> {
+            ServiceResponseDTO.Command.DuplicateStream(
+                params = ServiceResponseDTO.Command.DuplicateStream.Params(
                     key = key,
                     uniqueId = uniqueId
                 )
             )
         }
 
-        is Command.InputForm -> {
-            CommandDTO.InputForm(
-                params = CommandDTO.InputForm.Params(
+        is ServiceResponse.Command.InputForm -> {
+            ServiceResponseDTO.Command.InputForm(
+                params = ServiceResponseDTO.Command.InputForm.Params(
                     x = x,
                     y = y,
                     length = length,
@@ -100,9 +98,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.InputMessage -> {
-            CommandDTO.InputMessage(
-                params = CommandDTO.InputMessage.Params(
+        is ServiceResponse.Command.InputMessage -> {
+            ServiceResponseDTO.Command.InputMessage(
+                params = ServiceResponseDTO.Command.InputMessage.Params(
                     x = x,
                     y = y,
                     width = width,
@@ -115,9 +113,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.InputText -> {
-            CommandDTO.InputText(
-                params = CommandDTO.InputText.Params(
+        is ServiceResponse.Command.InputText -> {
+            ServiceResponseDTO.Command.InputText(
+                params = ServiceResponseDTO.Command.InputText.Params(
                     x = x,
                     y = y,
                     length = length,
@@ -130,9 +128,9 @@ internal fun Command.mapToDTO(): CommandDTO {
             )
         }
 
-        is Command.PushServiceMessage -> {
-            CommandDTO.PushServiceMessage(
-                params = CommandDTO.PushServiceMessage.Params(
+        is ServiceResponse.Command.PushServiceMessage -> {
+            ServiceResponseDTO.Command.PushServiceMessage(
+                params = ServiceResponseDTO.Command.PushServiceMessage.Params(
                     uniqueIds = uniqueIds,
                     message = message
                 )
@@ -141,29 +139,29 @@ internal fun Command.mapToDTO(): CommandDTO {
     }
 }
 
-internal fun Command.FunctionKey.mapToDTO(): CommandDTO.FunctionKey {
+internal fun ServiceResponse.Command.FunctionKey.mapToDTO(): ServiceResponseDTO.Command.FunctionKey {
     return when (this) {
-        Command.FunctionKey.SOMMAIRE -> CommandDTO.FunctionKey.SOMMAIRE
-        Command.FunctionKey.RETOUR -> CommandDTO.FunctionKey.RETOUR
-        Command.FunctionKey.REPETITION -> CommandDTO.FunctionKey.REPETITION
-        Command.FunctionKey.GUIDE -> CommandDTO.FunctionKey.GUIDE
-        Command.FunctionKey.SUITE -> CommandDTO.FunctionKey.SUITE
-        Command.FunctionKey.ENVOI -> CommandDTO.FunctionKey.ENVOI
+        ServiceResponse.Command.FunctionKey.SOMMAIRE -> ServiceResponseDTO.Command.FunctionKey.SOMMAIRE
+        ServiceResponse.Command.FunctionKey.RETOUR -> ServiceResponseDTO.Command.FunctionKey.RETOUR
+        ServiceResponse.Command.FunctionKey.REPETITION -> ServiceResponseDTO.Command.FunctionKey.REPETITION
+        ServiceResponse.Command.FunctionKey.GUIDE -> ServiceResponseDTO.Command.FunctionKey.GUIDE
+        ServiceResponse.Command.FunctionKey.SUITE -> ServiceResponseDTO.Command.FunctionKey.SUITE
+        ServiceResponse.Command.FunctionKey.ENVOI -> ServiceResponseDTO.Command.FunctionKey.ENVOI
     }
 }
 
-internal fun Command.Case.mapToDTO(): CommandDTO.Case {
+internal fun ServiceResponse.Command.Case.mapToDTO(): ServiceResponseDTO.Command.Case {
     return when (this) {
-        Command.Case.LOWER -> CommandDTO.Case.LOWER
-        Command.Case.UPPER -> CommandDTO.Case.UPPER
+        ServiceResponse.Command.Case.LOWER -> ServiceResponseDTO.Command.Case.LOWER
+        ServiceResponse.Command.Case.UPPER -> ServiceResponseDTO.Command.Case.UPPER
     }
 }
 
-internal fun Boolean.mapToDTO(): CommandDTO.OnOff {
+internal fun Boolean.mapToDTO(): ServiceResponseDTO.Command.OnOff {
     return if (this) {
-        CommandDTO.OnOff.ON
+        ServiceResponseDTO.Command.OnOff.ON
     } else {
-        CommandDTO.OnOff.OFF
+        ServiceResponseDTO.Command.OnOff.OFF
     }
 }
 
