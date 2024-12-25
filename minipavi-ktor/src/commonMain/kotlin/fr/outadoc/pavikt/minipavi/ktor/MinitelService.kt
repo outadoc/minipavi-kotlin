@@ -9,7 +9,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-public inline fun <reified T : Any> Route.minitelApp(
+public inline fun <reified T : Any> Route.minitelService(
     path: String = "/",
     version: String,
     initialState: T,
