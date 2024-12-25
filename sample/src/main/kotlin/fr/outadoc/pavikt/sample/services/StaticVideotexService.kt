@@ -30,6 +30,9 @@ private val sampleFiles =
         "tux.vdt",
     )
 
+/**
+ * Un service qui affiche tous les exemples de fichiers vidéotex en boucle.
+ */
 fun Application.staticSampleVdt() {
     minitelService<StaticSampleVdtState>(
         path = "/",

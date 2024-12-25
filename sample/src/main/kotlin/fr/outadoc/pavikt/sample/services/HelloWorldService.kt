@@ -25,7 +25,7 @@ sealed interface HelloWorldState {
 }
 
 /**
- * A simple service that displays multiple pages of text and demonstrates user input.
+ * Un service qui affiche plusieurs pages de texte formaté et démontre la saisie de texte.
  */
 fun Application.helloWorld() {
     minitelService<HelloWorldState>(
