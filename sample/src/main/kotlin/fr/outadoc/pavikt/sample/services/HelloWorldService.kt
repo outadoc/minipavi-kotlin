@@ -13,27 +13,30 @@ import kotlinx.serialization.Serializable
 sealed interface HelloWorldState {
     @Serializable
     @SerialName("intro")
-    data object Intro : HelloWorldState
+    data object IntroPage : HelloWorldState
 
     @Serializable
-    @SerialName("text")
-    data object Text : HelloWorldState
+    @SerialName("textColor")
+    data object TextColorPage : HelloWorldState
 
     @Serializable
-    @SerialName("background")
-    data object Background : HelloWorldState
+    @SerialName("textFormat")
+    data object TextFormatPage : HelloWorldState
 }
 
+/**
+ * A simple service that displays multiple pages of text and demonstrates user input.
+ */
 fun Application.helloWorld() {
     minitelService<HelloWorldState>(
         path = "/",
         version = "0.1",
-        initialState = HelloWorldState.Intro,
+        initialState = HelloWorldState.IntroPage,
     ) { request ->
         when (request.payload.state) {
-            HelloWorldState.Intro -> {
+            HelloWorldState.IntroPage -> {
                 ServiceResponse(
-                    state = HelloWorldState.Text,
+                    state = HelloWorldState.TextColorPage,
                     content =
                         buildVideotex {
                             clearAll()
@@ -67,9 +70,9 @@ fun Application.helloWorld() {
                 )
             }
 
-            HelloWorldState.Text -> {
+            HelloWorldState.TextColorPage -> {
                 ServiceResponse(
-                    state = HelloWorldState.Background,
+                    state = HelloWorldState.TextFormatPage,
                     command =
                         ServiceResponse.Command.InputForm(
                             x = listOf(1),
@@ -100,9 +103,9 @@ fun Application.helloWorld() {
                 )
             }
 
-            HelloWorldState.Background -> {
+            HelloWorldState.TextFormatPage -> {
                 ServiceResponse(
-                    state = HelloWorldState.Intro,
+                    state = HelloWorldState.IntroPage,
                     content =
                         buildVideotex {
                             clearAll()
