@@ -16,6 +16,7 @@ application {
 }
 
 dependencies {
+    implementation(projects.minipavi)
     implementation(projects.videotex)
 
     implementation(libs.logback)
