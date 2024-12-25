@@ -1,4 +1,4 @@
-rootProject.name = "pavikt"
+rootProject.name = "minipavi-kotlin"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
