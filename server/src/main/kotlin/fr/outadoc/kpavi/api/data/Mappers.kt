@@ -25,10 +25,10 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.BackgroundCall -> {
             CommandDTO.BackgroundCall(
                 params = CommandDTO.BackgroundCall.Params(
-                    sendAt = params.sendAt,
-                    url = params.url,
-                    simulate = params.simulate,
-                    uniqueIds = params.uniqueIds
+                    sendAt = sendAt,
+                    url = url,
+                    simulate = simulate,
+                    uniqueIds = uniqueIds
                 )
             )
         }
@@ -36,10 +36,10 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.ConnectToExt -> {
             CommandDTO.ConnectToExt(
                 params = CommandDTO.ConnectToExt.Params(
-                    key = params.key,
-                    telNumber = params.telNumber,
-                    rx = params.rx,
-                    tx = params.tx
+                    key = key,
+                    telNumber = telNumber,
+                    rx = rx,
+                    tx = tx
                 )
             )
         }
@@ -47,11 +47,11 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.ConnectToTelnet -> {
             CommandDTO.ConnectToTelnet(
                 params = CommandDTO.ConnectToTelnet.Params(
-                    host = params.host,
-                    key = params.key,
-                    echo = params.echo.mapToDTO(),
-                    case = params.case.mapToDTO(),
-                    startSequence = params.startSequence,
+                    host = host,
+                    key = key,
+                    echo = echo.mapToDTO(),
+                    case = case.mapToDTO(),
+                    startSequence = startSequence,
                 )
             )
         }
@@ -59,12 +59,12 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.ConnectToWebSocket -> {
             CommandDTO.ConnectToWebSocket(
                 params = CommandDTO.ConnectToWebSocket.Params(
-                    key = params.key,
-                    echo = params.echo.mapToDTO(),
-                    case = params.case.mapToDTO(),
-                    host = params.host,
-                    path = params.path,
-                    proto = params.proto,
+                    key = key,
+                    echo = echo.mapToDTO(),
+                    case = case.mapToDTO(),
+                    host = host,
+                    path = path,
+                    proto = proto,
                 )
             )
         }
@@ -76,8 +76,8 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.DuplicateStream -> {
             CommandDTO.DuplicateStream(
                 params = CommandDTO.DuplicateStream.Params(
-                    key = params.key,
-                    uniqueId = params.uniqueId
+                    key = key,
+                    uniqueId = uniqueId
                 )
             )
         }
@@ -85,13 +85,13 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.InputForm -> {
             CommandDTO.InputForm(
                 params = CommandDTO.InputForm.Params(
-                    x = params.x,
-                    y = params.y,
-                    length = params.length,
-                    spaceChar = params.spaceChar,
-                    prefill = params.prefill,
-                    cursor = params.cursor.mapToDTO(),
-                    submitWith = params.submitWith.map { it.mapToDTO() }.toSet()
+                    x = x,
+                    y = y,
+                    length = length,
+                    spaceChar = spaceChar,
+                    prefill = prefill,
+                    cursor = cursor.mapToDTO(),
+                    submitWith = submitWith.map { it.mapToDTO() }.toSet()
                 )
             )
         }
@@ -99,14 +99,14 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.InputMessage -> {
             CommandDTO.InputMessage(
                 params = CommandDTO.InputMessage.Params(
-                    x = params.x,
-                    y = params.y,
-                    width = params.width,
-                    height = params.height,
-                    spaceChar = params.spaceChar,
-                    prefill = params.prefill,
-                    cursor = params.cursor.mapToDTO(),
-                    submitWith = params.submitWith.map { it.mapToDTO() }.toSet()
+                    x = x,
+                    y = y,
+                    width = width,
+                    height = height,
+                    spaceChar = spaceChar,
+                    prefill = prefill,
+                    cursor = cursor.mapToDTO(),
+                    submitWith = submitWith.map { it.mapToDTO() }.toSet()
                 )
             )
         }
@@ -114,14 +114,14 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.InputText -> {
             CommandDTO.InputText(
                 params = CommandDTO.InputText.Params(
-                    x = params.x,
-                    y = params.y,
-                    length = params.length,
-                    char = params.char,
-                    spaceChar = params.spaceChar,
-                    prefill = params.prefill,
-                    cursor = params.cursor.mapToDTO(),
-                    submitWith = params.submitWith.map { it.mapToDTO() }.toSet()
+                    x = x,
+                    y = y,
+                    length = length,
+                    char = char,
+                    spaceChar = spaceChar,
+                    prefill = prefill,
+                    cursor = cursor.mapToDTO(),
+                    submitWith = submitWith.map { it.mapToDTO() }.toSet()
                 )
             )
         }
@@ -129,8 +129,8 @@ fun Command.mapToDTO(): CommandDTO {
         is Command.PushServiceMessage -> {
             CommandDTO.PushServiceMessage(
                 params = CommandDTO.PushServiceMessage.Params(
-                    uniqueIds = params.uniqueIds,
-                    message = params.message
+                    uniqueIds = uniqueIds,
+                    message = message
                 )
             )
         }
