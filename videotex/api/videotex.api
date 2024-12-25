@@ -61,6 +61,7 @@ public final class fr/outadoc/pavikt/videotex/VideotexBuilder {
 	public final fun moveCursorRelative (Lfr/outadoc/pavikt/videotex/CursorDirection;)V
 	public final fun moveCursorTo (II)V
 	public final fun repeatChar (CI)V
+	public final fun resetCharacterSets ()V
 	public final fun setLocalEcho (Z)V
 	public final fun showCursor (Z)V
 	public final fun withBackgroundColor (Lfr/outadoc/pavikt/videotex/BackgroundColor;Lkotlin/jvm/functions/Function1;)V

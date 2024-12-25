@@ -3,6 +3,7 @@ package fr.outadoc.pavikt.sample.services
 import fr.outadoc.pavikt.minipavi.ktor.minitelService
 import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.sample.utils.readResource
+import fr.outadoc.pavikt.videotex.buildVideotex
 import io.ktor.server.application.Application
 import kotlinx.serialization.Serializable
 
@@ -26,7 +27,6 @@ private val sampleFiles =
         "minitel-rulez.vdt",
         "minitel-wants-you.vdt",
         "mitterrand.vdt",
-        "teletext.vdt",
         "tux.vdt",
     )
 
@@ -42,7 +42,19 @@ fun Application.staticSampleVdt() {
         val state = request.payload.state
         val file = sampleFiles[state.iter % sampleFiles.size]
         ServiceResponse(
-            content = readResource("/static/$file"),
+            content =
+                buildVideotex {
+                    clearStatus()
+                    resetCharacterSets()
+
+                    appendRawVideotex(
+                        readResource("/static/$file"),
+                    )
+
+                    moveCursorTo(1, 0)
+                    resetCharacterSets()
+                    append("> $file")
+                },
             state =
                 state.copy(
                     iter = state.iter + 1,

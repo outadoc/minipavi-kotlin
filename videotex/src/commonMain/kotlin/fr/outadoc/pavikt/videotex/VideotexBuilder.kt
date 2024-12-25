@@ -72,6 +72,10 @@ public class VideotexBuilder internal constructor() {
         bs.append(VdtConstants.VDT_CLRLN)
     }
 
+    public fun resetCharacterSets() {
+        bs.append(VdtConstants.VDT_RESET_DRCS)
+    }
+
     /**
      * Repeats a character a specified number of times.
      *
