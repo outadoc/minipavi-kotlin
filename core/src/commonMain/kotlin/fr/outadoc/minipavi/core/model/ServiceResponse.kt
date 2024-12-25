@@ -7,12 +7,13 @@ import kotlinx.io.bytestring.ByteString
 public data class ServiceResponse<T : Any>(
 
     /**
-     * Données libres qui seront renvoyées inchangées par la suite par la passerelle
+     * Données libres qui seront renvoyées inchangées par la suite par la passerelle.
      */
     val state: T,
 
     /**
-     * Le contenu de la page videotex à afficher, encodée en Base 64
+     * Le contenu de la page Vidéotex à afficher.
+     * Se référer au module `videotex` pour la construction de ce contenu.
      */
     val content: ByteString,
 
