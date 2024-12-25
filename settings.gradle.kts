@@ -1,4 +1,5 @@
-rootProject.name = "kpavi"
+rootProject.name = "pavikt"
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -29,3 +30,4 @@ dependencyResolutionManagement {
 }
 
 include(":server")
+include(":videotex")
