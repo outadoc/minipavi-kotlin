@@ -29,6 +29,6 @@ dependencyResolutionManagement {
     }
 }
 
-include(":minipavi")
+include(":core")
 include(":videotex")
 include(":sample")

@@ -8,7 +8,7 @@ créer une page Videotex en Kotlin.
 Le point d'entrée recommandé est la fonction `buildVideotex` :
 
 ```kotlin
-import fr.outadoc.pavikt.videotex.buildVideotex
+import fr.outadoc.minipavi.videotex.buildVideotex
 
 val videotex = buildVideotex {
     appendLine("Bonjour le monde !")
@@ -18,7 +18,7 @@ val videotex = buildVideotex {
 Vous pouvez appliquer des effets de style grâce aux fonctions `with*`
 
 ```kotlin
-import fr.outadoc.pavikt.videotex.buildVideotex
+import fr.outadoc.minipavi.videotex.buildVideotex
 
 val videotex = buildVideotex {
     withUnderline {
@@ -30,7 +30,7 @@ val videotex = buildVideotex {
 Ces fonctions sont imbriquables. Cet exemple produit un texte clignotant et souligné :
 
 ```kotlin
-import fr.outadoc.pavikt.videotex.buildVideotex
+import fr.outadoc.minipavi.videotex.buildVideotex
 
 val videotex = buildVideotex {
     withUnderline {

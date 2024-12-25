@@ -88,8 +88,8 @@ sealed class Etat {
 Une fois que vous avez votre état, vous pouvez commencer à définir votre service.
 
 ```kotlin
-import fr.outadoc.pavikt.minipavi.ktor.minitelService
-import fr.outadoc.pavikt.minipavi.model.ServiceResponse
+import fr.outadoc.minipavi.core.ktor.minitelService
+import fr.outadoc.minipavi.core.model.ServiceResponse
 import io.ktor.server.application.Application
 
 fun Application.module() {
@@ -115,9 +115,9 @@ Ktor.
 Il ne vous reste plus qu'à construire votre réponse, en renvoyant une `ServiceResponse` :
 
 ```kotlin
-import fr.outadoc.pavikt.minipavi.ktor.minitelService
-import fr.outadoc.pavikt.minipavi.model.ServiceResponse
-import fr.outadoc.pavikt.videotex.buildVideotex
+import fr.outadoc.minipavi.core.ktor.minitelService
+import fr.outadoc.minipavi.core.model.ServiceResponse
+import fr.outadoc.minipavi.videotex.buildVideotex
 import io.ktor.server.application.Application
 import kotlinx.serialization.Serializable
 

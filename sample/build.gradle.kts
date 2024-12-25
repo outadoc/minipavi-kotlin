@@ -6,18 +6,18 @@ plugins {
     application
 }
 
-group = "fr.outadoc.pavikt"
+group = "fr.outadoc.minipavi"
 version = "1.0.0"
 
 application {
-    mainClass.set("fr.outadoc.pavikt.sample.ApplicationKt")
+    mainClass.set("fr.outadoc.minipavi.sample.ApplicationKt")
     applicationDefaultJvmArgs = listOf(
         "-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}"
     )
 }
 
 dependencies {
-    implementation(projects.minipavi)
+    implementation(projects.core)
     implementation(projects.videotex)
 
     implementation(libs.logback)
