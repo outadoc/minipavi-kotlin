@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization) apply false
     alias(libs.plugins.kotlin.binaryCompatibilityValidator) apply false
     alias(libs.plugins.ktor) apply false
+    alias(libs.plugins.spotless) apply false
 
     alias(libs.plugins.dokka)
 }

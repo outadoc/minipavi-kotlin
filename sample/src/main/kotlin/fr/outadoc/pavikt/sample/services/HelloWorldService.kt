@@ -6,13 +6,12 @@ import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.videotex.CharacterSize
 import fr.outadoc.pavikt.videotex.TextColor
 import fr.outadoc.pavikt.videotex.buildVideotex
-import io.ktor.server.application.*
+import io.ktor.server.application.Application
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 sealed interface HelloWorldState {
-
     @Serializable
     @SerialName("intro")
     data object Intro : HelloWorldState
@@ -36,105 +35,109 @@ fun Application.helloWorld() {
             HelloWorldState.Intro -> {
                 ServiceResponse(
                     state = HelloWorldState.Text,
-                    content = buildVideotex {
-                        clearAll()
-                        appendLine()
+                    content =
+                        buildVideotex {
+                            clearAll()
+                            appendLine()
 
-                        withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
-                            appendLine(" Bonjour le monde !")
-                        }
-                        appendLine()
+                            withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                                appendLine(" Bonjour le monde !")
+                            }
+                            appendLine()
 
-                        append(" Vous êtes ")
-                        withTextColor(TextColor.RED) {
-                            appendLine(request.payload.sessionId)
-                        }
+                            append(" Vous êtes ")
+                            withTextColor(TextColor.RED) {
+                                appendLine(request.payload.sessionId)
+                            }
 
-                        append(" ou ")
-                        withTextColor(TextColor.GREEN) {
-                            appendLine(request.payload.remoteAddress)
-                        }
+                            append(" ou ")
+                            withTextColor(TextColor.GREEN) {
+                                appendLine(request.payload.remoteAddress)
+                            }
 
-                        append(" Connecté.e via ")
-                        withTextColor(TextColor.BLUE) {
-                            appendLine(request.payload.socketType.toString())
-                        }
+                            append(" Connecté.e via ")
+                            withTextColor(TextColor.BLUE) {
+                                appendLine(request.payload.socketType.toString())
+                            }
 
-                        append(" À l'aide d'un Minitel ")
-                        withTextColor(TextColor.YELLOW) {
-                            appendLine(request.payload.minitelVersion)
-                        }
-                    },
+                            append(" À l'aide d'un Minitel ")
+                            withTextColor(TextColor.YELLOW) {
+                                appendLine(request.payload.minitelVersion)
+                            }
+                        },
                 )
             }
 
             HelloWorldState.Text -> {
                 ServiceResponse(
                     state = HelloWorldState.Background,
-                    command = Command.InputForm(
-                        x = listOf(1),
-                        y = listOf(19),
-                        length = listOf(30),
-                    ),
-                    content = buildVideotex {
-                        clearAll()
+                    command =
+                        Command.InputForm(
+                            x = listOf(1),
+                            y = listOf(19),
+                            length = listOf(30),
+                        ),
+                    content =
+                        buildVideotex {
+                            clearAll()
 
-                        TextColor.entries.forEach { color ->
-                            withTextColor(color) {
-                                appendLine("Texte en ${color.name}")
-                            }
-                        }
-
-                        withInvertedBackground {
                             TextColor.entries.forEach { color ->
                                 withTextColor(color) {
                                     appendLine("Texte en ${color.name}")
                                 }
                             }
-                        }
 
-                        appendLine()
-                        appendLine("Test de l'entrée utilisateur :")
-                    },
+                            withInvertedBackground {
+                                TextColor.entries.forEach { color ->
+                                    withTextColor(color) {
+                                        appendLine("Texte en ${color.name}")
+                                    }
+                                }
+                            }
+
+                            appendLine()
+                            appendLine("Test de l'entrée utilisateur :")
+                        },
                 )
             }
 
             HelloWorldState.Background -> {
                 ServiceResponse(
                     state = HelloWorldState.Intro,
-                    content = buildVideotex {
-                        clearAll()
+                    content =
+                        buildVideotex {
+                            clearAll()
 
-                        withBlink {
-                            appendLine(" Texte clignotant")
-                        }
+                            withBlink {
+                                appendLine(" Texte clignotant")
+                            }
 
-                        withUnderline {
-                            appendLine(" Texte souligné")
-                        }
+                            withUnderline {
+                                appendLine(" Texte souligné")
+                            }
 
-                        appendLine()
+                            appendLine()
 
-                        withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
-                            appendLine(" Tall boi")
-                        }
+                            withCharacterSize(CharacterSize.DOUBLE_HEIGHT) {
+                                appendLine(" Tall boi")
+                            }
 
-                        withCharacterSize(CharacterSize.DOUBLE_WIDTH) {
-                            appendLine(" Long boi")
-                        }
+                            withCharacterSize(CharacterSize.DOUBLE_WIDTH) {
+                                appendLine(" Long boi")
+                            }
 
-                        appendLine()
+                            appendLine()
 
-                        withCharacterSize(CharacterSize.DOUBLE_SIZE) {
-                            appendLine(" Big boi")
-                        }
+                            withCharacterSize(CharacterSize.DOUBLE_SIZE) {
+                                appendLine(" Big boi")
+                            }
 
-                        appendLine()
-                        appendLine("Entrée utilisateur : ")
-                        request.payload.userInput.forEach { line ->
-                            appendLine(line)
-                        }
-                    },
+                            appendLine()
+                            appendLine("Entrée utilisateur : ")
+                            request.payload.userInput.forEach { line ->
+                                appendLine(line)
+                            }
+                        },
                 )
             }
         }

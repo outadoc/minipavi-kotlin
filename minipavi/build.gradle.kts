@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.binaryCompatibilityValidator)
+    alias(libs.plugins.spotless)
 }
 
 group = "fr.outadoc.pavikt"
@@ -37,5 +38,11 @@ kotlin {
                 implementation(libs.kotlin.test.junit)
             }
         }
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint()
     }
 }

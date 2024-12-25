@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.spotless)
     application
 }
 
@@ -23,4 +24,10 @@ dependencies {
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.kotlinx.serialization.json)
+}
+
+spotless {
+    kotlin {
+        ktlint()
+    }
 }

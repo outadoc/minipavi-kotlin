@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlin.binaryCompatibilityValidator)
+    alias(libs.plugins.spotless)
 }
 
 group = "fr.outadoc.pavikt"
@@ -24,5 +25,11 @@ kotlin {
                 implementation(libs.kotlinx.io)
             }
         }
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint()
     }
 }
