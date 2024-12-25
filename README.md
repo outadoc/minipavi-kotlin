@@ -13,9 +13,14 @@ MiniPavi, et permettre à mes ami·e·s développeur·euse·s Kotlin de créer d
 Vous trouverez donc ici le résultat de ces efforts : un SDK Kotlin pour MiniPavi, vous permettant **enfin** d'allier vos
 compétences en Kotlin et votre amour pour le GiscardPunk.
 
-## Non mais, pourquoi ?
+### Non mais, pourquoi ?
 
-Pourquoi pas.
+Pourquoi pas ?
+
+## Services d'exemple
+
+Vous pouvez consulter le contenu du module [`sample`](sample) pour voir comment utiliser le SDK à l'aide d'exemples
+concrets.
 
 ## Utilisation du SDK
 
@@ -126,11 +131,6 @@ Vous pouvez y ajouter du texte, des couleurs, des caractères spéciaux, etc.
 Elle est disponible dans le module `videotex`.
 
 Et voilà. Plus qu'à lancer votre serveur, et à le connecter à MiniPavi. 🎉
-
-## Services d'exemple
-
-Vous pouvez consulter le contenu du module [`sample`](sample) pour voir comment utiliser le SDK à l'aide d'exemples
-concrets.
 
 [1]: https://fr.wikipedia.org/wiki/Minitel
 
