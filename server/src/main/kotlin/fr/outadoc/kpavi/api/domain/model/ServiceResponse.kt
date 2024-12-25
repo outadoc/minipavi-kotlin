@@ -1,9 +1,8 @@
 package fr.outadoc.kpavi.api.domain.model
 
+import fr.outadoc.kpavi.api.domain.model.ServiceResponse.DirectCallSetting
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.JsonClassDiscriminator
 
 data class ServiceResponse<T : Any>(
 
@@ -29,8 +28,8 @@ data class ServiceResponse<T : Any>(
      * Demande à la passerelle d'appeler immédiatement l'url indiquée par la clé
      * [next], sans attendre une action de l'utilisateur.
      *
-     * - Si la valeur est `yes`, l'appel au service aura la clé `fctn` à la valeur `DIRECT`.
-     * - Si la valeur est `yes-cnx`, l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
+     * - Si la valeur est [DirectCallSetting.YES], l'appel au service aura la clé `fctn` à la valeur `DIRECT`.
+     * - Si la valeur est [DirectCallSetting.YES_CNX], l'appel au service aura la clé `fctn` à la valeur `DIRECTCNX`.
      */
     val directCall: DirectCallSetting = DirectCallSetting.NO,
 
@@ -54,8 +53,6 @@ data class ServiceResponse<T : Any>(
     }
 }
 
-@OptIn(ExperimentalSerializationApi::class)
-@JsonClassDiscriminator("name")
 sealed interface Command {
 
     /**
@@ -415,13 +412,13 @@ sealed interface Command {
          * Niveau minimal en réception (en décibels)
          * (Ex : -35)
          */
-        val rx: String,
+        val rx: Int,
 
         /**
          * Niveau du signal transmis (en décibels)
          * (Ex : -30)
          */
-        val tx: String
+        val tx: Int
     ) : Command
 
     /**

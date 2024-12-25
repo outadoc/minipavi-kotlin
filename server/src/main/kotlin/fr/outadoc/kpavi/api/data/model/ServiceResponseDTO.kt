@@ -558,14 +558,14 @@ sealed interface CommandDTO {
              * (Ex : -35)
              */
             @SerialName("RX")
-            val rx: String,
+            val rx: Int,
 
             /**
              * Niveau du signal transmis (en décibels)
              * (Ex : -30)
              */
             @SerialName("TX")
-            val tx: String
+            val tx: Int
         )
     }
 
