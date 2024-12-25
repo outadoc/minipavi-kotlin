@@ -104,7 +104,7 @@ fun Command.mapToDTO(): CommandDTO {
                     width = width,
                     height = height,
                     spaceChar = spaceChar,
-                    prefill = prefill,
+                    prefill = initialValues,
                     cursor = cursor.mapToDTO(),
                     submitWith = submitWith.map { it.mapToDTO() }.toSet()
                 )
@@ -177,7 +177,7 @@ inline fun <reified T : Any> GatewayRequestDTO.mapToDomain(
     return GatewayRequest(
         payload = GatewayRequest.Payload(
             gatewayVersion = payload.version,
-            uniqueId = payload.uniqueId,
+            sessionId = payload.uniqueId,
             remoteAddress = payload.remoteAddress,
             socketType = payload.socketType.mapToDomain(),
             minitelVersion = payload.minitelVersion,

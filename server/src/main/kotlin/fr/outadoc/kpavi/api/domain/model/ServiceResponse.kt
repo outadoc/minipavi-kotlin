@@ -149,7 +149,7 @@ sealed interface Command {
          * Tableau contenant les valeurs de pré-remplissage de la zone de saisie.
          * Chaque élément du tableau représente une ligne.
          */
-        val prefill: List<String> = emptyList(),
+        val initialValues: List<String> = emptyList(),
 
         /**
          * Si `true`, le curseur sera visible, sinon `false`.
@@ -158,14 +158,15 @@ sealed interface Command {
 
         /**
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
-         * (par exemple la touche Envoi).
+         * (par exemple la touche [FunctionKey.ENVOI]).
          *
-         * Les touches Correction et Annulation ne peuvent être définies car
+         * Les touches Correction et Annulation ne peuvent être définies, car
          * gérées directement par la passerelle pour la correction de la saisie
          * par l'utilisateur.
-         * De même que les touches Suite et Retour gérées directement par la passerelle pour le changement de ligne dans la zone de saisie.
+         * De même que les touches Suite et Retour, gérées directement par la passerelle
+         * pour le changement de ligne dans la zone de saisie.
          *
-         * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
+         * Valeurs possibles :
          * - [FunctionKey.SOMMAIRE]
          * - [FunctionKey.REPETITION]
          * - [FunctionKey.GUIDE]
@@ -196,7 +197,7 @@ sealed interface Command {
         val spaceChar: String = ".",
 
         /**
-         * Tableau contenant les valeurs de pré-remplissage de chaque zones de saisie.
+         * Tableau contenant les valeurs de pré-remplissage de chaque zone de saisie.
          *
          * Chaque élément du tableau représente une zone de saisie.
          */
@@ -209,14 +210,15 @@ sealed interface Command {
 
         /**
          * Valeur indiquant les touches de fonctions possibles qui valideront la saisie
-         * (par exemple la touche Envoi).
+         * (par exemple la touche [FunctionKey.ENVOI]).
          *
-         * Les touches Correction et Annulation ne peuvent être définies car
+         * Les touches Correction et Annulation ne peuvent être définies, car
          * gérées directement par la passerelle pour la correction de la saisie
          * par l'utilisateur.
-         * De même que les touches Suite et Retour gérées directement par la passerelle pour le changement de ligne dans la zone de saisie.
+         * De même que les touches Suite et Retour, gérées directement par la passerelle
+         * pour le changement de ligne dans la zone de saisie.
          *
-         * La valeur indiquée est la somme des valeurs des touches de fonctions possibles :
+         * Valeurs possibles :
          * - [FunctionKey.SOMMAIRE]
          * - [FunctionKey.REPETITION]
          * - [FunctionKey.GUIDE]

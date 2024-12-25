@@ -19,7 +19,7 @@ data class GatewayRequest<T : Any>(
          * Les 4 derniers chiffres correspondent au code pin pour l'utilisation
          * de l'accès WebMedia.
          */
-        val uniqueId: String,
+        val sessionId: String,
 
         /**
          * Adresse IP (ou téléphone si connu) de

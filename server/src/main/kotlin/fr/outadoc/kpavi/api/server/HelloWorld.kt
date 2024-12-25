@@ -46,7 +46,7 @@ fun Route.helloWorld() {
 
                         append(" Vous êtes ")
                         withTextColor(TextColor.RED) {
-                            appendLine(request.payload.uniqueId)
+                            appendLine(request.payload.sessionId)
                         }
 
                         append(" ou ")
