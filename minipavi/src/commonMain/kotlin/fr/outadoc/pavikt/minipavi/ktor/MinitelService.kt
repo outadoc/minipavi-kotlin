@@ -17,6 +17,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
 @OptIn(InternalSerializationApi::class)
+@Suppress("DEPRECATION")
 public inline fun <reified T : Any> Application.minitelService(
     path: String,
     version: String,
@@ -32,6 +33,10 @@ public inline fun <reified T : Any> Application.minitelService(
     )
 }
 
+@Deprecated(
+    message = "Use the inline function instead.",
+    replaceWith = ReplaceWith("minitelService(path, version, initialState, block)"),
+)
 public fun <T : Any> Application.minitelService(
     path: String,
     version: String,
