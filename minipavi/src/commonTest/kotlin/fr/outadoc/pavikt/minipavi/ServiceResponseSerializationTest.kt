@@ -1,4 +1,4 @@
-package fr.outadoc.pavikt.api.data
+package fr.outadoc.pavikt.minipavi
 
 import fr.outadoc.pavikt.minipavi.internal.data.model.CommandDTO
 import fr.outadoc.pavikt.minipavi.internal.data.model.ServiceResponseDTO

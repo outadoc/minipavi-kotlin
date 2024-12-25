@@ -1,4 +1,4 @@
-package fr.outadoc.pavikt.server
+package fr.outadoc.pavikt.sample.utils
 
 import kotlinx.io.asSource
 import kotlinx.io.buffered

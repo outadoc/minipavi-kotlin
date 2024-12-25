@@ -1,4 +1,4 @@
-package fr.outadoc.pavikt.api.data
+package fr.outadoc.pavikt.minipavi
 
 import fr.outadoc.pavikt.minipavi.internal.data.model.GatewayRequestDTO
 import kotlinx.serialization.json.Json

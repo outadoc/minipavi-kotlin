@@ -24,6 +24,9 @@ kotlin {
                 implementation(libs.kotlinx.io)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.server.core)
+                implementation(libs.ktor.server.contentNegotiation)
+                implementation(libs.ktor.serialization.json)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 

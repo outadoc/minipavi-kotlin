@@ -1,8 +1,9 @@
-package fr.outadoc.pavikt.server
+package fr.outadoc.pavikt.sample.services
 
-import fr.outadoc.pavikt.minipavi.model.ServiceResponse
 import fr.outadoc.pavikt.minipavi.ktor.minitelService
-import io.ktor.server.routing.*
+import fr.outadoc.pavikt.minipavi.model.ServiceResponse
+import fr.outadoc.pavikt.sample.utils.readResource
+import io.ktor.server.application.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -28,7 +29,7 @@ private val sampleFiles = listOf(
     "tux.vdt",
 )
 
-fun Route.staticSampleVdt() {
+fun Application.staticSampleVdt() {
     minitelService<StaticSampleVdtState>(
         path = "/",
         version = "0.1",

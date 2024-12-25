@@ -1,12 +1,12 @@
-package fr.outadoc.pavikt.server
+package fr.outadoc.pavikt.sample.services
 
+import fr.outadoc.pavikt.minipavi.ktor.minitelService
 import fr.outadoc.pavikt.minipavi.model.Command
 import fr.outadoc.pavikt.minipavi.model.ServiceResponse
-import fr.outadoc.pavikt.minipavi.ktor.minitelService
 import fr.outadoc.pavikt.videotex.CharacterSize
 import fr.outadoc.pavikt.videotex.TextColor
 import fr.outadoc.pavikt.videotex.buildVideotex
-import io.ktor.server.routing.*
+import io.ktor.server.application.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,7 +26,7 @@ sealed interface HelloWorldState {
     data object Background : HelloWorldState
 }
 
-fun Route.helloWorld() {
+fun Application.helloWorld() {
     minitelService<HelloWorldState>(
         path = "/",
         version = "0.1",
