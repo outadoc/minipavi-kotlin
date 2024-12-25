@@ -11,7 +11,7 @@ import kotlinx.serialization.encoding.Encoder
 internal object InstantUnixEpochSerializer : KSerializer<Instant> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("Instant", PrimitiveKind.LONG)
+        PrimitiveSerialDescriptor("InstantUnixEpochSerializer", PrimitiveKind.LONG)
 
     override fun deserialize(decoder: Decoder): Instant =
         Instant.fromEpochSeconds(decoder.decodeLong())
