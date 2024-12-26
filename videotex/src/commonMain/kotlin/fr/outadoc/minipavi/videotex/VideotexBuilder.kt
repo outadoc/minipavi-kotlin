@@ -139,10 +139,10 @@ public class VideotexBuilder internal constructor() {
      * Applique une couleur de texte au bloc spécifié.
      */
     public fun withTextColor(
-        color: TextColor,
+        color: Color,
         block: VideotexBuilder.() -> Unit
     ) {
-        bs.append(color.code)
+        bs.append(color.textColorCode)
         block()
         bs.append(VdtConstants.VDT_TXTWHITE)
     }
@@ -151,10 +151,10 @@ public class VideotexBuilder internal constructor() {
      * Applique une couleur de fond au bloc spécifié.
      */
     public fun withBackgroundColor(
-        color: BackgroundColor,
+        color: Color,
         block: VideotexBuilder.() -> Unit
     ) {
-        bs.append(color.code)
+        bs.append(color.backgroundColorCode)
         block()
         bs.append(VdtConstants.VDT_BGTRANS)
     }

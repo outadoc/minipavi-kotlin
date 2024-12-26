@@ -3,7 +3,7 @@ package fr.outadoc.minipavi.sample.services
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.CharacterSize
-import fr.outadoc.minipavi.videotex.TextColor
+import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.buildVideotex
 import io.ktor.server.application.Application
 import kotlinx.serialization.SerialName
@@ -48,22 +48,22 @@ fun Application.helloWorld() {
                             appendLine()
 
                             append(" Vous êtes ")
-                            withTextColor(TextColor.Red) {
+                            withTextColor(Color.Red) {
                                 appendLine(request.payload.sessionId)
                             }
 
                             append(" ou ")
-                            withTextColor(TextColor.Green) {
+                            withTextColor(Color.Green) {
                                 appendLine(request.payload.remoteAddress)
                             }
 
                             append(" Connecté.e via ")
-                            withTextColor(TextColor.Blue) {
+                            withTextColor(Color.Blue) {
                                 appendLine(request.payload.socketType.toString())
                             }
 
                             append(" À l'aide d'un Minitel ")
-                            withTextColor(TextColor.Yellow) {
+                            withTextColor(Color.Yellow) {
                                 appendLine(request.payload.minitelVersion)
                             }
                         },
@@ -83,17 +83,17 @@ fun Application.helloWorld() {
                         buildVideotex {
                             clearAll()
 
-                            TextColor.entries.forEach { color ->
+                            Color.entries.forEach { color ->
                                 withTextColor(color) {
                                     appendLine("Texte en ${color.name}")
                                 }
                             }
 
-                            withInvertedBackground {
-                                TextColor.entries.forEach { color ->
-                                    withTextColor(color) {
-                                        appendLine("Texte en ${color.name}")
-                                    }
+                            appendLine()
+
+                            Color.entries.forEach { color ->
+                                withBackgroundColor(color) {
+                                    appendLine("Texte sur ${color.name}")
                                 }
                             }
 
