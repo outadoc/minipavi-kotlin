@@ -115,7 +115,8 @@ public class VideotexBuilder internal constructor() {
      * Réinitialise les jeux de caractères.
      */
     public fun resetCharacterSets() {
-        bs.append(VdtConstants.VDT_RESET_DRCS)
+        bs.append(VdtConstants.VDT_RESET_G0_CHARSET)
+        bs.append(VdtConstants.VDT_RESET_G1_CHARSET)
     }
 
     /**
@@ -155,7 +156,7 @@ public class VideotexBuilder internal constructor() {
     ) {
         bs.append(color.code)
         block()
-        bs.append(VdtConstants.VDT_FDNORM)
+        bs.append(VdtConstants.VDT_BGTRANS)
     }
 
     /**

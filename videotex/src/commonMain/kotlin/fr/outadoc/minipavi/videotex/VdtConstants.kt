@@ -32,7 +32,7 @@ internal object VdtConstants {
     /**
      * Retour charriot + déplacement vers le bas.
      */
-    val VDT_CRLF = ByteString(0x0D, 0x0A)
+    val VDT_CRLF: ByteString = ByteString(0x0D, 0x0A)
 
     /**
      * Effacement écran.
@@ -40,12 +40,12 @@ internal object VdtConstants {
     val VDT_CLR: Byte = 0x0C
 
     /**
-     * Jeu de caractères G0.
+     * Jeu de caractères G0 (standard).
      */
     val VDT_G0: Byte = 0x0F
 
     /**
-     * Jeu de caractères G1.
+     * Jeu de caractères G1 (mosaïque).
      */
     val VDT_G1: Byte = 0x0E
 
@@ -82,165 +82,175 @@ internal object VdtConstants {
     /**
      * Taille des caractères normale.
      */
-    val VDT_SZNORM = ByteString(0x1B, 0x4C)
+    val VDT_SZNORM: ByteString = ByteString(0x1B, 0x4C)
 
     /**
      * Taille des caractères double hauteur.
      */
-    val VDT_SZDBLH = ByteString(0x1B, 0x4D)
+    val VDT_SZDBLH: ByteString = ByteString(0x1B, 0x4D)
 
     /**
      * Taille des caractères double largeur.
      */
-    val VDT_SZDBLW = ByteString(0x1B, 0x4E)
+    val VDT_SZDBLW: ByteString = ByteString(0x1B, 0x4E)
 
     /**
      * Taille des caractères double hauteur + double largeur.
      */
-    val VDT_SZDBLHW = ByteString(0x1B, 0x4F)
+    val VDT_SZDBLHW: ByteString = ByteString(0x1B, 0x4F)
 
     /**
      * Couleur texte noir.
      */
-    val VDT_TXTBLACK = ByteString(0x1B, 0x40)
+    val VDT_TXTBLACK: ByteString = ByteString(0x1B, 0x40)
 
     /**
      * Couleur texte rouge.
      */
-    val VDT_TXTRED = ByteString(0x1B, 0x41)
+    val VDT_TXTRED: ByteString = ByteString(0x1B, 0x41)
 
     /**
      * Couleur texte vert.
      */
-    val VDT_TXTGREEN = ByteString(0x1B, 0x42)
+    val VDT_TXTGREEN: ByteString = ByteString(0x1B, 0x42)
 
     /**
      * Couleur texte jaune.
      */
-    val VDT_TXTYELLOW = ByteString(0x1B, 0x43)
+    val VDT_TXTYELLOW: ByteString = ByteString(0x1B, 0x43)
 
     /**
      * Couleur texte bleu.
      */
-    val VDT_TXTBLUE = ByteString(0x1B, 0x44)
+    val VDT_TXTBLUE: ByteString = ByteString(0x1B, 0x44)
 
     /**
      * Couleur texte magenta.
      */
-    val VDT_TXTMAGENTA = ByteString(0x1B, 0x45)
+    val VDT_TXTMAGENTA: ByteString = ByteString(0x1B, 0x45)
 
     /**
      * Couleur texte cyan.
      */
-    val VDT_TXTCYAN = ByteString(0x1B, 0x46)
+    val VDT_TXTCYAN: ByteString = ByteString(0x1B, 0x46)
 
     /**
      * Couleur texte blanc.
      */
-    val VDT_TXTWHITE = ByteString(0x1B, 0x47)
+    val VDT_TXTWHITE: ByteString = ByteString(0x1B, 0x47)
 
     /**
      * Couleur fond noir.
      */
-    val VDT_BGBLACK = ByteString(0x1B, 0x50)
+    val VDT_BGBLACK: ByteString = ByteString(0x1B, 0x50)
 
     /**
      * Couleur fond rouge.
      */
-    val VDT_BGRED = ByteString(0x1B, 0x51)
+    val VDT_BGRED: ByteString = ByteString(0x1B, 0x51)
 
     /**
      * Couleur fond vert.
      */
-    val VDT_BGGREEN = ByteString(0x1B, 0x52)
+    val VDT_BGGREEN: ByteString = ByteString(0x1B, 0x52)
 
     /**
      * Couleur fond jaune.
      */
-    val VDT_BGYELLOW = ByteString(0x1B, 0x53)
+    val VDT_BGYELLOW: ByteString = ByteString(0x1B, 0x53)
 
     /**
      * Couleur fond bleu.
      */
-    val VDT_BGBLUE = ByteString(0x1B, 0x54)
+    val VDT_BGBLUE: ByteString = ByteString(0x1B, 0x54)
 
     /**
      * Couleur fond magenta.
      */
-    val VDT_BGMAGENTA = ByteString(0x1B, 0x55)
+    val VDT_BGMAGENTA: ByteString = ByteString(0x1B, 0x55)
 
     /**
      * Couleur fond cyan.
      */
-    val VDT_BGCYAN = ByteString(0x1B, 0x56)
+    val VDT_BGCYAN: ByteString = ByteString(0x1B, 0x56)
 
     /**
      * Couleur fond blanc.
      */
-    val VDT_BGWHITE = ByteString(0x1B, 0x57)
+    val VDT_BGWHITE: ByteString = ByteString(0x1B, 0x57)
+
+    /**
+     * Fond transparent.
+     */
+    val VDT_BGTRANS: ByteString = ByteString(0x1B, 0x5E)
 
     /**
      * Clignotement.
      */
-    val VDT_BLINK = ByteString(0x1B, 0x48)
+    val VDT_BLINK: ByteString = ByteString(0x1B, 0x48)
 
     /**
      * Arrêt clignotement.
      */
-    val VDT_FIXED = ByteString(0x1B, 0x49)
+    val VDT_FIXED: ByteString = ByteString(0x1B, 0x49)
 
     /**
      * Arrêt soulignement.
      */
-    val VDT_STOPUNDERLINE = ByteString(0x1B, 0x59)
+    val VDT_STOPUNDERLINE: ByteString = ByteString(0x1B, 0x59)
 
     /**
      * Début soulignement.
      */
-    val VDT_STARTUNDERLINE = ByteString(0x1B, 0x5A)
+    val VDT_STARTUNDERLINE: ByteString = ByteString(0x1B, 0x5A)
 
     /**
      * Fond inversé.
      */
-    val VDT_FDINV = ByteString(0x1B, 0x5D)
+    val VDT_FDINV: ByteString = ByteString(0x1B, 0x5D)
 
     /**
      * Fond normal.
      */
-    val VDT_FDNORM = ByteString(0x1B, 0x5C)
+    val VDT_FDNORM: ByteString = ByteString(0x1B, 0x5C)
 
     /**
      * Passage clavier en minuscules.
      */
-    val PRO_MIN = ByteString(0x1B, 0x3A, 0x69, 0x45)
+    val PRO_MIN: ByteString = ByteString(0x1B, 0x3A, 0x69, 0x45)
 
     /**
      * Passage clavier en majuscules.
      */
-    val PRO_MAJ = ByteString(0x1B, 0x3A, 0x6A, 0x45)
+    val PRO_MAJ: ByteString = ByteString(0x1B, 0x3A, 0x6A, 0x45)
 
     /**
      * Arrêt echo local.
      */
-    val PRO_LOCALECHO_OFF = ByteString(0x1B, 0x3B, 0x60, 0x58, 0x51)
+    val PRO_LOCALECHO_OFF: ByteString = ByteString(0x1B, 0x3B, 0x60, 0x58, 0x51)
 
     /**
      * Marche echo local.
      */
-    val PRO_LOCALECHO_ON = ByteString(0x1B, 0x3B, 0x61, 0x58, 0x51)
+    val PRO_LOCALECHO_ON: ByteString = ByteString(0x1B, 0x3B, 0x61, 0x58, 0x51)
 
     /**
      * Mode rouleau actif.
      */
-    val PRO_ROULEAU_ON = ByteString(0x1B, 0x3A, 0x69, 0x43)
+    val PRO_ROULEAU_ON: ByteString = ByteString(0x1B, 0x3A, 0x69, 0x43)
 
     /**
      * Mode rouleau inactif.
      */
-    val PRO_ROULEAU_OFF = ByteString(0x1B, 0x3A, 0x6A, 0x43)
+    val PRO_ROULEAU_OFF: ByteString = ByteString(0x1B, 0x3A, 0x6A, 0x43)
 
     /**
-     * "Réinitialisation" des jeux de caractères normaux.
+     * Réinitialisation des jeux de caractères normaux dans G0.
      */
-    val VDT_RESET_DRCS = ByteString(0x1B, 0x28, 0x40, 0x1B, 0x29, 0x63)
+    val VDT_RESET_G0_CHARSET: ByteString = ByteString(0x1B, 0x28, 0x40)
+
+    /**
+     * Réinitialisation des jeux de caractères normaux dans G1.
+     */
+    val VDT_RESET_G1_CHARSET: ByteString = ByteString(0x1B, 0x29, 0x63)
 }

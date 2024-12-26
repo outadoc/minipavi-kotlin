@@ -4,12 +4,15 @@ import fr.outadoc.minipavi.core.model.ServiceResponse.DirectCallSetting
 import kotlinx.datetime.Instant
 import kotlinx.io.bytestring.ByteString
 
-public data class ServiceResponse<T : Any>(
+/**
+ * Données émises par le service, à destination de la passerelle.
+ */
+public data class ServiceResponse<State : Any>(
 
     /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle.
      */
-    val state: T,
+    val state: State,
 
     /**
      * Le contenu de la page Vidéotex à afficher.
@@ -250,7 +253,7 @@ public data class ServiceResponse<T : Any>(
         ) : Command
 
         /**
-         * Demande à la passerelle d'effectuer un appel à une url à l'heure indiquée.
+         * Demande à la passerelle d'effectuer un appel à une [url] à l'heure indiquée.
          */
         public data class BackgroundCall(
             /**
@@ -267,8 +270,7 @@ public data class ServiceResponse<T : Any>(
              * à la passerelle.
              *
              * Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
-             * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre `url`
-             * (ci-dessous).
+             * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre [url].
              *
              * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
              * [GatewayRequest.Function.BackgroundCallSimulated].

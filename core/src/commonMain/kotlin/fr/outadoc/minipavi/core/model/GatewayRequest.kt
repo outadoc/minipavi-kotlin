@@ -1,5 +1,8 @@
 package fr.outadoc.minipavi.core.model
 
+/**
+ * Données émises par la passerelle, à destination du service.
+ */
 public data class GatewayRequest<T : Any>(
     val payload: Payload<T>,
     /**
@@ -33,16 +36,16 @@ public data class GatewayRequest<T : Any>(
         val socketType: SocketType,
 
         /**
-         * 3 caractères correspondant au type de Minitel, si connu. Sinon « ??? ».
+         * Trois caractères correspondant au type de Minitel, si connu. Sinon « ??? ».
          *
-         * N'est pas forcément initialisé dès la connexion.
+         * Ce champ n'est pas forcément initialisé dès la connexion.
          */
         val minitelVersion: String,
 
         /**
          * Tableau contenant la saisie de l'utilisateur.
          *
-         * Si il s'agit d'une saisie de plusieurs lignes, chaque ligne est un élément du tableau.
+         * S'il s'agit d'une saisie de plusieurs lignes, chaque ligne est un élément du tableau.
          * S'il n'y a qu'une seule ligne, la saisie est à l'indice « 0 » du tableau.
          */
         val userInput: List<String>,
@@ -55,7 +58,7 @@ public data class GatewayRequest<T : Any>(
         val state: T,
 
         /**
-         * Touche de fonction saisie, ou évènement, ayant initié cette requête.
+         * Touche de fonction ou évènement ayant initié cette requête.
          */
         val function: Function
     )
