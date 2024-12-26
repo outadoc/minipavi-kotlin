@@ -68,6 +68,7 @@ public final class fr/outadoc/minipavi/videotex/VideotexBuilder {
 	public final fun withBlink (Lkotlin/jvm/functions/Function1;)V
 	public final fun withCharacterSize (Lfr/outadoc/minipavi/videotex/CharacterSize;Lkotlin/jvm/functions/Function1;)V
 	public final fun withInvertedBackground (Lkotlin/jvm/functions/Function1;)V
+	public final fun withMosaic (Lkotlin/jvm/functions/Function1;)V
 	public final fun withRouleau (Lkotlin/jvm/functions/Function1;)V
 	public final fun withTextColor (Lfr/outadoc/minipavi/videotex/TextColor;Lkotlin/jvm/functions/Function1;)V
 	public final fun withUnderline (Lkotlin/jvm/functions/Function1;)V

@@ -234,6 +234,19 @@ public class VideotexBuilder internal constructor() {
     }
 
     /**
+     * Active le mode mosaïque pour le bloc spécifié.
+     *
+     * Le mode mosaïque est un mode graphique qui permet de dessiner des caractères
+     * sur une grille de 2x3 caractères. Les caractères sont dessinés en utilisant
+     * les octets de 0x20 à 0x7F.
+     */
+    public fun withMosaic(block: VideotexBuilder.() -> Unit) {
+        bs.append(VdtConstants.VDT_G1)
+        block()
+        bs.append(VdtConstants.VDT_G0)
+    }
+
+    /**
      * Construit le document Vidéotex finalisé en tant que chaîne binaire.
      */
     public fun build(): ByteString {
