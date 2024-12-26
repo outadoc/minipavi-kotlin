@@ -1,0 +1,193 @@
+Liste des codes VIDEOTEX
+========================
+
+00    ' caractère null
+05    ' demande d'identification
+07    ' dring
+08    ' curseur à gauche
+09    ' curseur à droite
+0A    ' curseur en bas
+0B    ' curseur en haut
+0C    ' effacement de page
+0D    ' retour chariot
+0E    ' passage en G1
+0F    ' passage en G0
+11    ' curseur on
+12 XX ' répétition
+   XX    ' Nombre de répétition + 40
+13 XX ' touches spéciales et commandes diverses
+   41    ' envoi
+   42    ' retour
+   43    ' répétition
+   44    ' guide
+   45    ' annulation
+   46    ' sommaire
+   47    ' correction
+   48    ' suite
+   49    ' connection-fin
+   4A    ' mise en marche correction d'erreur
+   4B    ' arret correction d'erreur
+   4C    ' acq. retournement modem (1200-75)
+   4D    ' acq. retournement inverse (75-1200)
+   50    ' aquittement connexion
+   51    ' aquittement changement vitesse
+   53    ' aquittement dét porteuse (connexion, decon. modem)
+   54    ' aquittement prise péri. en service
+   56    ' acq. changement mode de fonctionnement
+   57    ' acq. mise en transparence
+   6C    ' détection sonnerie (M2)
+14    ' curseur off
+18    ' efface fin de ligne
+19    ' passage en G2
+1A    ' signal d'erreur
+1B XX ' escape
+   23 XX YY 
+      20 YY ' validation attribut sur tout l'écran
+      21 YY ' dévalidation   "     "  "    "     "
+         YY    ' attribut
+   28 XX ' jeu de caractère dans G0 (M2)
+   29 XX ' jeu de caractère dans G1 (M2)
+      42    ' américain
+      52    ' français
+      33    ' m12
+      30    ' vt100
+   35 XX ' mise en route périphérique
+   36 XX ' arret périp.
+   37 XX ' attente perip.
+      40    ' imprimante
+      41    ' enregistreur
+      42    ' mode roll up
+      43    ' mode roll down
+   39 XX ' protocole PRO1
+      53    ' prise de ligne (M2)
+      57    ' libération ligne (M2)
+      5A    ' demande status numérotation (M2)
+      67    ' deconnexion du modem
+      68    ' connexion du modem
+      6C    ' retournement du modem
+      6D    ' retournement inverse
+      6E    ' acquittement de retournement (demande ?)
+      6F    ' passage en mode maitre
+      70    ' demande status terminal
+      72    ' demande status fonctionnement
+      74    ' demande status vitesse
+      76    ' demande status protocole
+      78    ' téléchargement bloc 1
+      79    ' téléchargement bloc 2
+      7A    ' identification bloc 2
+      7B    ' identification terminal
+   3A XX YY ' protocole PRO2
+              Codes récepteur et émetteur :
+                 Module     Emission     Réception
+                 Ecran         50           58
+                 Clavier       51           59
+                 Modem         52           5A
+                 Prise péri.   53           5B
+                 Téléphonie    54           5C
+      5B YY ' réponse demande status numérotation (M2)
+         4D    ' en numérotation
+         44    ' libre
+      62 YY ' demande status d'un module
+         YY    ' code récepteur ou émetteur
+      64 YY ' diffusion restreinte des acq.
+      65 YY ' diffusion systématique des acq.
+         YY    ' code récepteur
+      66 YY ' mise en transparence
+         YY    ' nombre d'octet
+      69 YY ' mise en route mode fonct. particulier
+      6A YY ' arret mode fonct. particulier
+         43    ' mode rouleau
+         46    ' loupe haut
+         47    ' loupe bas
+      6B YY ' prog. vitesse périp.
+         52    ' 300 bauds
+         64    ' 1200 bauds
+         76    ' 4800 bauds
+         7F    ' 9600 bauds
+      6F 31 ' passage en mode esclave
+      71 YY ' réponse demande status terminal
+         YY    ' octet de status
+               b1 : parité
+               b2 : 1
+               b3 : 0
+               b4 : fil PT sur prise péri.
+               b5 : détectionn porteuse
+               b6 : 0
+               b7 : vitesse serveur-minitel
+               b8 : état terminal à la connexion
+      73 YY ' réponse demande status fonctionnement
+         YY    ' octet de status
+      75 YY ' réponse demande status vitesse
+         52    ' 300 bauds
+         64    ' 1200 bauds
+         76    ' 4800 bauds
+         7F    ' 9600 bauds
+      77 YY ' réponse demande status protocole
+         YY    ' octet de status
+               b1 à b6 : inutilisé
+               b7 : 0 = acq. vers prise
+               b8 : 0 = acq. vers modem
+   3B XX YY ZZ ' protocole PRO3
+      52 3X 3Y ' numérotation à l'écran
+         3X 3Y    ' ??? Ex : 33 33
+      60 YY ZZ ' arret d'aiguillage
+      61 YY ZZ ' mise en route d'aiguillage
+         YY ZZ    ' code récepteur, code émetteur
+      63 YY ZZ ' réponse demande status module
+         YY ZZ    ' code récepteur ou émetteur, octet de status
+                  b1 : parité
+                  b2 : 1
+                  b3 : 0
+                  b4 : 0 (téléphonie ?)
+                  b5 : prise péri.
+                  b6 : modem
+                  b7 : clavier
+                  b8 : écran
+      69 5A 42    ' appel auto. (M2)
+   40    ' car. noir
+   41    ' car. rouge
+   42    ' car. vert
+   43    ' car. jaune
+   44    ' car. bleu
+   45    ' car. magenta (mauve)
+   46    ' car. cyan (bleu clair)
+   47    ' car. blanc
+   48    ' clignotement
+   49    ' fixe
+   4A    ' fin incrustation
+   4B    ' début incrustation
+   4C    ' taille normale
+   4D    ' double hauteur
+   4E    ' double largeur
+   4F    ' double hauteur et double largeur
+   50    ' fond noir
+   51    ' fond rouge
+   52    ' fond vert
+   53    ' fond jaune
+   54    ' fond bleu
+   55    ' fond magenta
+   56    ' fond cyan
+   57    ' fond blanc
+   58    ' masquage
+   59    ' fin de lignage
+   5A    ' début de lignage
+   5C    ' fond normal
+   5D    ' inversion de fond
+   5E    ' fond transparent
+   5F    ' démasquage
+   61    ' demande de position
+1E    ' home
+1F XX YY ' positionnement curseur ou réponse à une demande de
+           position
+   XX    ' ligne + 40
+   YY    ' colonne + 40
+20 à 7F    ' caractère imprimable
+
+Remarques utiles :
+* Couleurs de la plus claire à la plus foncée :
+  blanc, jaune, cyan, vert, magenta, rouge, bleu, noir
+* Taille et fond inverse indisponible en semi-graphique.
+* Lignage en semi-graphique = mosaique disjointe
+* Validation d'un attribut de lignage ou de masquage ou une
+  couleur de fond : car. semi-graphique ou un espace
+* Protocoles 78 à 7B impossible depuis la prise péri-inf.
