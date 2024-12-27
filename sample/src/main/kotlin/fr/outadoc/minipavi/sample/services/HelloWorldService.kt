@@ -75,8 +75,8 @@ fun Application.helloWorld() {
                     state = HelloWorldState.TextFormatPage,
                     command =
                         ServiceResponse.Command.InputForm(
-                            x = listOf(1),
-                            y = listOf(19),
+                            cols = listOf(1),
+                            lines = listOf(19),
                             length = listOf(30),
                         ),
                     content =

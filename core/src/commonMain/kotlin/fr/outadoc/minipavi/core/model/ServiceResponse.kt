@@ -68,12 +68,12 @@ public data class ServiceResponse<State : Any>(
             /**
              * Position de la colonne (1-40) de la zone de saisie.
              */
-            val x: Int,
+            val col: Int,
 
             /**
              * Position de la ligne (1-25) de la zone de saisie.
              */
-            val y: Int,
+            val line: Int,
 
             /**
              * Longueur de la zone de saisie (1-40).
@@ -84,7 +84,7 @@ public data class ServiceResponse<State : Any>(
              *  Si non vide, quel que soit le caractère tapé par l'utilisateur,
              *  ce caractère s'affichera (pour la saisie de mot de passe par exemple).
              */
-            val char: String,
+            val substituteChar: String = "",
 
             /**
              *  Caractère pour affichage du champ de saisie (` ` ou `.` généralement).
@@ -94,7 +94,7 @@ public data class ServiceResponse<State : Any>(
             /**
              * Valeur de pré-remplissage du champ de saisie.
              */
-            val prefill: String,
+            val prefill: String = "",
 
             /**
              * Si `true`, le curseur sera visible, sinon `false`.
@@ -120,16 +120,22 @@ public data class ServiceResponse<State : Any>(
             val submitWith: Set<FunctionKey> = setOf(FunctionKey.Envoi),
         ) : Command
 
+        /**
+         * Demande à la passerelle de gérer la saisie par l'utilisateur d’une zone
+         * de saisie de plusieurs lignes, de longueur définie.
+         *
+         * Généralement utilisée pour la saisie d’un message.
+         */
         public data class InputMessage(
             /**
              * Position de la colonne (1-40) de la zone de saisie.
              */
-            val x: Int,
+            val col: Int,
 
             /**
              * Position de la ligne (1-25) de la zone de saisie.
              */
-            val y: Int,
+            val line: Int,
 
             /**
              * Longueur de la zone de saisie (1-40).
@@ -180,12 +186,12 @@ public data class ServiceResponse<State : Any>(
             /**
              * Tableau des positions de la colonne (1-40) des zones de saisie.
              */
-            val x: List<Int>,
+            val cols: List<Int>,
 
             /**
              * Tableau des positions de la ligne (1-25) des zones de saisie.
              */
-            val y: List<Int>,
+            val lines: List<Int>,
 
             /**
              * Tableau des longueurs des zones de saisie (1-40).

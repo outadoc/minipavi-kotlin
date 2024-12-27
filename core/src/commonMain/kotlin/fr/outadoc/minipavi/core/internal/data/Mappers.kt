@@ -87,8 +87,8 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
         is ServiceResponse.Command.InputForm -> {
             ServiceResponseDTO.Command.InputForm(
                 params = ServiceResponseDTO.Command.InputForm.Params(
-                    x = x,
-                    y = y,
+                    x = cols,
+                    y = lines,
                     length = length,
                     spaceChar = spaceChar,
                     prefill = prefill,
@@ -101,8 +101,8 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
         is ServiceResponse.Command.InputMessage -> {
             ServiceResponseDTO.Command.InputMessage(
                 params = ServiceResponseDTO.Command.InputMessage.Params(
-                    x = x,
-                    y = y,
+                    x = col,
+                    y = line,
                     width = width,
                     height = height,
                     spaceChar = spaceChar,
@@ -116,10 +116,10 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
         is ServiceResponse.Command.InputText -> {
             ServiceResponseDTO.Command.InputText(
                 params = ServiceResponseDTO.Command.InputText.Params(
-                    x = x,
-                    y = y,
+                    x = col,
+                    y = line,
                     length = length,
-                    char = char,
+                    char = substituteChar,
                     spaceChar = spaceChar,
                     prefill = prefill,
                     cursor = cursor.mapToDTO(),
@@ -178,19 +178,17 @@ internal fun <T : Any> GatewayRequestDTO.mapToDomain(
     initialState: T
 ): GatewayRequest<T> {
     return GatewayRequest(
-        payload = GatewayRequest.Payload(
-            gatewayVersion = payload.version,
-            sessionId = payload.uniqueId,
-            remoteAddress = payload.remoteAddress,
-            socketType = payload.socketType.mapToDomain(),
-            minitelVersion = payload.minitelVersion,
-            userInput = payload.content,
-            state = payload.context
-                .takeIf { context -> context.isNotEmpty() }
-                ?.let { context -> Json.decodeFromString(serializer, context) }
-                ?: initialState,
-            function = payload.function.mapToDomain()
-        ),
+        gatewayVersion = payload.version,
+        sessionId = payload.uniqueId,
+        remoteAddress = payload.remoteAddress,
+        socketType = payload.socketType.mapToDomain(),
+        minitelVersion = payload.minitelVersion,
+        userInput = payload.content,
+        state = payload.context
+            .takeIf { context -> context.isNotEmpty() }
+            ?.let { context -> Json.decodeFromString(serializer, context) }
+            ?: initialState,
+        function = payload.function.mapToDomain(),
         urlParams = urlParams
     )
 }
