@@ -57,7 +57,7 @@ public data class GatewayRequest<T : Any>(
     /**
      * Tableau associatif contenant les éventuels paramètres indiqués dans l'URL.
      */
-    val urlParams: List<String>? = null,
+    val urlParams: Map<String, String>? = null,
 ) {
     public enum class SocketType {
         WebSocket,

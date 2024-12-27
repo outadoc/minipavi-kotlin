@@ -39,7 +39,7 @@ fun Application.staticSampleVdt() {
         version = "0.1",
         initialState = StaticSampleVdtState(),
     ) { request ->
-        val state = request.payload.state
+        val state = request.state
         val file = sampleFiles[state.iter % sampleFiles.size]
         ServiceResponse(
             content =

@@ -9,7 +9,7 @@ internal data class GatewayRequestDTO(
     val payload: Payload,
 
     @SerialName("URLPARAMS")
-    val urlParams: List<String>? = null,
+    val urlParams: Map<String, String>? = null,
 ) {
     @Serializable
     internal data class Payload(

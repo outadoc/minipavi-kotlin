@@ -33,7 +33,7 @@ fun Application.helloWorld() {
         version = "0.1",
         initialState = HelloWorldState.IntroPage,
     ) { request ->
-        when (request.payload.state) {
+        when (request.state) {
             HelloWorldState.IntroPage -> {
                 ServiceResponse(
                     state = HelloWorldState.TextColorPage,
@@ -49,22 +49,22 @@ fun Application.helloWorld() {
 
                             append(" Vous êtes ")
                             withTextColor(Color.Red) {
-                                appendLine(request.payload.sessionId)
+                                appendLine(request.sessionId)
                             }
 
                             append(" ou ")
                             withTextColor(Color.Green) {
-                                appendLine(request.payload.remoteAddress)
+                                appendLine(request.remoteAddress)
                             }
 
                             append(" Connecté.e via ")
                             withTextColor(Color.Blue) {
-                                appendLine(request.payload.socketType.toString())
+                                appendLine(request.socketType.toString())
                             }
 
                             append(" À l'aide d'un Minitel ")
                             withTextColor(Color.Yellow) {
-                                appendLine(request.payload.minitelVersion)
+                                appendLine(request.minitelVersion)
                             }
                         },
                 )
@@ -136,7 +136,7 @@ fun Application.helloWorld() {
 
                             appendLine()
                             appendLine("Entrée utilisateur : ")
-                            request.payload.userInput.forEach { line ->
+                            request.userInput.forEach { line ->
                                 appendLine(line)
                             }
                         },
