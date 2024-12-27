@@ -6,9 +6,6 @@ plugins {
     application
 }
 
-group = "fr.outadoc.minipavi"
-version = "1.0.0"
-
 application {
     mainClass.set("fr.outadoc.minipavi.sample.ApplicationKt")
     applicationDefaultJvmArgs = listOf(

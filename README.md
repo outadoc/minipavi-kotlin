@@ -32,6 +32,24 @@ place.
 MiniPavi-Kotlin est conçue pour être utilisée avec le framework Ktor. MiniPavi va appeler votre service, qui construira
 sa réponse avec le SDK, et la renverra à MiniPavi.
 
+Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
+
+```toml
+[versions]
+minipavi-kotlin = "x.y.z"
+
+[libraries]
+minipavi-core = { module = "com.github.outadoc.minipavi-kotlin:core", version.ref = "minipavi-kotlin" }
+minipavi-videotex = { module = "com.github.outadoc.minipavi-kotlin:videotex", version.ref = "minipavi-kotlin" }
+```
+
+```kotlin
+dependencies {
+    implementation(libs.minipavi.core)
+    implementation(libs.minipavi.videotex)
+}
+```
+
 Commencez par créer un serveur Ktor de base. Je vous recommande encore une fois de suivre la [documentation de Ktor][4]
 si vous n'êtes pas familièr·e avec ce framework.
 
