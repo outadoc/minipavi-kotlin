@@ -35,6 +35,8 @@ sa réponse avec le SDK, et la renverra à MiniPavi.
 Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
 
 ```toml
+# libs.versions.toml
+
 [versions]
 minipavi-kotlin = "x.y.z"
 
@@ -44,6 +46,18 @@ minipavi-videotex = { module = "com.github.outadoc.minipavi-kotlin:videotex", ve
 ```
 
 ```kotlin
+// settings.gradle.kts
+
+dependencyResolutionManagement {
+    repositories {
+        maven("https://jitpack.io")
+    }
+}
+```
+
+```kotlin
+// build.gradle.kts
+
 dependencies {
     implementation(libs.minipavi.core)
     implementation(libs.minipavi.videotex)
@@ -160,7 +174,7 @@ fun Application.helloWorld() {
 ```
 
 La fonction `buildVideotex` vous permet de construire une réponse au format Vidéotex.
-Vous pouvez y ajouter du texte, des couleurs, des caractères spéciaux, etc. 
+Vous pouvez y ajouter du texte, des couleurs, des caractères spéciaux, etc.
 Elle est disponible dans le module `videotex`.
 
 Et voilà. Plus qu'à lancer votre serveur, et à le connecter à MiniPavi. 🎉
