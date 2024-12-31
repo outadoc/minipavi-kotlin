@@ -9,6 +9,6 @@ fun main() {
         Netty,
         port = 8080,
         host = "0.0.0.0",
-        module = Application::helloWorld,
+        module = Application::minitus,
     ).start(wait = true)
 }
