@@ -102,8 +102,8 @@ fun Application.minitus() {
             command = when (nextState) {
                 is MinitusState.Playing -> {
                     ServiceResponse.Command.InputText(
-                        col = 1,
-                        line = 11,
+                        col = 23,
+                        line = 24,
                         length = expectedWord.length,
                     )
                 }
@@ -181,27 +181,21 @@ private fun VideotexBuilder.showGameState(
 ) {
     val expectedWord = dictionary.pickDailyWord(state.date)
 
-    state.guesses.forEach { guess ->
-        appendLine(guess)
-    }
+    withCharacterSize(CharacterSize.DoubleSize) {
+        state.guesses.forEach { guess ->
+            appendLine()
+            appendLine(guess)
+        }
 
-    (state.guesses.size until Constants.MAX_ATTEMPTS).forEach { _ ->
-        // On affiche des lignes vides pour remplir les guess non-faits
-        appendLine(
-            expectedWord.map { '.' }.joinToString(separator = "")
-        )
-    }
-
-    appendLine()
-
-    if (state is MinitusState.Playing) {
-        append("Entrez un mot puis ")
-        withInvertedBackground {
-            appendLine("ENVOI")
+        (state.guesses.size until Constants.MAX_ATTEMPTS).forEach { _ ->
+            // On affiche des lignes vides pour remplir les guess non-faits
+            appendLine()
+            appendLine(
+                expectedWord.map { '.' }.joinToString(separator = "")
+            )
         }
     }
 
-    appendLine()
     appendLine()
 
     if (state is MinitusState.Playing && state.lastInputError != null) {
@@ -238,6 +232,15 @@ private fun VideotexBuilder.showGameState(
             }
         }
     }
+
+    moveCursorTo(1, 24)
+
+    if (state is MinitusState.Playing) {
+        append("Entrez un mot + ")
+        withInvertedBackground {
+            appendLine("ENVOI")
+        }
+    }
 }
 
 private fun VideotexBuilder.displayLogo() {
@@ -264,6 +267,12 @@ private fun VideotexBuilder.displayLogo() {
         }
         appendLine()
     }
+
+    withUnderline {
+        repeatChar(' ', 40)
+    }
+
+    appendLine()
 }
 
 private fun readWords(environment: ApplicationEnvironment): Set<String> =
