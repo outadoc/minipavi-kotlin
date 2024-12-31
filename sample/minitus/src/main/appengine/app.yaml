@@ -1,2 +1,0 @@
-runtime: java21
-entrypoint: 'java -jar google-appengine-standard-all.jar'
