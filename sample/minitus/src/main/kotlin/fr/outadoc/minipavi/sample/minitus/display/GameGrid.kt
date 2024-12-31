@@ -1,9 +1,9 @@
 package fr.outadoc.minipavi.sample.minitus.display
 
-import fr.outadoc.minipavi.sample.minitus.CharacterMatch
 import fr.outadoc.minipavi.sample.minitus.GameConstants
-import fr.outadoc.minipavi.sample.minitus.computeDiff
-import fr.outadoc.minipavi.sample.minitus.getHintForNextGuess
+import fr.outadoc.minipavi.sample.minitus.diff.CharacterMatch
+import fr.outadoc.minipavi.sample.minitus.diff.computeDiff
+import fr.outadoc.minipavi.sample.minitus.diff.getHintForNextGuess
 import fr.outadoc.minipavi.videotex.CharacterSize
 import fr.outadoc.minipavi.videotex.Color
 import fr.outadoc.minipavi.videotex.VideotexBuilder
