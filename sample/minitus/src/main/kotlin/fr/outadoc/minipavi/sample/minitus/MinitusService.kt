@@ -18,7 +18,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed interface MinitusState {
-
     val date: LocalDate
     val guesses: List<String>
 
@@ -74,57 +73,62 @@ fun Application.minitus() {
     minitelService<MinitusState>(
         path = "/",
         version = "0.1",
-        initialState = MinitusState.Playing(
-            guesses = emptyList(),
-            date = clock.now().toLocalDateTime(tz).date,
-        ),
+        initialState =
+            MinitusState.Playing(
+                guesses = emptyList(),
+                date = clock.now().toLocalDateTime(tz).date,
+            ),
     ) { request ->
-        val nextState = request.state.reduce(
-            date = request.state.date,
-            userInput = request.userInput.firstOrNull() ?: "",
-            dictionary = dictionary,
-        )
+        val nextState =
+            request.state.reduce(
+                date = request.state.date,
+                userInput = request.userInput.firstOrNull() ?: "",
+                dictionary = dictionary,
+            )
 
         val expectedWord = dictionary.pickDailyWord(nextState.date)
 
         ServiceResponse(
             state = nextState,
-            content = when (nextState) {
-                is MinitusState.Playing -> {
-                    playingScreen(
-                        state = nextState,
-                        expectedWord = expectedWord,
-                    )
-                }
+            content =
+                when (nextState) {
+                    is MinitusState.Playing -> {
+                        playingScreen(
+                            state = nextState,
+                            expectedWord = expectedWord,
+                        )
+                    }
 
-                is MinitusState.Lose -> {
-                    loseScreen(
-                        state = nextState,
-                        expectedWord = expectedWord,
-                    )
-                }
+                    is MinitusState.Lose -> {
+                        loseScreen(
+                            state = nextState,
+                            expectedWord = expectedWord,
+                        )
+                    }
 
-                is MinitusState.Win -> {
-                    winScreen(
-                        state = nextState,
-                        expectedWord = expectedWord,
-                    )
-                }
-            },
-            command = when (nextState) {
-                is MinitusState.Playing -> {
-                    ServiceResponse.Command.InputText(
-                        col = 23,
-                        line = 24,
-                        length = expectedWord.length,
-                    )
-                }
+                    is MinitusState.Win -> {
+                        winScreen(
+                            state = nextState,
+                            expectedWord = expectedWord,
+                        )
+                    }
+                },
+            command =
+                when (nextState) {
+                    is MinitusState.Playing -> {
+                        ServiceResponse.Command.InputText(
+                            col = 23,
+                            line = 24,
+                            length = expectedWord.length,
+                        )
+                    }
 
-                is MinitusState.Win,
-                is MinitusState.Lose -> {
-                    null
-                }
-            }
+                    is MinitusState.Win,
+                    is MinitusState.Lose,
+                    -> {
+                        null
+                    }
+                },
         )
     }
 }
@@ -205,7 +209,7 @@ private fun playingScreen(
             when (state.lastInputError) {
                 MinitusState.Error.InvalidLength -> {
                     appendLine(
-                        "Le mot à trouver contient ${expectedWord.length} lettres."
+                        "Le mot à trouver contient ${expectedWord.length} lettres.",
                     )
                 }
 
@@ -278,7 +282,7 @@ private fun VideotexBuilder.displayGameGrid(
         repeatChar(' ', startPadding)
 
         withCharacterSize(CharacterSize.DoubleWidth) {
-            compute(
+            diff(
                 expectedWord = expectedWord,
                 guess = guess,
             ).forEach { match ->
@@ -322,7 +326,7 @@ private fun VideotexBuilder.displayGameGrid(
                     expectedWord
                         .drop(1)
                         .map { '.' }
-                        .joinToString(separator = "")
+                        .joinToString(separator = ""),
                 )
             }
         }
@@ -336,7 +340,7 @@ private fun VideotexBuilder.displayGameGrid(
                 appendLine(
                     expectedWord
                         .map { '.' }
-                        .joinToString(separator = "")
+                        .joinToString(separator = ""),
                 )
             }
         }
@@ -406,47 +410,3 @@ private fun readWords(environment: ApplicationEnvironment): Set<String> =
 
         environment.log.info("Chargé $size mots avec succès")
     }
-
-sealed interface CharacterMatch {
-    val character: Char
-
-    data class Exact(override val character: Char) : CharacterMatch
-    data class Partial(override val character: Char) : CharacterMatch
-    data class None(override val character: Char) : CharacterMatch
-}
-
-internal fun compute(
-    expectedWord: String,
-    guess: String,
-): List<CharacterMatch> {
-    val zipped = expectedWord.zip(guess)
-
-    // On garde une copie modifiable des lettres disponibles
-    val availableLetters = guess.toMutableList()
-
-    // Les lettres avec un match exact ne peuvent pas être utilisées pour un match partiel,
-    // donc on les retire de la liste des lettres disponibles.
-    zipped.forEach { (expected, actual) ->
-        if (expected == actual) {
-            availableLetters.remove(actual)
-        }
-    }
-
-    // On compare les lettres restantes pour trouver les matchs partiels
-    return zipped.map { (expected, actual) ->
-        when (expected) {
-            actual -> {
-                CharacterMatch.Exact(actual)
-            }
-
-            in availableLetters -> {
-                availableLetters.remove(actual)
-                CharacterMatch.Partial(actual)
-            }
-
-            else -> {
-                CharacterMatch.None(actual)
-            }
-        }
-    }
-}

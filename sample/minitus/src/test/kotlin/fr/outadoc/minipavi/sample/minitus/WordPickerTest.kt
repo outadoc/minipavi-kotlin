@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class WordPickerTest {
-
     @Test
     fun `Consecutive calls to pickDailyWord give the same result`() {
         val today = LocalDate(2024, 12, 31)
