@@ -27,7 +27,7 @@ sealed interface MinitusState {
     data class Playing(
         override val date: LocalDate,
         override val guesses: List<String>,
-        val lastInputWasInvalid: Boolean = false,
+        val lastInputError: Error? = null,
     ) : MinitusState
 
     @Serializable
@@ -36,12 +36,29 @@ sealed interface MinitusState {
         override val date: LocalDate,
         override val guesses: List<String>,
     ) : MinitusState
+
+    @Serializable
+    @SerialName("lose")
+    data class Lose(
+        override val date: LocalDate,
+        override val guesses: List<String>,
+    ) : MinitusState
+
+    @Serializable
+    sealed interface Error {
+        @Serializable
+        data object NotInDictionary : Error
+
+        @Serializable
+        data object InvalidLength : Error
+    }
 }
 
 private object Constants {
     const val MAX_ATTEMPTS = 6
 
     // On ne veut que des mots en majuscules de 5 à 10 caractères
+    val ALLOWED_WORD_LENGTHS = 5..10
     val ALLOWED_WORD_REGEX = Regex("^[A-Z]{5,10}$")
 
     const val MAX_READ_LINE_LENGTH = 32L
@@ -68,6 +85,8 @@ fun Application.minitus() {
             dictionary = dictionary,
         )
 
+        val expectedWord = dictionary.pickDailyWord(nextState.date)
+
         ServiceResponse(
             state = nextState,
             content =
@@ -75,8 +94,25 @@ fun Application.minitus() {
                     clearAll()
                     displayLogo()
 
-                    showGameState(nextState)
+                    showGameState(
+                        dictionary = dictionary,
+                        state = nextState
+                    )
                 },
+            command = when (nextState) {
+                is MinitusState.Playing -> {
+                    ServiceResponse.Command.InputText(
+                        col = 1,
+                        line = 11,
+                        length = expectedWord.length,
+                    )
+                }
+
+                is MinitusState.Win,
+                is MinitusState.Lose -> {
+                    null
+                }
+            }
         )
     }
 }
@@ -89,6 +125,7 @@ private fun MinitusState.reduce(
     return when (this) {
         is MinitusState.Playing -> reduce(date, userInput, dictionary)
         is MinitusState.Win -> this
+        is MinitusState.Lose -> this
     }
 }
 
@@ -99,12 +136,20 @@ private fun MinitusState.Playing.reduce(
 ): MinitusState {
     val inputWord = userInput.normalize()
     if (inputWord.isEmpty()) {
-        return this
+        return copy(
+            lastInputError = null,
+        )
+    }
+
+    if (inputWord.length !in Constants.ALLOWED_WORD_LENGTHS) {
+        return copy(
+            lastInputError = MinitusState.Error.InvalidLength,
+        )
     }
 
     if (inputWord !in dictionary) {
         return copy(
-            lastInputWasInvalid = true,
+            lastInputError = MinitusState.Error.NotInDictionary,
         )
     }
 
@@ -117,22 +162,80 @@ private fun MinitusState.Playing.reduce(
         )
     }
 
+    if (guesses.size >= Constants.MAX_ATTEMPTS - 1) {
+        return MinitusState.Lose(
+            date = date,
+            guesses = guesses + inputWord,
+        )
+    }
+
     return copy(
         guesses = guesses + inputWord,
-        lastInputWasInvalid = false,
+        lastInputError = null,
     )
 }
 
-private fun VideotexBuilder.showGameState(state: MinitusState) {
-    if (state is MinitusState.Playing && state.lastInputWasInvalid) {
+private fun VideotexBuilder.showGameState(
+    dictionary: Set<String>,
+    state: MinitusState
+) {
+    val expectedWord = dictionary.pickDailyWord(state.date)
+
+    state.guesses.forEach { guess ->
+        appendLine(guess)
+    }
+
+    (state.guesses.size until Constants.MAX_ATTEMPTS).forEach { _ ->
+        // On affiche des lignes vides pour remplir les guess non-faits
+        appendLine(
+            expectedWord.map { '.' }.joinToString(separator = "")
+        )
+    }
+
+    appendLine()
+
+    if (state is MinitusState.Playing) {
+        append("Entrez un mot puis ")
+        withInvertedBackground {
+            appendLine("ENVOI")
+        }
+    }
+
+    appendLine()
+    appendLine()
+
+    if (state is MinitusState.Playing && state.lastInputError != null) {
         withTextColor(Color.Red) {
-            appendLine("Désolé, ce mot n'est pas dans mon dictionnaire.")
+            when (state.lastInputError) {
+                MinitusState.Error.InvalidLength -> {
+                    appendLine(
+                        "Le mot à trouver contient ${expectedWord.length} lettres."
+                    )
+                }
+
+                MinitusState.Error.NotInDictionary -> {
+                    appendLine("Désolé, ce mot n'est pas dans mon")
+                    appendLine("dictionnaire.")
+                }
+            }
         }
     }
 
     if (state is MinitusState.Win) {
         withTextColor(Color.Green) {
             appendLine("Bravo, vous avez trouvé le mot du jour !")
+        }
+    }
+
+    if (state is MinitusState.Lose) {
+        withTextColor(Color.Red) {
+            appendLine("Désolé, vous n'avez pas trouvé le mot du jour. :(")
+            appendLine()
+
+            append("Le mot était ")
+            withInvertedBackground {
+                appendLine(expectedWord)
+            }
         }
     }
 }
