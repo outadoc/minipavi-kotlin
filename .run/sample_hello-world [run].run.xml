@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run test service" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="sample:hello-world [run]" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/sample" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$/sample/hello-world" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">

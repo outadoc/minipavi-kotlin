@@ -1,6 +1,5 @@
-package fr.outadoc.minipavi.sample
+package fr.outadoc.minipavi.sample.static
 
-import fr.outadoc.minipavi.sample.services.helloWorld
 import io.ktor.server.application.Application
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -10,10 +9,6 @@ fun main() {
         Netty,
         port = 8080,
         host = "0.0.0.0",
-        module = Application::module,
+        module = Application::staticSampleVdt,
     ).start(wait = true)
-}
-
-fun Application.module() {
-    helloWorld()
 }

@@ -1,4 +1,4 @@
-package fr.outadoc.minipavi.sample.utils
+package fr.outadoc.minipavi.sample.static
 
 import kotlinx.io.asSource
 import kotlinx.io.buffered

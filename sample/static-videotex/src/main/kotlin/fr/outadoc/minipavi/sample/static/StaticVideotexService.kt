@@ -1,8 +1,7 @@
-package fr.outadoc.minipavi.sample.services
+package fr.outadoc.minipavi.sample.static
 
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minipavi.core.model.ServiceResponse
-import fr.outadoc.minipavi.sample.utils.readResource
 import fr.outadoc.minipavi.videotex.buildVideotex
 import io.ktor.server.application.Application
 import kotlinx.serialization.Serializable

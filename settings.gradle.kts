@@ -31,4 +31,5 @@ dependencyResolutionManagement {
 
 include(":core")
 include(":videotex")
-include(":sample")
+include(":sample:static-videotex")
+include(":sample:hello-world")

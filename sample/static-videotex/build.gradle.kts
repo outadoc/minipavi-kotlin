@@ -7,7 +7,7 @@ plugins {
 }
 
 application {
-    mainClass.set("fr.outadoc.minipavi.sample.ApplicationKt")
+    mainClass.set("fr.outadoc.minipavi.sample.static.ApplicationKt")
     applicationDefaultJvmArgs = listOf(
         "-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}"
     )

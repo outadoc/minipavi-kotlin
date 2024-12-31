@@ -1,4 +1,4 @@
-package fr.outadoc.minipavi.sample.services
+package fr.outadoc.minipavi.sample.helloworld
 
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minipavi.core.model.ServiceResponse
