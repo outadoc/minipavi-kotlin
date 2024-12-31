@@ -38,13 +38,12 @@ internal fun playingScreen(
                         when (state.lastInputError) {
                             MinitusState.Error.InvalidLength -> {
                                 appendLine(
-                                    "Le mot à trouver contient ${expectedWord.length} lettres.",
+                                    "Entrez un mot de ${expectedWord.length} lettres.",
                                 )
                             }
 
                             MinitusState.Error.NotInDictionary -> {
-                                appendLine("Désolé, ce mot n'est pas dans mon")
-                                appendLine("dictionnaire.")
+                                appendLine("Je ne connais pas ce mot.")
                             }
                         }
                     }
