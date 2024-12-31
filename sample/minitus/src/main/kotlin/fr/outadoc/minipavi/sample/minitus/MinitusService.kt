@@ -94,10 +94,22 @@ fun Application.minitus() {
                     clearAll()
                     displayLogo()
 
-                    showGameState(
-                        dictionary = dictionary,
-                        state = nextState
-                    )
+                    when (nextState) {
+                        is MinitusState.Playing -> {
+                            playingScreen(
+                                state = nextState,
+                                expectedWord = expectedWord,
+                            )
+                        }
+
+                        is MinitusState.Lose -> {
+                            loseScreen(expectedWord)
+                        }
+
+                        is MinitusState.Win -> {
+                            winScreen()
+                        }
+                    }
                 },
             command = when (nextState) {
                 is MinitusState.Playing -> {
@@ -175,30 +187,16 @@ private fun MinitusState.Playing.reduce(
     )
 }
 
-private fun VideotexBuilder.showGameState(
-    dictionary: Set<String>,
-    state: MinitusState
+private fun VideotexBuilder.playingScreen(
+    state: MinitusState.Playing,
+    expectedWord: String,
 ) {
-    val expectedWord = dictionary.pickDailyWord(state.date)
+    displayGameGrid(
+        guesses = state.guesses,
+        expectedWord = expectedWord,
+    )
 
-    withCharacterSize(CharacterSize.DoubleSize) {
-        state.guesses.forEach { guess ->
-            appendLine()
-            appendLine(guess)
-        }
-
-        (state.guesses.size until Constants.MAX_ATTEMPTS).forEach { _ ->
-            // On affiche des lignes vides pour remplir les guess non-faits
-            appendLine()
-            appendLine(
-                expectedWord.map { '.' }.joinToString(separator = "")
-            )
-        }
-    }
-
-    appendLine()
-
-    if (state is MinitusState.Playing && state.lastInputError != null) {
+    if (state.lastInputError != null) {
         withTextColor(Color.Red) {
             when (state.lastInputError) {
                 MinitusState.Error.InvalidLength -> {
@@ -215,32 +213,53 @@ private fun VideotexBuilder.showGameState(
         }
     }
 
-    if (state is MinitusState.Win) {
-        withTextColor(Color.Green) {
-            appendLine("Bravo, vous avez trouvé le mot du jour !")
-        }
-    }
-
-    if (state is MinitusState.Lose) {
-        withTextColor(Color.Red) {
-            appendLine("Désolé, vous n'avez pas trouvé le mot du jour. :(")
-            appendLine()
-
-            append("Le mot était ")
-            withInvertedBackground {
-                appendLine(expectedWord)
-            }
-        }
-    }
-
     moveCursorTo(1, 24)
+    append("Entrez un mot + ")
+    withInvertedBackground {
+        appendLine("ENVOI")
+    }
+}
 
-    if (state is MinitusState.Playing) {
-        append("Entrez un mot + ")
+private fun VideotexBuilder.winScreen() {
+    withTextColor(Color.Green) {
+        appendLine("Bravo, vous avez trouvé le mot du jour !")
+    }
+}
+
+private fun VideotexBuilder.loseScreen(
+    expectedWord: String,
+) {
+    withTextColor(Color.Red) {
+        appendLine("Désolé, vous n'avez pas trouvé le mot du jour. :(")
+        appendLine()
+
+        append("Le mot était ")
         withInvertedBackground {
-            appendLine("ENVOI")
+            appendLine(expectedWord)
         }
     }
+}
+
+private fun VideotexBuilder.displayGameGrid(
+    guesses: List<String>,
+    expectedWord: String,
+) {
+    withCharacterSize(CharacterSize.DoubleSize) {
+        guesses.forEach { guess ->
+            appendLine()
+            appendLine(guess)
+        }
+
+        (guesses.size until Constants.MAX_ATTEMPTS).forEach { _ ->
+            // On affiche des lignes vides pour remplir les guess non-faits
+            appendLine()
+            appendLine(
+                expectedWord.map { '.' }.joinToString(separator = "")
+            )
+        }
+    }
+
+    appendLine()
 }
 
 private fun VideotexBuilder.displayLogo() {
