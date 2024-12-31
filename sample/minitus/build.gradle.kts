@@ -1,3 +1,6 @@
+import io.ktor.plugin.features.DockerImageRegistry
+import io.ktor.plugin.features.DockerPortMapping
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -11,6 +14,25 @@ application {
     applicationDefaultJvmArgs = listOf(
         "-Dio.ktor.development=${extra["io.ktor.development"] ?: "false"}"
     )
+}
+
+ktor {
+    docker {
+        localImageName = "minitus"
+        jreVersion = JavaVersion.VERSION_21
+        portMappings = listOf(
+            DockerPortMapping(
+                outsideDocker = 8080,
+                insideDocker = 8080
+            )
+        )
+        externalRegistry = DockerImageRegistry.externalRegistry(
+            username = provider { System.getenv("GHCR_USERNAME") },
+            password = provider { System.getenv("GHCR_PASSWORD") },
+            project = provider { "minitus" },
+            namespace = provider { "https://ghcr.io" },
+        )
+    }
 }
 
 dependencies {
