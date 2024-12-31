@@ -1,6 +1,6 @@
-package fr.outadoc.minipavi.sample.minitus
+package fr.outadoc.minipavi.sample.minitus.diff
 
-internal fun diff(
+internal fun computeDiff(
     expectedWord: String,
     guess: String,
 ): List<CharacterMatch> {
@@ -32,6 +32,29 @@ internal fun diff(
             else -> {
                 CharacterMatch.None(actual)
             }
+        }
+    }
+}
+
+internal fun getHintForNextGuess(
+    expectedWord: String,
+    previousGuesses: List<String>,
+): List<CharacterMatch> {
+    if (previousGuesses.isEmpty()) {
+        return expectedWord.mapIndexed { index, expectedChar ->
+            if (index == 0) {
+                CharacterMatch.Exact(expectedWord.first())
+            } else {
+                CharacterMatch.None('.')
+            }
+        }
+    }
+
+    return expectedWord.mapIndexed { index, expectedChar ->
+        if (previousGuesses.any { previousGuess -> previousGuess[index] == expectedChar }) {
+            CharacterMatch.Exact(expectedChar)
+        } else {
+            CharacterMatch.None('.')
         }
     }
 }

@@ -2,17 +2,17 @@ package fr.outadoc.minipavi.sample.minitus
 
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minipavi.core.model.ServiceResponse
-import fr.outadoc.minipavi.videotex.CharacterSize
+import fr.outadoc.minipavi.sample.minitus.dictionary.pickDailyWord
+import fr.outadoc.minipavi.sample.minitus.dictionary.readWords
+import fr.outadoc.minipavi.sample.minitus.display.displayGameGrid
+import fr.outadoc.minipavi.sample.minitus.display.displayLogo
 import fr.outadoc.minipavi.videotex.Color
-import fr.outadoc.minipavi.videotex.VideotexBuilder
 import fr.outadoc.minipavi.videotex.buildVideotex
 import io.ktor.server.application.Application
-import io.ktor.server.application.ApplicationEnvironment
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.io.readLineStrict
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -51,17 +51,6 @@ sealed interface MinitusState {
         @Serializable
         data object InvalidLength : Error
     }
-}
-
-private object Constants {
-    const val MAX_ATTEMPTS = 6
-
-    // On ne veut que des mots en majuscules de 5 à 10 caractères
-    val ALLOWED_WORD_LENGTHS = 5..10
-    val ALLOWED_WORD_REGEX = Regex("^[A-Z]{5,10}$")
-
-    const val MAX_READ_LINE_LENGTH = 32L
-    const val DICT_PATH = "/dict/fr/dict.txt"
 }
 
 fun Application.minitus() {
@@ -157,7 +146,7 @@ private fun MinitusState.Playing.reduce(
         )
     }
 
-    if (inputWord.length !in Constants.ALLOWED_WORD_LENGTHS) {
+    if (inputWord.length !in GameConstants.ALLOWED_WORD_LENGTHS) {
         return copy(
             lastInputError = MinitusState.Error.InvalidLength,
         )
@@ -178,7 +167,7 @@ private fun MinitusState.Playing.reduce(
         )
     }
 
-    if (guesses.size >= Constants.MAX_ATTEMPTS - 1) {
+    if (guesses.size >= GameConstants.MAX_ATTEMPTS - 1) {
         return MinitusState.Lose(
             date = date,
             guesses = guesses + inputWord,
@@ -269,144 +258,3 @@ private fun loseScreen(
         }
     }
 }
-
-private fun VideotexBuilder.displayGameGrid(
-    guesses: List<String>,
-    expectedWord: String,
-    showExtraLines: Boolean,
-) {
-    val startPadding = 20 - expectedWord.length
-
-    guesses.forEach { guess ->
-        appendLine()
-        repeatChar(' ', startPadding)
-
-        withCharacterSize(CharacterSize.DoubleWidth) {
-            diff(
-                expectedWord = expectedWord,
-                guess = guess,
-            ).forEach { match ->
-                when (match) {
-                    is CharacterMatch.Exact -> {
-                        withInvertedBackground {
-                            withTextColor(Color.Red) {
-                                append(match.character)
-                            }
-                        }
-                    }
-
-                    is CharacterMatch.Partial -> {
-                        withInvertedBackground {
-                            withTextColor(Color.Yellow) {
-                                append(match.character)
-                            }
-                        }
-                    }
-
-                    is CharacterMatch.None -> {
-                        append(match.character)
-                    }
-                }
-            }
-        }
-    }
-
-    if (showExtraLines) {
-        if (guesses.size < Constants.MAX_ATTEMPTS) {
-            appendLine()
-            repeatChar(' ', startPadding)
-
-            withCharacterSize(CharacterSize.DoubleWidth) {
-                withInvertedBackground {
-                    withTextColor(Color.Red) {
-                        append(expectedWord.first())
-                    }
-                }
-                appendLine(
-                    expectedWord
-                        .drop(1)
-                        .map { '.' }
-                        .joinToString(separator = ""),
-                )
-            }
-        }
-
-        (guesses.size + 1 until Constants.MAX_ATTEMPTS).forEach { _ ->
-            // On affiche des lignes vides pour remplir les guess non-faits
-            appendLine()
-            repeatChar(' ', startPadding)
-
-            withCharacterSize(CharacterSize.DoubleWidth) {
-                appendLine(
-                    expectedWord
-                        .map { '.' }
-                        .joinToString(separator = ""),
-                )
-            }
-        }
-    }
-
-    appendLine()
-    appendLine()
-}
-
-private fun VideotexBuilder.displayLogo() {
-    moveCursorTo(14, 2)
-
-    withCharacterSize(CharacterSize.DoubleSize) {
-        append('M')
-        withInvertedBackground {
-            withTextColor(Color.Yellow) {
-                append('I')
-            }
-        }
-        append("NI")
-        withInvertedBackground {
-            withTextColor(Color.Red) {
-                append('T')
-            }
-        }
-        append('U')
-        withInvertedBackground {
-            withTextColor(Color.Yellow) {
-                append('S')
-            }
-        }
-        appendLine()
-    }
-
-    withUnderline {
-        repeatChar(' ', 39)
-    }
-
-    appendLine()
-    appendLine()
-}
-
-private fun readWords(environment: ApplicationEnvironment): Set<String> =
-    buildSet {
-        readResource(Constants.DICT_PATH)
-            .use { wordSource ->
-                try {
-                    while (!wordSource.exhausted()) {
-                        val word =
-                            wordSource
-                                .readLineStrict(
-                                    limit = Constants.MAX_READ_LINE_LENGTH,
-                                )
-                                .normalize()
-
-                        if (word.matches(Constants.ALLOWED_WORD_REGEX)) {
-                            add(word)
-                            environment.log.debug("AJOUTÉ : $word")
-                        } else {
-                            environment.log.debug("IGNORÉ : $word")
-                        }
-                    }
-                } catch (e: Exception) {
-                    environment.log.error("Erreur lors de la lecture du dictionnaire", e)
-                }
-            }
-
-        environment.log.info("Chargé $size mots avec succès")
-    }

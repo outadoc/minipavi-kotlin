@@ -10,7 +10,7 @@ class GuessDifferTest {
         val guess = "LAPIN"
 
         val result =
-            diff(
+            computeDiff(
                 expectedWord = expected,
                 guess = guess,
             )
@@ -34,7 +34,7 @@ class GuessDifferTest {
         val guess = "ROUGE"
 
         val result =
-            diff(
+            computeDiff(
                 expectedWord = expected,
                 guess = guess,
             )
@@ -58,7 +58,7 @@ class GuessDifferTest {
         val guess = "LATIN"
 
         val result =
-            diff(
+            computeDiff(
                 expectedWord = expected,
                 guess = guess,
             )
@@ -82,7 +82,7 @@ class GuessDifferTest {
         val guess = "NIPAL"
 
         val result =
-            diff(
+            computeDiff(
                 expectedWord = expected,
                 guess = guess,
             )
@@ -106,7 +106,7 @@ class GuessDifferTest {
         val guess = "ECLATE"
 
         val result =
-            diff(
+            computeDiff(
                 expectedWord = expected,
                 guess = guess,
             )

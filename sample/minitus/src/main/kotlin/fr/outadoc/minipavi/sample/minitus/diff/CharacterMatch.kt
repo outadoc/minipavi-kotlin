@@ -1,4 +1,4 @@
-package fr.outadoc.minipavi.sample.minitus
+package fr.outadoc.minipavi.sample.minitus.diff
 
 sealed interface CharacterMatch {
     val character: Char

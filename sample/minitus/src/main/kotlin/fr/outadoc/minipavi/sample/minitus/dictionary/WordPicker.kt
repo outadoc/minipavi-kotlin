@@ -1,4 +1,4 @@
-package fr.outadoc.minipavi.sample.minitus
+package fr.outadoc.minipavi.sample.minitus.dictionary
 
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
