@@ -11,8 +11,6 @@ import io.ktor.server.application.ApplicationEnvironment
 import kotlinx.io.readLineStrict
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.lang.Character.UnicodeBlock
-import java.text.Normalizer
 
 @Serializable
 sealed interface MinitusState {
@@ -22,13 +20,13 @@ sealed interface MinitusState {
 }
 
 private object Constants {
-    const val MaxAttempts = 6
+    const val MAX_ATTEMPTS = 6
 
     // On ne veut que des mots en majuscules de 5 à 10 caractères
-    val AllowedWordRegex = Regex("^[A-Z]{5,10}$")
+    val ALLOWED_WORD_REGEX = Regex("^[A-Z]{5,10}$")
 
-    const val MaxReadLineLength = 32L
-    val DictPath = "/dict/fr/dict.txt"
+    const val MAX_READ_LINE_LENGTH = 32L
+    const val DICT_PATH = "/dict/fr/dict.txt"
 }
 
 fun Application.minitus() {
@@ -82,17 +80,18 @@ private fun VideotexBuilder.displayLogo() {
 
 private fun readWords(environment: ApplicationEnvironment): Set<String> =
     buildSet {
-        readResource(Constants.DictPath)
+        readResource(Constants.DICT_PATH)
             .use { wordSource ->
                 try {
                     while (!wordSource.exhausted()) {
-                        val word = wordSource
-                            .readLineStrict(
-                                limit = Constants.MaxReadLineLength
-                            )
-                            .normalize()
+                        val word =
+                            wordSource
+                                .readLineStrict(
+                                    limit = Constants.MAX_READ_LINE_LENGTH,
+                                )
+                                .normalize()
 
-                        if (word.matches(Constants.AllowedWordRegex)) {
+                        if (word.matches(Constants.ALLOWED_WORD_REGEX)) {
                             add(word)
                             environment.log.debug("AJOUTÉ : $word")
                         } else {
@@ -106,14 +105,3 @@ private fun readWords(environment: ApplicationEnvironment): Set<String> =
 
         environment.log.info("Chargé $size mots avec succès")
     }
-
-private fun String.normalize(): String {
-    // On normalise la chaîne de caractères en NFD,
-    // c'est-à-dire en décomposant les caractères en base et diacritiques
-    return Normalizer.normalize(this, Normalizer.Form.NFD)
-        .filter { char ->
-            // On supprime toutes les diacritiques
-            UnicodeBlock.of(char) != UnicodeBlock.COMBINING_DIACRITICAL_MARKS
-        }
-        .uppercase()
-}
