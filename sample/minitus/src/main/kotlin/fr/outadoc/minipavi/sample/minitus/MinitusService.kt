@@ -3,6 +3,8 @@ package fr.outadoc.minipavi.sample.minitus
 import fr.outadoc.minipavi.core.ktor.minitelService
 import fr.outadoc.minipavi.core.model.ServiceResponse
 import fr.outadoc.minipavi.videotex.CharacterSize
+import fr.outadoc.minipavi.videotex.Color
+import fr.outadoc.minipavi.videotex.VideotexBuilder
 import fr.outadoc.minipavi.videotex.buildVideotex
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationEnvironment
@@ -44,15 +46,37 @@ fun Application.minitus() {
                     content =
                         buildVideotex {
                             clearAll()
-                            appendLine()
-
-                            withCharacterSize(CharacterSize.DoubleHeight) {
-                                appendLine("MINITUS")
-                            }
+                            displayLogo()
                         },
                 )
             }
         }
+    }
+}
+
+private fun VideotexBuilder.displayLogo() {
+    moveCursorTo(14, 2)
+
+    withCharacterSize(CharacterSize.DoubleSize) {
+        append('M')
+        withInvertedBackground {
+            withTextColor(Color.Yellow) {
+                append('I')
+            }
+        }
+        append("NI")
+        withInvertedBackground {
+            withTextColor(Color.Red) {
+                append('T')
+            }
+        }
+        append('U')
+        withInvertedBackground {
+            withTextColor(Color.Yellow) {
+                append('S')
+            }
+        }
+        appendLine()
     }
 }
 
