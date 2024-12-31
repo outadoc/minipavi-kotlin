@@ -419,12 +419,34 @@ internal fun compute(
     expectedWord: String,
     guess: String,
 ): List<CharacterMatch> {
-    return expectedWord.zip(guess)
-        .map { (expected, actual) ->
-            when (expected) {
-                actual -> CharacterMatch.Exact(actual)
-                in guess -> CharacterMatch.Partial(actual)
-                else -> CharacterMatch.None(actual)
+    val zipped = expectedWord.zip(guess)
+
+    // On garde une copie modifiable des lettres disponibles
+    val availableLetters = guess.toMutableList()
+
+    // Les lettres avec un match exact ne peuvent pas être utilisées pour un match partiel,
+    // donc on les retire de la liste des lettres disponibles.
+    zipped.forEach { (expected, actual) ->
+        if (expected == actual) {
+            availableLetters.remove(actual)
+        }
+    }
+
+    // On compare les lettres restantes pour trouver les matchs partiels
+    return zipped.map { (expected, actual) ->
+        when (expected) {
+            actual -> {
+                CharacterMatch.Exact(actual)
+            }
+
+            in availableLetters -> {
+                availableLetters.remove(actual)
+                CharacterMatch.Partial(actual)
+            }
+
+            else -> {
+                CharacterMatch.None(actual)
             }
         }
+    }
 }
