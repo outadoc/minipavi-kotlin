@@ -4,7 +4,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kotlin.random.Random
 
-private const val SEED = 571875701399963519L
+private const val SEED = 1370784130107967936L
 private val EPOCH = LocalDate(2024, 12, 31)
 
 internal fun Set<String>.pickDailyWord(today: LocalDate): String {
