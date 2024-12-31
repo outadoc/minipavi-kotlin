@@ -270,12 +270,16 @@ private fun VideotexBuilder.displayGameGrid(
     withCharacterSize(CharacterSize.DoubleSize) {
         guesses.forEach { guess ->
             appendLine()
-            appendLine(guess)
+            append(guess)
         }
 
         if (guesses.size < Constants.MAX_ATTEMPTS) {
             appendLine()
-            append(expectedWord.first())
+            withInvertedBackground {
+                withTextColor(Color.Red) {
+                    append(expectedWord.first())
+                }
+            }
             appendLine(
                 expectedWord
                     .drop(1)
@@ -324,9 +328,10 @@ private fun VideotexBuilder.displayLogo() {
     }
 
     withUnderline {
-        repeatChar(' ', 40)
+        repeatChar(' ', 39)
     }
 
+    appendLine()
     appendLine()
 }
 
