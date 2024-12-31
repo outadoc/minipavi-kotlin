@@ -197,6 +197,7 @@ private fun playingScreen(
     displayGameGrid(
         guesses = state.guesses,
         expectedWord = expectedWord,
+        showExtraLines = true,
     )
 
     if (state.lastInputError != null) {
@@ -233,10 +234,11 @@ private fun winScreen(
     displayGameGrid(
         guesses = state.guesses,
         expectedWord = expectedWord,
+        showExtraLines = false,
     )
 
     withTextColor(Color.Green) {
-        appendLine("Bravo, vous avez trouvé le mot du jour !")
+        appendLine("C'est gagné !")
     }
 }
 
@@ -250,10 +252,11 @@ private fun loseScreen(
     displayGameGrid(
         guesses = state.guesses,
         expectedWord = expectedWord,
+        showExtraLines = false,
     )
 
     withTextColor(Color.Red) {
-        appendLine("Désolé, vous n'avez pas trouvé le mot du jour. :(")
+        appendLine("Perdu :(")
         appendLine()
 
         append("Le mot était ")
@@ -266,39 +269,80 @@ private fun loseScreen(
 private fun VideotexBuilder.displayGameGrid(
     guesses: List<String>,
     expectedWord: String,
+    showExtraLines: Boolean,
 ) {
-    withCharacterSize(CharacterSize.DoubleSize) {
-        guesses.forEach { guess ->
-            appendLine()
-            append(guess)
-        }
+    val startPadding = 20 - expectedWord.length
 
-        if (guesses.size < Constants.MAX_ATTEMPTS) {
-            appendLine()
-            withInvertedBackground {
-                withTextColor(Color.Red) {
-                    append(expectedWord.first())
+    guesses.forEach { guess ->
+        appendLine()
+        repeatChar(' ', startPadding)
+
+        withCharacterSize(CharacterSize.DoubleWidth) {
+            compute(
+                expectedWord = expectedWord,
+                guess = guess,
+            ).forEach { match ->
+                when (match) {
+                    is CharacterMatch.Exact -> {
+                        withInvertedBackground {
+                            withTextColor(Color.Red) {
+                                append(match.character)
+                            }
+                        }
+                    }
+
+                    is CharacterMatch.Partial -> {
+                        withInvertedBackground {
+                            withTextColor(Color.Yellow) {
+                                append(match.character)
+                            }
+                        }
+                    }
+
+                    is CharacterMatch.None -> {
+                        append(match.character)
+                    }
                 }
             }
-            appendLine(
-                expectedWord
-                    .drop(1)
-                    .map { '.' }
-                    .joinToString(separator = "")
-            )
+        }
+    }
+
+    if (showExtraLines) {
+        if (guesses.size < Constants.MAX_ATTEMPTS) {
+            appendLine()
+            repeatChar(' ', startPadding)
+
+            withCharacterSize(CharacterSize.DoubleWidth) {
+                withInvertedBackground {
+                    withTextColor(Color.Red) {
+                        append(expectedWord.first())
+                    }
+                }
+                appendLine(
+                    expectedWord
+                        .drop(1)
+                        .map { '.' }
+                        .joinToString(separator = "")
+                )
+            }
         }
 
         (guesses.size + 1 until Constants.MAX_ATTEMPTS).forEach { _ ->
             // On affiche des lignes vides pour remplir les guess non-faits
             appendLine()
-            appendLine(
-                expectedWord
-                    .map { '.' }
-                    .joinToString(separator = "")
-            )
+            repeatChar(' ', startPadding)
+
+            withCharacterSize(CharacterSize.DoubleWidth) {
+                appendLine(
+                    expectedWord
+                        .map { '.' }
+                        .joinToString(separator = "")
+                )
+            }
         }
     }
 
+    appendLine()
     appendLine()
 }
 
@@ -362,3 +406,25 @@ private fun readWords(environment: ApplicationEnvironment): Set<String> =
 
         environment.log.info("Chargé $size mots avec succès")
     }
+
+sealed interface CharacterMatch {
+    val character: Char
+
+    data class Exact(override val character: Char) : CharacterMatch
+    data class Partial(override val character: Char) : CharacterMatch
+    data class None(override val character: Char) : CharacterMatch
+}
+
+internal fun compute(
+    expectedWord: String,
+    guess: String,
+): List<CharacterMatch> {
+    return expectedWord.zip(guess)
+        .map { (expected, actual) ->
+            when (expected) {
+                actual -> CharacterMatch.Exact(actual)
+                in guess -> CharacterMatch.Partial(actual)
+                else -> CharacterMatch.None(actual)
+            }
+        }
+}
