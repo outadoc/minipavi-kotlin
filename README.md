@@ -22,6 +22,10 @@ Pourquoi pas ?
 Vous pouvez consulter le contenu du module [`sample`](sample) pour voir comment utiliser le SDK à l'aide d'exemples
 concrets.
 
+## Services en ligne
+
+- [`5422*MINITUS`](https://github.com/outadoc/minitus) : Motus-like sur Minitel, avec un nouveau mot à trouver chaque jour.
+
 ## Utilisation du SDK
 
 Tout d'abord, je vous invite à lire la documentation de MiniPavi, disponible [sur son site][2] ainsi que [sur son dépôt
