@@ -4,6 +4,7 @@ import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
 import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
 import fr.outadoc.minipavi.core.model.GatewayRequest
 import fr.outadoc.minipavi.core.model.ServiceResponse
+import io.ktor.server.application.ApplicationEnvironment
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
@@ -174,6 +175,7 @@ internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.Di
 }
 
 internal fun <T : Any> GatewayRequestDTO.mapToDomain(
+    environment: ApplicationEnvironment,
     serializer: KSerializer<T>,
     initialState: T
 ): GatewayRequest<T> {
@@ -184,10 +186,15 @@ internal fun <T : Any> GatewayRequestDTO.mapToDomain(
         socketType = payload.socketType.mapToDomain(),
         minitelVersion = payload.minitelVersion,
         userInput = payload.content,
-        state = payload.context
-            .takeIf { context -> context.isNotEmpty() }
-            ?.let { context -> Json.decodeFromString(serializer, context) }
-            ?: initialState,
+        state = try {
+            payload.context
+                .takeIf { context -> context.isNotEmpty() }
+                ?.let { context -> Json.decodeFromString(serializer, context) }
+                ?: initialState
+        } catch (e: Exception) {
+            environment.log.error("Failed to decode state. Context was ${payload.context}", e)
+            initialState
+        },
         function = payload.function.mapToDomain(),
         urlParams = urlParams
     )

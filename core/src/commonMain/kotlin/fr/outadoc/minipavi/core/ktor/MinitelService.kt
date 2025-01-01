@@ -56,6 +56,7 @@ public fun <T : Any> Application.minitelService(
         post(path) {
             val requestDto: GatewayRequestDTO = call.receive<GatewayRequestDTO>()
             val request = requestDto.mapToDomain(
+                environment = application.environment,
                 serializer = stateSerializer,
                 initialState = initialState
             )
