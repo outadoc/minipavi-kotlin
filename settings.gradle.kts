@@ -34,4 +34,3 @@ include(":videotex")
 
 include(":sample:static-videotex")
 include(":sample:hello-world")
-include(":sample:minitus")
