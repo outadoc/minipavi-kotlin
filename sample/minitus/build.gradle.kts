@@ -29,8 +29,9 @@ ktor {
         externalRegistry = DockerImageRegistry.externalRegistry(
             username = provider { System.getenv("GHCR_USERNAME") },
             password = provider { System.getenv("GHCR_PASSWORD") },
+            hostname = provider { "ghcr.io" },
             project = provider { "minitus" },
-            namespace = provider { "https://ghcr.io" },
+            namespace = provider { "outadoc" },
         )
     }
 }
