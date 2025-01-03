@@ -36,7 +36,7 @@ fun Application.staticSampleVdt() {
     minitelService<StaticSampleVdtState>(
         path = "/",
         version = "0.1",
-        initialState = StaticSampleVdtState(),
+        initialState = { StaticSampleVdtState() },
     ) { request ->
         val state = request.state
         val file = sampleFiles[state.iter % sampleFiles.size]

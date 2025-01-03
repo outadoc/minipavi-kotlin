@@ -32,9 +32,9 @@ public data class ServiceResponse<State : Any>(
      * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
      * [nextUrl], sans attendre une action de l'utilisateur.
      *
-     * - Si la valeur est [DirectCallSetting.Yes], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * - Si la valeur est [DirectCallSetting.Yes], l'appel au service aura la clé [GatewayRequest.function]
      * à la valeur [GatewayRequest.Function.Direct].
-     * - Si la valeur est [DirectCallSetting.YesCnx], l'appel au service aura la clé [GatewayRequest.Payload.function]
+     * - Si la valeur est [DirectCallSetting.YesCnx], l'appel au service aura la clé [GatewayRequest.function]
      * à la valeur  [GatewayRequest.Function.DirectConnection].
      */
     val directCall: DirectCallSetting = DirectCallSetting.No,
@@ -270,7 +270,7 @@ public data class ServiceResponse<State : Any>(
             /**
              * Si `false`, l'appel sera effectué vers l'URL indiquée en paramètres.
              * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
-             * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
+             * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
              * [GatewayRequest.Function.BackgroundCall].
              * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
              * à la passerelle.
@@ -278,7 +278,7 @@ public data class ServiceResponse<State : Any>(
              * Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
              * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre [url].
              *
-             * La touche de fonction indiquée dans la clé [GatewayRequest.Payload.function] aura la valeur
+             * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
              * [GatewayRequest.Function.BackgroundCallSimulated].
              * Cet appel devra être vu par le service comme une action de l'utilisateur.
              * En retour, le service peut envoyer toutes commandes et tout contenu,

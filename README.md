@@ -137,7 +137,7 @@ fun Application.helloWorld() {
     minitelService<EtatSimple>(
         path = "/",
         version = "0.1",
-        initialState = EtatSimple,
+        initialState = { EtatSimple },
     ) { request ->
         TODO("Votre logique de service sera ici")
     }
@@ -167,7 +167,7 @@ fun Application.helloWorld() {
         initialState = EtatSimple,
     ) { request ->
         ServiceResponse(
-            state = EtatSimple,
+            state = { EtatSimple },
             content =
                 buildVideotex {
                     appendLine("Bonjour le monde !")

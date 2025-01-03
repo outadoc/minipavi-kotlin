@@ -25,7 +25,7 @@ import kotlinx.serialization.serializer
 public inline fun <reified T : Any> Application.minitelService(
     path: String,
     version: String,
-    initialState: T,
+    noinline initialState: () -> T,
     noinline block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
 ) {
     minitelService(
@@ -45,7 +45,7 @@ public fun <T : Any> Application.minitelService(
     path: String,
     version: String,
     stateSerializer: KSerializer<T>,
-    initialState: T,
+    initialState: () -> T,
     block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
 ) {
     install(ContentNegotiation) {

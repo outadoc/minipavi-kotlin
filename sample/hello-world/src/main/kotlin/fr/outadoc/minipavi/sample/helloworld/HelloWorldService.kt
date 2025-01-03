@@ -31,7 +31,7 @@ fun Application.helloWorld() {
     minitelService<HelloWorldState>(
         path = "/",
         version = "0.1",
-        initialState = HelloWorldState.IntroPage,
+        initialState = { HelloWorldState.IntroPage },
     ) { request ->
         when (request.state) {
             HelloWorldState.IntroPage -> {

@@ -177,7 +177,7 @@ internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.Di
 internal fun <T : Any> GatewayRequestDTO.mapToDomain(
     environment: ApplicationEnvironment,
     serializer: KSerializer<T>,
-    initialState: T
+    initialState: () -> T
 ): GatewayRequest<T> {
     return GatewayRequest(
         gatewayVersion = payload.version,
@@ -190,10 +190,10 @@ internal fun <T : Any> GatewayRequestDTO.mapToDomain(
             payload.context
                 .takeIf { context -> context.isNotEmpty() }
                 ?.let { context -> Json.decodeFromString(serializer, context) }
-                ?: initialState
+                ?: initialState()
         } catch (e: Exception) {
             environment.log.error("Failed to decode state. Context was ${payload.context}", e)
-            initialState
+            initialState()
         },
         function = payload.function.mapToDomain(),
         urlParams = urlParams
