@@ -26,6 +26,10 @@ import kotlinx.serialization.serializer
  * Utilisez cette fonction comme point d'entrée pour votre service.
  * Chaque requête de la passerelle MiniPavi à votre service entrainera un appel à [block],
  * où vous pouvez traiter la requête et renvoyer une [ServiceResponse] appropriée.
+ *
+ * @param path La route par défaut du service qui sera appelé par la passerelle.
+ * Par exemple, `/`, ou `/mon-service`.
+ * @param version La version du service. Par exemple, `0.1`.
  */
 @OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
