@@ -271,16 +271,15 @@ public data class ServiceResponse<State : Any>(
             val sendAt: Instant,
 
             /**
-             * Si `false`, l'appel sera effectué vers l'URL indiquée en paramètres.
+             * - Si `false`, l'appel sera effectué vers l'URL indiquée en paramètre.
              * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
              * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
              * [GatewayRequest.Function.BackgroundCall].
              * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
              * à la passerelle.
              *
-             * Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
+             * - Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
              * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre [url].
-             *
              * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
              * [GatewayRequest.Function.BackgroundCallSimulated].
              * Cet appel devra être vu par le service comme une action de l'utilisateur.
