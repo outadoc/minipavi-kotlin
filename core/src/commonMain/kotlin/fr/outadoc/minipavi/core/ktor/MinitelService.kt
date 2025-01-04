@@ -20,6 +20,13 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
+/**
+ * Définit la route d'un nouveau service Minitel.
+ *
+ * Utilisez cette fonction comme point d'entrée pour votre service.
+ * Chaque requête de la passerelle MiniPavi à votre service entrainera un appel à [block],
+ * où vous pouvez traiter la requête et renvoyer une [ServiceResponse] appropriée.
+ */
 @OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
 public inline fun <reified T : Any> Application.minitelService(
