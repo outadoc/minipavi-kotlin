@@ -24,6 +24,16 @@ public class VideotexBuilder internal constructor() {
     private val bs = ByteStringBuilder()
 
     /**
+     * La hauteur de l'écran (nombre de lignes).
+     */
+    public val screenHeight: Int = 25
+
+    /**
+     * La largeur de l'écran (nombre de colonnes).
+     */
+    public val screenWidth: Int = 40
+
+    /**
      * Ajoute le texte spécifié au document, en convertissant
      * les caractères spéciaux si nécessaire.
      */
