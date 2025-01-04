@@ -31,6 +31,7 @@ import kotlinx.serialization.serializer
  * Par exemple, `/`, ou `/mon-service`.
  * @param version La version du service. Par exemple, `0.1`.
  * @param initialState L'état initial du service, lors de la première session d'un nouvel utilisateur.
+ * @param block Le bloc de code qui sera exécuté à chaque requête de la passerelle.
  */
 @OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
@@ -49,8 +50,22 @@ public inline fun <reified T : Any> Application.minitelService(
     )
 }
 
+/**
+ * Définit la route d'un nouveau service Minitel.
+ *
+ * Utilisez cette fonction comme point d'entrée pour votre service.
+ * Chaque requête de la passerelle MiniPavi à votre service entrainera un appel à [block],
+ * où vous pouvez traiter la requête et renvoyer une [ServiceResponse] appropriée.
+ *
+ * @param path La route par défaut du service qui sera appelé par la passerelle.
+ * Par exemple, `/`, ou `/mon-service`.
+ * @param version La version du service. Par exemple, `0.1`.
+ * @param stateSerializer Le [KSerializer] qui servira à sérialiser les états de type [T].
+ * @param initialState L'état initial du service, lors de la première session d'un nouvel utilisateur.
+ * @param block Le bloc de code qui sera exécuté à chaque requête de la passerelle.
+ */
 @Deprecated(
-    message = "Use the inline function instead.",
+    message = "Utilisez plutôt la fonction inline.",
     replaceWith = ReplaceWith("minitelService(path, version, initialState, block)"),
 )
 public fun <T : Any> Application.minitelService(

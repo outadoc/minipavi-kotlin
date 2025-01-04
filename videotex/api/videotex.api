@@ -44,6 +44,8 @@ public final class fr/outadoc/minipavi/videotex/VideotexBuilder {
 	public final fun clearLine ()V
 	public final fun clearScreen ()V
 	public final fun clearStatus ()V
+	public final fun getScreenHeight ()I
+	public final fun getScreenWidth ()I
 	public final fun moveCursorRelative (Lfr/outadoc/minipavi/videotex/CursorDirection;)V
 	public final fun moveCursorTo (II)V
 	public final fun repeatChar (CI)V

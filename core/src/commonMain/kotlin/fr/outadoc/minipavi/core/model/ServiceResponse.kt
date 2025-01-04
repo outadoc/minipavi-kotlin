@@ -29,20 +29,17 @@ public data class ServiceResponse<State : Any>(
     val echo: Boolean = true,
 
     /**
-     * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
-     * [nextUrl], sans attendre une action de l'utilisateur.
-     *
-     * - Si la valeur est [DirectCallSetting.Yes], l'appel au service aura la clé [GatewayRequest.function]
-     * à la valeur [GatewayRequest.Function.Direct].
-     * - Si la valeur est [DirectCallSetting.YesCnx], l'appel au service aura la clé [GatewayRequest.function]
-     * à la valeur  [GatewayRequest.Function.DirectConnection].
-     */
-    val directCall: DirectCallSetting = DirectCallSetting.No,
-
-    /**
      * Prochaine URL du service qui devra être appelée par la passerelle.
+     * Si [directCall] vaut [DirectCallSetting.No], l'URL ne sera appelée que
+     * lors d'une action de l'utilisateur.
      */
     val nextUrl: String = "",
+
+    /**
+     * Demande à la passerelle d'appeler immédiatement l'URL indiquée par la clé
+     * [nextUrl], sans attendre une action de l'utilisateur.
+     */
+    val directCall: DirectCallSetting = DirectCallSetting.No,
 
     /**
      * Commande particulière que doit gérer la passerelle
@@ -50,12 +47,33 @@ public data class ServiceResponse<State : Any>(
      */
     val command: Command? = null,
 ) {
+    /**
+     * Indique le mode d'appel direct à effectuer par la passerelle.
+     */
     public enum class DirectCallSetting {
+
+        /**
+         * Valeur par défaut. La passerelle n'effectuera pas d'appel direct
+         * et attendra une action de l'utilisateur.
+         */
         No,
+
+        /**
+         * L'appel au service aura la clé [GatewayRequest.function] à la
+         * valeur [GatewayRequest.Function.Direct].
+         */
         Yes,
+
+        /**
+         * L'appel au service aura la clé [GatewayRequest.function] à la
+         * valeur [GatewayRequest.Function.DirectConnection].
+         */
         YesCnx
     }
 
+    /**
+     * Commande particulière que devra gérer la passerelle.
+     */
     public sealed interface Command {
 
         /**
@@ -121,10 +139,10 @@ public data class ServiceResponse<State : Any>(
         ) : Command
 
         /**
-         * Demande à la passerelle de gérer la saisie par l'utilisateur d’une zone
+         * Demande à la passerelle de gérer la saisie par l'utilisateur d'une zone
          * de saisie de plusieurs lignes, de longueur définie.
          *
-         * Généralement utilisée pour la saisie d’un message.
+         * Généralement utilisée pour la saisie d'un message.
          */
         public data class InputMessage(
             /**
@@ -182,6 +200,10 @@ public data class ServiceResponse<State : Any>(
             val submitWith: Set<FunctionKey> = setOf(FunctionKey.Envoi),
         ) : Command
 
+        /**
+         * Demande à la passerelle de gérer la saisie par l'utilisateur d'un formulaire comprenant
+         * plusieurs zones de saisie (30 maximum), de position et longueur définies.
+         */
         public data class InputForm(
             /**
              * Tableau des positions de la colonne (1-40) des zones de saisie.
@@ -457,17 +479,53 @@ public data class ServiceResponse<State : Any>(
             val uniqueId: String
         ) : Command
 
+        /**
+         * Casse des caractères du clavier de l'utilisateur.
+         */
         public enum class Case {
+            /**
+             * Majuscules.
+             */
             Upper,
+
+            /**
+             * Minuscules.
+             */
             Lower
         }
 
+        /**
+         * Touches de fonction disponibles sur le terminal utilisateur.
+         */
         public enum class FunctionKey {
+            /**
+             * Touche `SOMMAIRE`.
+             */
             Sommaire,
+
+            /**
+             * Touche `RETOUR`.
+             */
             Retour,
+
+            /**
+             * Touche `RÉPÉTITION`.
+             */
             Repetition,
+
+            /**
+             * Touche `GUIDE`.
+             */
             Guide,
+
+            /**
+             * Touche `SUITE`.
+             */
             Suite,
+
+            /**
+             * Touche `ENVOI`.
+             */
             Envoi
         }
     }

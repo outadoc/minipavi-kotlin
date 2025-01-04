@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.URL
 
@@ -50,11 +49,12 @@ spotless {
     }
 }
 
-tasks.withType<DokkaTaskPartial>().configureEach {
+tasks.dokkaHtmlPartial {
     dokkaSourceSets {
         configureEach {
             includes.from("README.md")
-            apiVersion.set(version.toString())
+            reportUndocumented.set(true)
+            failOnWarning.set(true)
 
             externalDocumentationLink {
                 url.set(URL("https://kotlinlang.org/api/kotlinx.serialization/"))

@@ -8,3 +8,7 @@ plugins {
 
     alias(libs.plugins.dokka)
 }
+
+tasks.dokkaHtmlMultiModule {
+    moduleVersion.set(findProperty("fr.outadoc.minipavi.version") as String)
+}

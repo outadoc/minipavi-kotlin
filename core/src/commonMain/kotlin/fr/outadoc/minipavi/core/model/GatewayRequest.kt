@@ -59,29 +59,123 @@ public data class GatewayRequest<T : Any>(
      */
     val urlParams: Map<String, String>? = null,
 ) {
+    /**
+     * Le type de connexion de l'utilisateur.
+     */
     public enum class SocketType {
+        /**
+         * Connexion par WebSocket.
+         */
         WebSocket,
+
+        /**
+         * Connexion par WebSocket sécurisée.
+         */
         WebSocketSSL,
+
+        /**
+         * Connexion par [Asterisk](https://fr.wikipedia.org/wiki/Asterisk_(logiciel))
+         * (réseau téléphonique).
+         */
         Asterisk,
+
+        /**
+         * Connexion par Telnet.
+         */
         Telnet,
     }
 
+    /**
+     * Touche de fonction ou évènement ayant initié une requête.
+     */
     public enum class Function {
+        /**
+         * Touche `ENVOI`.
+         */
         Envoi,
+
+        /**
+         * Touche `SUITE`.
+         */
         Suite,
+
+        /**
+         * Touche `Retour`.
+         */
         Retour,
+
+        /**
+         * Touche `Annulation`.
+         */
         Annulation,
+
+        /**
+         * Touche `Correction`.
+         */
         Correction,
+
+        /**
+         * Touche `GUIDE`.
+         */
         Guide,
+
+        /**
+         * Touche `RÉPÉTITION`.
+         */
         Repetition,
+
+        /**
+         * Touche `SOMMAIRE`.
+         */
         Sommaire,
+
+        /**
+         * Événement envoyé lors de la connexion initiale de l'utilisateur.
+         */
         Connection,
+
+        /**
+         * Événement envoyé lors de la déconnexion de l'utilisateur.
+         */
         Fin,
+
+        /**
+         * Événement envoyé lorsque la passerelle a appelé le service
+         * à cause d'un paramètre [ServiceResponse.directCall] à
+         * [ServiceResponse.DirectCallSetting.Yes].
+         */
         Direct,
+
+        /**
+         * Événement envoyé lorsque la passerelle a appelé le service
+         * à cause d'un paramètre [ServiceResponse.directCall] à
+         * [ServiceResponse.DirectCallSetting.YesCnx].
+         */
         DirectConnection,
+
+        /**
+         * Événement envoyé lors de l'échec de l'appel direct,
+         * suite à l'utilisation du paramètre [ServiceResponse.directCall].
+         */
         DirectCallFailed,
+
+        /**
+         * Événement envoyé lorsque l'appel direct a été terminé,
+         * suite à l'utilisation du paramètre [ServiceResponse.directCall].
+         */
         DirectCallEnded,
+
+        /**
+         * Événement envoyé lorsque la passerelle a appelé le service
+         * suite à une commande [ServiceResponse.Command.BackgroundCall].
+         */
         BackgroundCall,
+
+        /**
+         * Événement envoyé lorsque la passerelle a appelé le service
+         * suite à une commande [ServiceResponse.Command.BackgroundCall]
+         * avec le paramètre [ServiceResponse.Command.BackgroundCall.simulate] à `true`.
+         */
         BackgroundCallSimulated,
     }
 }
