@@ -266,7 +266,7 @@ public data class ServiceResponse<State : Any>(
          */
         public data class BackgroundCall(
             /**
-             * Timestamp Unix de l'heure prévue de l'appel.
+             * Heure prévue de l'appel.
              */
             val sendAt: Instant,
 
