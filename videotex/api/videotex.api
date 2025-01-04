@@ -1,17 +1,3 @@
-public final class fr/outadoc/minipavi/videotex/BackgroundColor : java/lang/Enum {
-	public static final field Black Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Blue Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Cyan Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Green Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Magenta Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Red Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field White Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static final field Yellow Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/videotex/BackgroundColor;
-	public static fun values ()[Lfr/outadoc/minipavi/videotex/BackgroundColor;
-}
-
 public final class fr/outadoc/minipavi/videotex/CharacterSize : java/lang/Enum {
 	public static final field DoubleHeight Lfr/outadoc/minipavi/videotex/CharacterSize;
 	public static final field DoubleSize Lfr/outadoc/minipavi/videotex/CharacterSize;
@@ -20,6 +6,20 @@ public final class fr/outadoc/minipavi/videotex/CharacterSize : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/videotex/CharacterSize;
 	public static fun values ()[Lfr/outadoc/minipavi/videotex/CharacterSize;
+}
+
+public final class fr/outadoc/minipavi/videotex/Color : java/lang/Enum {
+	public static final field Black Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Blue Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Cyan Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Green Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Magenta Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Red Lfr/outadoc/minipavi/videotex/Color;
+	public static final field White Lfr/outadoc/minipavi/videotex/Color;
+	public static final field Yellow Lfr/outadoc/minipavi/videotex/Color;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/videotex/Color;
+	public static fun values ()[Lfr/outadoc/minipavi/videotex/Color;
 }
 
 public final class fr/outadoc/minipavi/videotex/CursorDirection : java/lang/Enum {
@@ -31,20 +31,6 @@ public final class fr/outadoc/minipavi/videotex/CursorDirection : java/lang/Enum
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/videotex/CursorDirection;
 	public static fun values ()[Lfr/outadoc/minipavi/videotex/CursorDirection;
-}
-
-public final class fr/outadoc/minipavi/videotex/TextColor : java/lang/Enum {
-	public static final field Black Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Blue Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Cyan Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Green Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Magenta Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Red Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field White Lfr/outadoc/minipavi/videotex/TextColor;
-	public static final field Yellow Lfr/outadoc/minipavi/videotex/TextColor;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lfr/outadoc/minipavi/videotex/TextColor;
-	public static fun values ()[Lfr/outadoc/minipavi/videotex/TextColor;
 }
 
 public final class fr/outadoc/minipavi/videotex/VideotexBuilder {
@@ -64,13 +50,13 @@ public final class fr/outadoc/minipavi/videotex/VideotexBuilder {
 	public final fun resetCharacterSets ()V
 	public final fun setLocalEcho (Z)V
 	public final fun showCursor (Z)V
-	public final fun withBackgroundColor (Lfr/outadoc/minipavi/videotex/BackgroundColor;Lkotlin/jvm/functions/Function1;)V
+	public final fun withBackgroundColor (Lfr/outadoc/minipavi/videotex/Color;Lkotlin/jvm/functions/Function1;)V
 	public final fun withBlink (Lkotlin/jvm/functions/Function1;)V
 	public final fun withCharacterSize (Lfr/outadoc/minipavi/videotex/CharacterSize;Lkotlin/jvm/functions/Function1;)V
 	public final fun withInvertedBackground (Lkotlin/jvm/functions/Function1;)V
 	public final fun withMosaic (Lkotlin/jvm/functions/Function1;)V
 	public final fun withRouleau (Lkotlin/jvm/functions/Function1;)V
-	public final fun withTextColor (Lfr/outadoc/minipavi/videotex/TextColor;Lkotlin/jvm/functions/Function1;)V
+	public final fun withTextColor (Lfr/outadoc/minipavi/videotex/Color;Lkotlin/jvm/functions/Function1;)V
 	public final fun withUnderline (Lkotlin/jvm/functions/Function1;)V
 }
 
