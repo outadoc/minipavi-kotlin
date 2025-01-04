@@ -178,6 +178,13 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Discon
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Display : fr/outadoc/minipavi/core/model/ServiceResponse$Command {
+	public static final field INSTANCE Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$Display;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$DuplicateStream : fr/outadoc/minipavi/core/model/ServiceResponse$Command {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;

@@ -19,12 +19,16 @@ internal fun <T : Any> ServiceResponse<T>.mapToDTO(
         echo = echo.mapToDTO(),
         directCall = directCall.mapToDTO(),
         nextUrl = nextUrl,
-        command = command?.mapToDTO()
+        command = command.mapToDTO()
     )
 }
 
-internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command {
+internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command? {
     return when (this) {
+        is ServiceResponse.Command.Display -> {
+            null
+        }
+
         is ServiceResponse.Command.BackgroundCall -> {
             ServiceResponseDTO.Command.BackgroundCall(
                 params = ServiceResponseDTO.Command.BackgroundCall.Params(

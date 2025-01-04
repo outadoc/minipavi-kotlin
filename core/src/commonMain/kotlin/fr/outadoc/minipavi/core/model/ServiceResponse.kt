@@ -45,36 +45,17 @@ public data class ServiceResponse<State : Any>(
      * Commande particulière que doit gérer la passerelle
      * (saisie texte, saisie message, etc.).
      */
-    val command: Command? = null,
+    val command: Command = Command.Display,
 ) {
-    /**
-     * Indique le mode d'appel direct à effectuer par la passerelle.
-     */
-    public enum class DirectCallSetting {
-
-        /**
-         * Valeur par défaut. La passerelle n'effectuera pas d'appel direct
-         * et attendra une action de l'utilisateur.
-         */
-        No,
-
-        /**
-         * L'appel au service aura la clé [GatewayRequest.function] à la
-         * valeur [GatewayRequest.Function.Direct].
-         */
-        Yes,
-
-        /**
-         * L'appel au service aura la clé [GatewayRequest.function] à la
-         * valeur [GatewayRequest.Function.DirectConnection].
-         */
-        YesCnx
-    }
-
     /**
      * Commande particulière que devra gérer la passerelle.
      */
     public sealed interface Command {
+
+        /**
+         * Demande à la passerelle d'afficher simplement le contenu de la page Vidéotex.
+         */
+        public data object Display : Command
 
         /**
          * Demande à la passerelle de gérer la saisie par l'utilisateur d'une seule ligne de saisie,
@@ -528,5 +509,29 @@ public data class ServiceResponse<State : Any>(
              */
             Envoi
         }
+    }
+
+    /**
+     * Indique le mode d'appel direct à effectuer par la passerelle.
+     */
+    public enum class DirectCallSetting {
+
+        /**
+         * Valeur par défaut. La passerelle n'effectuera pas d'appel direct
+         * et attendra une action de l'utilisateur.
+         */
+        No,
+
+        /**
+         * L'appel au service aura la clé [GatewayRequest.function] à la
+         * valeur [GatewayRequest.Function.Direct].
+         */
+        Yes,
+
+        /**
+         * L'appel au service aura la clé [GatewayRequest.function] à la
+         * valeur [GatewayRequest.Function.DirectConnection].
+         */
+        YesCnx
     }
 }
