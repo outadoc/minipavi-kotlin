@@ -30,6 +30,7 @@ import kotlinx.serialization.serializer
  * @param path La route par défaut du service qui sera appelé par la passerelle.
  * Par exemple, `/`, ou `/mon-service`.
  * @param version La version du service. Par exemple, `0.1`.
+ * @param initialState L'état initial du service, lors de la première session d'un nouvel utilisateur.
  */
 @OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
