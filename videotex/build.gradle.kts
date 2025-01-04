@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "fr.outadoc.minipavi"
-version = "0.0.3"
+version = findProperty("fr.outadoc.minipavi.version") as String
 
 kotlin {
     explicitApi()
@@ -41,6 +41,7 @@ tasks.withType<DokkaTaskPartial>().configureEach {
     dokkaSourceSets {
         configureEach {
             includes.from("README.md")
+            apiVersion.set(version.toString())
 
             externalDocumentationLink {
                 url.set(URL("https://kotlinlang.org/api/kotlinx-io/"))
