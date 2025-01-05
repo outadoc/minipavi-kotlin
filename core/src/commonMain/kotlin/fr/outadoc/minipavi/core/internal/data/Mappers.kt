@@ -3,14 +3,15 @@ package fr.outadoc.minipavi.core.internal.data
 import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
 import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
 import fr.outadoc.minipavi.core.model.GatewayRequest
+import fr.outadoc.minipavi.core.model.FunctionKey
 import fr.outadoc.minipavi.core.model.ServiceResponse
 import io.ktor.server.application.ApplicationEnvironment
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-internal fun <T : Any> ServiceResponse<T>.mapToDTO(
-    stateSerializer: KSerializer<T>,
-    version: String
+internal fun <TState : Any> ServiceResponse<TState>.mapToDTO(
+    stateSerializer: KSerializer<TState>,
+    version: String,
 ): ServiceResponseDTO {
     return ServiceResponseDTO(
         version = version,
@@ -95,7 +96,7 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command? {
                     x = cols,
                     y = lines,
                     length = length,
-                    spaceChar = spaceChar,
+                    spaceChar = spaceChar.toString(),
                     prefill = prefill,
                     cursor = cursor.mapToDTO(),
                     submitWith = submitWith.map { it.mapToDTO() }.toSet()
@@ -144,14 +145,19 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command? {
     }
 }
 
-internal fun ServiceResponse.Command.FunctionKey.mapToDTO(): ServiceResponseDTO.Command.FunctionKey {
+internal fun FunctionKey.mapToDTO(): ServiceResponseDTO.Command.FunctionKey {
     return when (this) {
-        ServiceResponse.Command.FunctionKey.Sommaire -> ServiceResponseDTO.Command.FunctionKey.SOMMAIRE
-        ServiceResponse.Command.FunctionKey.Retour -> ServiceResponseDTO.Command.FunctionKey.RETOUR
-        ServiceResponse.Command.FunctionKey.Repetition -> ServiceResponseDTO.Command.FunctionKey.REPETITION
-        ServiceResponse.Command.FunctionKey.Guide -> ServiceResponseDTO.Command.FunctionKey.GUIDE
-        ServiceResponse.Command.FunctionKey.Suite -> ServiceResponseDTO.Command.FunctionKey.SUITE
-        ServiceResponse.Command.FunctionKey.Envoi -> ServiceResponseDTO.Command.FunctionKey.ENVOI
+        FunctionKey.Sommaire -> ServiceResponseDTO.Command.FunctionKey.SOMMAIRE
+        FunctionKey.Retour -> ServiceResponseDTO.Command.FunctionKey.RETOUR
+        FunctionKey.Repetition -> ServiceResponseDTO.Command.FunctionKey.REPETITION
+        FunctionKey.Guide -> ServiceResponseDTO.Command.FunctionKey.GUIDE
+        FunctionKey.Suite -> ServiceResponseDTO.Command.FunctionKey.SUITE
+        FunctionKey.Envoi -> ServiceResponseDTO.Command.FunctionKey.ENVOI
+        FunctionKey.Annulation,
+        FunctionKey.Correction,
+            -> {
+            error("Unsupported function key: $this")
+        }
     }
 }
 
@@ -178,11 +184,11 @@ internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.Di
     }
 }
 
-internal fun <T : Any> GatewayRequestDTO.mapToDomain(
+internal fun <TState : Any> GatewayRequestDTO.mapToDomain(
     environment: ApplicationEnvironment,
-    serializer: KSerializer<T>,
-    initialState: () -> T
-): GatewayRequest<T> {
+    serializer: KSerializer<TState>,
+    initialState: () -> TState,
+): GatewayRequest<TState> {
     return GatewayRequest(
         gatewayVersion = payload.version,
         sessionId = payload.uniqueId,
@@ -199,29 +205,29 @@ internal fun <T : Any> GatewayRequestDTO.mapToDomain(
             environment.log.error("Failed to decode state. Context was ${payload.context}", e)
             initialState()
         },
-        function = payload.function.mapToDomain(),
+        event = payload.function.mapToDomain(),
         urlParams = urlParams
     )
 }
 
-internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Function {
+internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Event {
     return when (this) {
-        GatewayRequestDTO.Function.ENVOI -> GatewayRequest.Function.Envoi
-        GatewayRequestDTO.Function.SUITE -> GatewayRequest.Function.Suite
-        GatewayRequestDTO.Function.RETOUR -> GatewayRequest.Function.Retour
-        GatewayRequestDTO.Function.ANNULATION -> GatewayRequest.Function.Annulation
-        GatewayRequestDTO.Function.CORRECTION -> GatewayRequest.Function.Correction
-        GatewayRequestDTO.Function.GUIDE -> GatewayRequest.Function.Guide
-        GatewayRequestDTO.Function.REPETITION -> GatewayRequest.Function.Repetition
-        GatewayRequestDTO.Function.SOMMAIRE -> GatewayRequest.Function.Sommaire
-        GatewayRequestDTO.Function.CONNECTION -> GatewayRequest.Function.Connection
-        GatewayRequestDTO.Function.FIN -> GatewayRequest.Function.Fin
-        GatewayRequestDTO.Function.DIRECT -> GatewayRequest.Function.Direct
-        GatewayRequestDTO.Function.DIRECT_CONNECTION -> GatewayRequest.Function.DirectConnection
-        GatewayRequestDTO.Function.DIRECT_CALL_FAILED -> GatewayRequest.Function.DirectCallFailed
-        GatewayRequestDTO.Function.DIRECT_CALL_ENDED -> GatewayRequest.Function.DirectCallEnded
-        GatewayRequestDTO.Function.BACKGROUND_CALL -> GatewayRequest.Function.BackgroundCall
-        GatewayRequestDTO.Function.SIMULATED_BACKGROUND_CALL -> GatewayRequest.Function.BackgroundCallSimulated
+        GatewayRequestDTO.Function.ENVOI -> GatewayRequest.Event.KeyboardInput(FunctionKey.Envoi)
+        GatewayRequestDTO.Function.SUITE -> GatewayRequest.Event.KeyboardInput(FunctionKey.Suite)
+        GatewayRequestDTO.Function.RETOUR -> GatewayRequest.Event.KeyboardInput(FunctionKey.Retour)
+        GatewayRequestDTO.Function.ANNULATION -> GatewayRequest.Event.KeyboardInput(FunctionKey.Annulation)
+        GatewayRequestDTO.Function.CORRECTION -> GatewayRequest.Event.KeyboardInput(FunctionKey.Correction)
+        GatewayRequestDTO.Function.GUIDE -> GatewayRequest.Event.KeyboardInput(FunctionKey.Guide)
+        GatewayRequestDTO.Function.REPETITION -> GatewayRequest.Event.KeyboardInput(FunctionKey.Repetition)
+        GatewayRequestDTO.Function.SOMMAIRE -> GatewayRequest.Event.KeyboardInput(FunctionKey.Sommaire)
+        GatewayRequestDTO.Function.CONNECTION -> GatewayRequest.Event.Connection
+        GatewayRequestDTO.Function.FIN -> GatewayRequest.Event.Fin
+        GatewayRequestDTO.Function.DIRECT -> GatewayRequest.Event.Direct
+        GatewayRequestDTO.Function.DIRECT_CONNECTION -> GatewayRequest.Event.DirectConnection
+        GatewayRequestDTO.Function.DIRECT_CALL_FAILED -> GatewayRequest.Event.DirectCallFailed
+        GatewayRequestDTO.Function.DIRECT_CALL_ENDED -> GatewayRequest.Event.DirectCallEnded
+        GatewayRequestDTO.Function.BACKGROUND_CALL -> GatewayRequest.Event.BackgroundCall
+        GatewayRequestDTO.Function.SIMULATED_BACKGROUND_CALL -> GatewayRequest.Event.BackgroundCallSimulated
     }
 }
 

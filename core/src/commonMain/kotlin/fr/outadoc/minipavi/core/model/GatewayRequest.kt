@@ -3,7 +3,7 @@ package fr.outadoc.minipavi.core.model
 /**
  * Données émises par la passerelle, à destination du service.
  */
-public data class GatewayRequest<T : Any>(
+public data class GatewayRequest<TState : Any>(
     /**
      * Version de la passerelle.
      */
@@ -47,12 +47,12 @@ public data class GatewayRequest<T : Any>(
      *
      * Sert à sauvegarder le contexte de l'utilisateur tout au long de sa visite du service.
      */
-    val state: T,
+    val state: TState,
 
     /**
-     * Touche de fonction ou évènement ayant initié cette requête.
+     * Évènement ayant initié cette requête.
      */
-    val function: Function,
+    val event: Event,
 
     /**
      * Tableau associatif contenant les éventuels paramètres indiqués dans l'URL.
@@ -86,96 +86,67 @@ public data class GatewayRequest<T : Any>(
     }
 
     /**
-     * Touche de fonction ou évènement ayant initié une requête.
+     * Évènement ayant initié une requête.
      */
-    public enum class Function {
-        /**
-         * Touche `ENVOI`.
-         */
-        Envoi,
+    public sealed class Event {
 
         /**
-         * Touche `SUITE`.
+         * Événement envoyé lors de l'appui sur une touche du clavier.
          */
-        Suite,
-
-        /**
-         * Touche `Retour`.
-         */
-        Retour,
-
-        /**
-         * Touche `Annulation`.
-         */
-        Annulation,
-
-        /**
-         * Touche `Correction`.
-         */
-        Correction,
-
-        /**
-         * Touche `GUIDE`.
-         */
-        Guide,
-
-        /**
-         * Touche `RÉPÉTITION`.
-         */
-        Repetition,
-
-        /**
-         * Touche `SOMMAIRE`.
-         */
-        Sommaire,
+        public data class KeyboardInput(
+            /**
+             * Touche du clavier appuyée.
+             */
+            val key: FunctionKey,
+        ) : Event()
 
         /**
          * Événement envoyé lors de la connexion initiale de l'utilisateur.
          */
-        Connection,
+        public data object Connection : Event()
 
         /**
          * Événement envoyé lors de la déconnexion de l'utilisateur.
          */
-        Fin,
+        public data object Fin : Event()
 
         /**
          * Événement envoyé lorsque la passerelle a appelé le service
          * à cause d'un paramètre [ServiceResponse.directCall] à
          * [ServiceResponse.DirectCallSetting.Yes].
          */
-        Direct,
+        public data object Direct : Event()
 
         /**
          * Événement envoyé lorsque la passerelle a appelé le service
          * à cause d'un paramètre [ServiceResponse.directCall] à
          * [ServiceResponse.DirectCallSetting.YesCnx].
          */
-        DirectConnection,
+        public data object DirectConnection : Event()
 
         /**
          * Événement envoyé lors de l'échec de l'appel direct,
          * suite à l'utilisation du paramètre [ServiceResponse.directCall].
          */
-        DirectCallFailed,
+        public data object DirectCallFailed : Event()
 
         /**
          * Événement envoyé lorsque l'appel direct a été terminé,
          * suite à l'utilisation du paramètre [ServiceResponse.directCall].
          */
-        DirectCallEnded,
+        public data object DirectCallEnded : Event()
 
         /**
          * Événement envoyé lorsque la passerelle a appelé le service
          * suite à une commande [ServiceResponse.Command.BackgroundCall].
          */
-        BackgroundCall,
+        public data object BackgroundCall : Event()
 
         /**
          * Événement envoyé lorsque la passerelle a appelé le service
          * suite à une commande [ServiceResponse.Command.BackgroundCall]
          * avec le paramètre [ServiceResponse.Command.BackgroundCall.simulate] à `true`.
          */
-        BackgroundCallSimulated,
+        public data object BackgroundCallSimulated : Event()
     }
 }

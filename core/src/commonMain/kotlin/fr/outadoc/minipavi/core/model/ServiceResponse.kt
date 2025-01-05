@@ -7,12 +7,12 @@ import kotlinx.io.bytestring.ByteString
 /**
  * Données émises par le service, à destination de la passerelle.
  */
-public data class ServiceResponse<State : Any>(
+public data class ServiceResponse<TState : Any>(
 
     /**
      * Données libres qui seront renvoyées inchangées par la suite par la passerelle.
      */
-    val state: State,
+    val state: TState,
 
     /**
      * Le contenu de la page Vidéotex à afficher.
@@ -204,7 +204,7 @@ public data class ServiceResponse<State : Any>(
             /**
              *  Caractère pour affichage du champ de saisie (` ` ou `.` généralement).
              */
-            val spaceChar: String = ".",
+            val spaceChar: Char = '.',
 
             /**
              * Tableau contenant les valeurs de pré-remplissage de chaque zone de saisie.
@@ -273,15 +273,15 @@ public data class ServiceResponse<State : Any>(
             /**
              * - Si `false`, l'appel sera effectué vers l'URL indiquée en paramètre.
              * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
-             * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
-             * [GatewayRequest.Function.BackgroundCall].
+             * La touche de fonction indiquée dans la clé [GatewayRequest.event] aura la valeur
+             * [GatewayRequest.Event.BackgroundCall].
              * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
              * à la passerelle.
              *
              * - Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
              * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre [url].
-             * La touche de fonction indiquée dans la clé [GatewayRequest.function] aura la valeur
-             * [GatewayRequest.Function.BackgroundCallSimulated].
+             * La touche de fonction indiquée dans la clé [GatewayRequest.event] aura la valeur
+             * [GatewayRequest.Event.BackgroundCallSimulated].
              * Cet appel devra être vu par le service comme une action de l'utilisateur.
              * En retour, le service peut envoyer toutes commandes et tout contenu,
              * qui sera alors envoyé à l'utilisateur.
@@ -310,8 +310,8 @@ public data class ServiceResponse<State : Any>(
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Websocket.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -360,8 +360,8 @@ public data class ServiceResponse<State : Any>(
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Telnet.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -405,8 +405,8 @@ public data class ServiceResponse<State : Any>(
          * accessible par téléphone.
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -432,7 +432,7 @@ public data class ServiceResponse<State : Any>(
              * Niveau du signal transmis (en décibels)
              * (Ex : -30)
              */
-            val tx: Int
+            val tx: Int,
         ) : Command
 
         /**
@@ -441,8 +441,8 @@ public data class ServiceResponse<State : Any>(
          * ce que voit l'utilisateur B).
          *
          * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Function.DirectCallEnded]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Function.DirectCallFailed]
+         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
+         * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
@@ -456,7 +456,7 @@ public data class ServiceResponse<State : Any>(
             /**
              * Identifiant unique de l'utilisateur dont le flux sortant doit être dupliqué.
              */
-            val uniqueId: String
+            val uniqueId: String,
         ) : Command
 
         /**
@@ -473,41 +473,6 @@ public data class ServiceResponse<State : Any>(
              */
             Lower
         }
-
-        /**
-         * Touches de fonction disponibles sur le terminal utilisateur.
-         */
-        public enum class FunctionKey {
-            /**
-             * Touche `SOMMAIRE`.
-             */
-            Sommaire,
-
-            /**
-             * Touche `RETOUR`.
-             */
-            Retour,
-
-            /**
-             * Touche `RÉPÉTITION`.
-             */
-            Repetition,
-
-            /**
-             * Touche `GUIDE`.
-             */
-            Guide,
-
-            /**
-             * Touche `SUITE`.
-             */
-            Suite,
-
-            /**
-             * Touche `ENVOI`.
-             */
-            Envoi
-        }
     }
 
     /**
@@ -522,14 +487,14 @@ public data class ServiceResponse<State : Any>(
         No,
 
         /**
-         * L'appel au service aura la clé [GatewayRequest.function] à la
-         * valeur [GatewayRequest.Function.Direct].
+         * L'appel au service aura la clé [GatewayRequest.event] à la
+         * valeur [GatewayRequest.Event.Direct].
          */
         Yes,
 
         /**
-         * L'appel au service aura la clé [GatewayRequest.function] à la
-         * valeur [GatewayRequest.Function.DirectConnection].
+         * L'appel au service aura la clé [GatewayRequest.event] à la
+         * valeur [GatewayRequest.Event.DirectConnection].
          */
         YesCnx
     }

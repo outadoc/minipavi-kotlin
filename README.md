@@ -164,7 +164,7 @@ fun Application.helloWorld() {
     minitelService<EtatSimple>(
         path = "/",
         version = "0.1",
-        initialState = EtatSimple,
+        initialState = { EtatSimple },
     ) { request ->
         ServiceResponse(
             state = { EtatSimple },

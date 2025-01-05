@@ -35,16 +35,16 @@ import kotlinx.serialization.serializer
  */
 @OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
-public inline fun <reified T : Any> Application.minitelService(
+public inline fun <reified TState : Any> Application.minitelService(
     path: String,
     version: String,
-    noinline initialState: () -> T,
-    noinline block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
+    noinline initialState: () -> TState,
+    noinline block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>
 ) {
     minitelService(
         path = path,
         version = version,
-        stateSerializer = T::class.serializer(),
+        stateSerializer = TState::class.serializer(),
         initialState = initialState,
         block = block
     )
@@ -60,7 +60,7 @@ public inline fun <reified T : Any> Application.minitelService(
  * @param path La route par défaut du service qui sera appelé par la passerelle.
  * Par exemple, `/`, ou `/mon-service`.
  * @param version La version du service. Par exemple, `0.1`.
- * @param stateSerializer Le [KSerializer] qui servira à sérialiser les états de type [T].
+ * @param stateSerializer Le [KSerializer] qui servira à sérialiser les états de type [TState].
  * @param initialState L'état initial du service, lors de la première session d'un nouvel utilisateur.
  * @param block Le bloc de code qui sera exécuté à chaque requête de la passerelle.
  */
@@ -68,12 +68,12 @@ public inline fun <reified T : Any> Application.minitelService(
     message = "Utilisez plutôt la fonction inline.",
     replaceWith = ReplaceWith("minitelService(path, version, initialState, block)"),
 )
-public fun <T : Any> Application.minitelService(
+public fun <TState : Any> Application.minitelService(
     path: String,
     version: String,
-    stateSerializer: KSerializer<T>,
-    initialState: () -> T,
-    block: Route.(GatewayRequest<T>) -> ServiceResponse<T>
+    stateSerializer: KSerializer<TState>,
+    initialState: () -> TState,
+    block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>
 ) {
     install(ContentNegotiation) {
         json(Json)
@@ -90,7 +90,7 @@ public fun <T : Any> Application.minitelService(
 
             application.environment.log.debug("Received request: {}", request)
 
-            val response: ServiceResponse<T> = block(request)
+            val response: ServiceResponse<TState> = block(request)
 
             application.environment.log.debug("Responding with: {}", response)
 
