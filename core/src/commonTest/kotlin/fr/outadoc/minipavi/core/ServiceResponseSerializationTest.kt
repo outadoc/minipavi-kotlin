@@ -1,6 +1,5 @@
 package fr.outadoc.minipavi.core
 
-import fr.outadoc.minipavi.core.internal.data.model.CommandDTO
 import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
 import kotlinx.io.bytestring.encodeToByteString
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -17,8 +16,8 @@ class ServiceResponseSerializationTest {
         val expected = """
             {
               "version": "1.0",
-              "content": "SGVsbG8gV29ybGQh",
               "context": "a:1:{s:3:\"url\";s:0:\"\";}",
+              "content": "SGVsbG8gV29ybGQh",
               "echo": "on",
               "directcall": "no",
               "next": "http://www.monsite.fr/index.php?step=20",
@@ -42,22 +41,22 @@ class ServiceResponseSerializationTest {
             version = "1.0",
             content = "Hello World!".encodeToByteString(),
             context = "a:1:{s:3:\"url\";s:0:\"\";}",
-            echo = CommandDTO.OnOff.ON,
+            echo = ServiceResponseDTO.Command.OnOff.ON,
             directCall = ServiceResponseDTO.DirectCallSetting.NO,
             nextUrl = "http://www.monsite.fr/index.php?step=20",
-            command = CommandDTO.InputMessage(
-                params = CommandDTO.InputMessage.Params(
+            command = ServiceResponseDTO.Command.InputMessage(
+                params = ServiceResponseDTO.Command.InputMessage.Params(
                     x = 1,
                     y = 13,
                     width = 40,
                     height = 2,
                     spaceChar = ".",
                     prefill = emptyList(),
-                    cursor = CommandDTO.OnOff.ON,
+                    cursor = ServiceResponseDTO.Command.OnOff.ON,
                     submitWith = setOf(
-                        CommandDTO.FunctionKey.REPETITION,
-                        CommandDTO.FunctionKey.GUIDE,
-                        CommandDTO.FunctionKey.ENVOI
+                        ServiceResponseDTO.Command.FunctionKey.REPETITION,
+                        ServiceResponseDTO.Command.FunctionKey.GUIDE,
+                        ServiceResponseDTO.Command.FunctionKey.ENVOI
                     )
                 )
             )
@@ -75,8 +74,8 @@ class ServiceResponseSerializationTest {
         val expected = """
             {
               "version": "1.0",
-              "content": "SGVsbG8gV29ybGQh",
               "context": "a:0:{}",
+              "content": "SGVsbG8gV29ybGQh",
               "echo": "on",
               "directcall": "no",
               "next": "http://www.monsite.fr/index.php?step=20",
@@ -100,21 +99,21 @@ class ServiceResponseSerializationTest {
             version = "1.0",
             content = "Hello World!".encodeToByteString(),
             context = "a:0:{}",
-            echo = CommandDTO.OnOff.ON,
+            echo = ServiceResponseDTO.Command.OnOff.ON,
             directCall = ServiceResponseDTO.DirectCallSetting.NO,
             nextUrl = "http://www.monsite.fr/index.php?step=20",
-            command = CommandDTO.InputText(
-                params = CommandDTO.InputText.Params(
+            command = ServiceResponseDTO.Command.InputText(
+                params = ServiceResponseDTO.Command.InputText.Params(
                     x = 2,
                     y = 20,
                     length = 10,
                     char = "",
                     spaceChar = ".",
                     prefill = "Salut!",
-                    cursor = CommandDTO.OnOff.ON,
+                    cursor = ServiceResponseDTO.Command.OnOff.ON,
                     submitWith = setOf(
-                        CommandDTO.FunctionKey.REPETITION,
-                        CommandDTO.FunctionKey.ENVOI
+                        ServiceResponseDTO.Command.FunctionKey.REPETITION,
+                        ServiceResponseDTO.Command.FunctionKey.ENVOI
                     )
                 )
             )
@@ -130,5 +129,6 @@ class ServiceResponseSerializationTest {
     private val json = Json {
         prettyPrint = true
         prettyPrintIndent = "  "
+        encodeDefaults = true
     }
 }
