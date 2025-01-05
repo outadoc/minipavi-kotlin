@@ -96,8 +96,8 @@ public final class fr/outadoc/minipavi/core/model/GatewayRequest$Event$DirectCon
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class fr/outadoc/minipavi/core/model/GatewayRequest$Event$Fin : fr/outadoc/minipavi/core/model/GatewayRequest$Event {
-	public static final field INSTANCE Lfr/outadoc/minipavi/core/model/GatewayRequest$Event$Fin;
+public final class fr/outadoc/minipavi/core/model/GatewayRequest$Event$Disconnection : fr/outadoc/minipavi/core/model/GatewayRequest$Event {
+	public static final field INSTANCE Lfr/outadoc/minipavi/core/model/GatewayRequest$Event$Disconnection;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

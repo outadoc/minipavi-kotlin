@@ -221,7 +221,7 @@ internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Event {
         GatewayRequestDTO.Function.REPETITION -> GatewayRequest.Event.KeyboardInput(FunctionKey.Repetition)
         GatewayRequestDTO.Function.SOMMAIRE -> GatewayRequest.Event.KeyboardInput(FunctionKey.Sommaire)
         GatewayRequestDTO.Function.CONNECTION -> GatewayRequest.Event.Connection
-        GatewayRequestDTO.Function.FIN -> GatewayRequest.Event.Fin
+        GatewayRequestDTO.Function.FIN -> GatewayRequest.Event.Disconnection
         GatewayRequestDTO.Function.DIRECT -> GatewayRequest.Event.Direct
         GatewayRequestDTO.Function.DIRECT_CONNECTION -> GatewayRequest.Event.DirectConnection
         GatewayRequestDTO.Function.DIRECT_CALL_FAILED -> GatewayRequest.Event.DirectCallFailed

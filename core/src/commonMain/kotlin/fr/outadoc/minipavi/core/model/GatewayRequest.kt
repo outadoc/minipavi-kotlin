@@ -108,7 +108,7 @@ public data class GatewayRequest<TState : Any>(
         /**
          * Événement envoyé lors de la déconnexion de l'utilisateur.
          */
-        public data object Fin : Event()
+        public data object Disconnection : Event()
 
         /**
          * Événement envoyé lorsque la passerelle a appelé le service
