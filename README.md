@@ -167,7 +167,7 @@ fun Application.helloWorld() {
         initialState = { EtatSimple },
     ) { request ->
         ServiceResponse(
-            state = { EtatSimple },
+            state = EtatSimple,
             content =
                 buildVideotex {
                     appendLine("Bonjour le monde !")
