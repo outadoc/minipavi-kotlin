@@ -1,4 +1,4 @@
-rootProject.name = "minipavi-kotlin"
+rootProject.name = "dokka-bug-test"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -30,7 +30,3 @@ dependencyResolutionManagement {
 }
 
 include(":core")
-include(":videotex")
-
-include(":sample:static-videotex")
-include(":sample:hello-world")
