@@ -17,28 +17,28 @@ public final class fr/outadoc/minipavi/core/model/FunctionKey : java/lang/Enum {
 }
 
 public final class fr/outadoc/minipavi/core/model/GatewayRequest {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/String;Ljava/util/List;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/Map;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/String;Ljava/util/List;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ljava/util/List;
-	public final fun component7 ()Ljava/lang/Object;
-	public final fun component8 ()Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;
+	public final fun component6 ()Ljava/lang/Object;
+	public final fun component7 ()Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;
+	public final fun component8 ()Ljava/util/List;
 	public final fun component9 ()Ljava/util/Map;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/String;Ljava/util/List;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/Map;)Lfr/outadoc/minipavi/core/model/GatewayRequest;
-	public static synthetic fun copy$default (Lfr/outadoc/minipavi/core/model/GatewayRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/String;Ljava/util/List;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/Map;ILjava/lang/Object;)Lfr/outadoc/minipavi/core/model/GatewayRequest;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/List;Ljava/util/Map;)Lfr/outadoc/minipavi/core/model/GatewayRequest;
+	public static synthetic fun copy$default (Lfr/outadoc/minipavi/core/model/GatewayRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;Ljava/lang/Object;Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lfr/outadoc/minipavi/core/model/GatewayRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEvent ()Lfr/outadoc/minipavi/core/model/GatewayRequest$Event;
 	public final fun getGatewayVersion ()Ljava/lang/String;
 	public final fun getMinitelVersion ()Ljava/lang/String;
 	public final fun getRemoteAddress ()Ljava/lang/String;
-	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getSocketType ()Lfr/outadoc/minipavi/core/model/GatewayRequest$SocketType;
 	public final fun getState ()Ljava/lang/Object;
 	public final fun getUrlParams ()Ljava/util/Map;
+	public final fun getUserId ()Ljava/lang/String;
 	public final fun getUserInput ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -255,7 +255,7 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$Duplic
 	public static synthetic fun copy$default (Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$DuplicateStream;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$DuplicateStream;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getKey ()Ljava/lang/String;
-	public final fun getUniqueId ()Ljava/lang/String;
+	public final fun getUserId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -344,7 +344,7 @@ public final class fr/outadoc/minipavi/core/model/ServiceResponse$Command$PushSe
 	public static synthetic fun copy$default (Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$PushServiceMessage;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lfr/outadoc/minipavi/core/model/ServiceResponse$Command$PushServiceMessage;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMessage ()Ljava/util/List;
-	public final fun getUniqueIds ()Ljava/util/List;
+	public final fun getUserIds ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

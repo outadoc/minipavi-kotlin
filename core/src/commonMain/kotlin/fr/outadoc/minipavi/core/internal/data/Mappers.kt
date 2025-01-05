@@ -85,7 +85,7 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command? {
             ServiceResponseDTO.Command.DuplicateStream(
                 params = ServiceResponseDTO.Command.DuplicateStream.Params(
                     key = key,
-                    uniqueId = uniqueId
+                    uniqueId = userId
                 )
             )
         }
@@ -137,7 +137,7 @@ internal fun ServiceResponse.Command.mapToDTO(): ServiceResponseDTO.Command? {
         is ServiceResponse.Command.PushServiceMessage -> {
             ServiceResponseDTO.Command.PushServiceMessage(
                 params = ServiceResponseDTO.Command.PushServiceMessage.Params(
-                    uniqueIds = uniqueIds,
+                    uniqueIds = userIds,
                     message = message
                 )
             )
@@ -191,7 +191,7 @@ internal fun <TState : Any> GatewayRequestDTO.mapToDomain(
 ): GatewayRequest<TState> {
     return GatewayRequest(
         gatewayVersion = payload.version,
-        sessionId = payload.uniqueId,
+        userId = payload.uniqueId,
         remoteAddress = payload.remoteAddress,
         socketType = payload.socketType.mapToDomain(),
         minitelVersion = payload.minitelVersion,

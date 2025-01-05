@@ -23,8 +23,6 @@ public data class ServiceResponse<TState : Any>(
     /**
      * Active l'écho par la passerelle des caractères tapés par l'utilisateur,
      * pour que l'utilisateur voie ce qu'il tape.
-     *
-     * Généralement, cette clé aura la valeur `true`.
      */
     val echo: Boolean = true,
 
@@ -54,6 +52,7 @@ public data class ServiceResponse<TState : Any>(
 
         /**
          * Demande à la passerelle d'afficher simplement le contenu de la page Vidéotex.
+         * C'est le mode par défaut.
          */
         public data object Display : Command
 
@@ -96,7 +95,7 @@ public data class ServiceResponse<TState : Any>(
             val prefill: String = "",
 
             /**
-             * Si `true`, le curseur sera visible, sinon `false`.
+             * Affichage ou non du curseur sur le terminal de l'utilisateur.
              */
             val cursor: Boolean = true,
 
@@ -158,7 +157,7 @@ public data class ServiceResponse<TState : Any>(
             val initialValues: List<String> = emptyList(),
 
             /**
-             * Si `true`, le curseur sera visible, sinon `false`.
+             * Affichage ou non du curseur sur le terminal de l'utilisateur.
              */
             val cursor: Boolean = true,
 
@@ -214,7 +213,7 @@ public data class ServiceResponse<TState : Any>(
             val prefill: List<String> = emptyList(),
 
             /**
-             * Si `true`, le curseur sera visible, sinon `false`.
+             * Affichage ou non du curseur sur le terminal de l'utilisateur.
              */
             val cursor: Boolean = true,
 
@@ -252,7 +251,7 @@ public data class ServiceResponse<TState : Any>(
              * Tableau contenant la liste des identifiants uniques des
              * utilisateurs vers lesquels envoyer un message.
              */
-            val uniqueIds: List<String>,
+            val userIds: List<String>,
 
             /**
              * Tableau contenant les messages à envoyer à chaque utilisateur.
@@ -262,7 +261,7 @@ public data class ServiceResponse<TState : Any>(
         ) : Command
 
         /**
-         * Demande à la passerelle d'effectuer un appel à une [url] à l'heure indiquée.
+         * Demande à la passerelle d'effectuer un appel à une [url] en différé.
          */
         public data class BackgroundCall(
             /**
@@ -271,17 +270,17 @@ public data class ServiceResponse<TState : Any>(
             val sendAt: Instant,
 
             /**
+             * Simuler ou non l'appel.
+             *
              * - Si `false`, l'appel sera effectué vers l'URL indiquée en paramètre.
              * Cet appel devra être vu par le service comme indépendant de l'action d'un utilisateur.
-             * La touche de fonction indiquée dans la clé [GatewayRequest.event] aura la valeur
-             * [GatewayRequest.Event.BackgroundCall].
+             * [GatewayRequest.event] aura la valeur [GatewayRequest.Event.BackgroundCall].
              * En retour, le service ne pourra qu'envoyer une commande [PushServiceMessage]
              * à la passerelle.
              *
              * - Si `true`, l'appel sera effectué vers l'URL qui a été indiquée dans la clé
-             * `nextUrl` de l'utilisateur, avec en contenu` saisie` la valeur du paramètre [url].
-             * La touche de fonction indiquée dans la clé [GatewayRequest.event] aura la valeur
-             * [GatewayRequest.Event.BackgroundCallSimulated].
+             * [nextUrl] de l'utilisateur, avec en contenu `saisie` la valeur du paramètre [url].
+             * [GatewayRequest.event] aura la valeur [GatewayRequest.Event.BackgroundCallSimulated].
              * Cet appel devra être vu par le service comme une action de l'utilisateur.
              * En retour, le service peut envoyer toutes commandes et tout contenu,
              * qui sera alors envoyé à l'utilisateur.
@@ -292,33 +291,37 @@ public data class ServiceResponse<TState : Any>(
              * Tableau contenant la liste des identifiants uniques des utilisateurs.
              *
              * Si [simulate] est `true`, l'URL appelée sera celle indiquée dans la clé
-             * `nextUrl` de l'utilisateur identifié.
+             * [nextUrl] de l'utilisateur identifié.
              *
-             * Dans tous les cas, l'identifiant unique sera indiqué dans la clé `uniqueId`
-             * de l'appel de la passerelle vers le service.
+             * Dans tous les cas, l'identifiant unique sera indiqué dans la clé
+             * [GatewayRequest.userId] de l'appel de la passerelle vers le service.
              */
             val uniqueIds: List<String>,
 
             /**
+             * URL à appeler.
+             *
              * - Si [simulate] est `false`, indique l'URL qui doit être appelée.
-             * - Si [simulate] est `true`, indique les données qui seront indiquées dans la clé `content` de l'appel de la passerelle au service.
+             * - Si [simulate] est `true`, indique les données qui seront indiquées dans la clé
+             * [content] de l'appel de la passerelle au service.
              */
             val url: String,
         ) : Command
 
         /**
-         * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Websocket.
+         * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par WebSocket.
          *
-         * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
-         * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
-         * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
-         * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
+         * En fin de connexion, l'URL indiquée dans la clé [ServiceResponse.nextUrl] sera appelée
+         * et l'événement indiqué sera [GatewayRequest.Event.DirectCallEnded] si la connexion s'est
+         * terminée normalement, ou  [GatewayRequest.Event.DirectCallFailed]  si la connexion a échoué.
+         * L'utilisateur peut mettre fin à la connexion par la séquence `***` + `Sommaire` ou par
+         * la touche `Connexion/fin`.
          */
         public data class ConnectToWebSocket(
             /**
-             * Clé d'autorisation d'utilisation de cette commande
-             * (configurée au niveau de la passerelle).
+             * Clé d'autorisation d'utilisation de cette commande.
+             *
+             * Cette valeur est configurée au niveau de la passerelle.
              *
              * Si l'adresse du serveur est la même que l'adresse du script
              * demandant cette commande, n'importe quelle clé est acceptée.
@@ -326,9 +329,11 @@ public data class ServiceResponse<TState : Any>(
             val key: String,
 
             /**
-             * Adresse et port (obligatoire) du serveur (Exemple : `mntl.joher.com:2018`).
+             * Adresse et port (obligatoire) du serveur.
              *
-             * Dans le cas d'une websocket SSL (wss), l'adresse doit être précédée de `ssl://`.
+             * Par ex : `mntl.joher.com:2018`.
+             *
+             * Dans le cas d'une WebSocket SSL (`wss`), l'adresse doit être précédée de `ssl://`.
              */
             val host: String,
 
@@ -344,12 +349,17 @@ public data class ServiceResponse<TState : Any>(
             val proto: String? = null,
 
             /**
+             * Active l'écho par la passerelle des caractères tapés par l'utilisateur,
+             * pour que l'utilisateur voie ce qu'il tape.
+             *
              * - `true` : l'écho est activé et géré par la passerelle.
              * - `false` : l'écho est géré directement par le serveur.
              */
             val echo: Boolean = true,
 
             /**
+             * Casse des caractères du clavier de l'utilisateur.
+             *
              * - [Case.Lower] : force le clavier de l'utilisateur en minuscules.
              * - [Case.Upper] : force le clavier de l'utilisateur en majuscules.
              */
@@ -359,7 +369,7 @@ public data class ServiceResponse<TState : Any>(
         /**
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel accessible par Telnet.
          *
-         * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
+         * En fin de connexion, l'URL indiquée dans la clé [nextUrl] de la requête
          * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
          * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
@@ -367,8 +377,9 @@ public data class ServiceResponse<TState : Any>(
          */
         public data class ConnectToTelnet(
             /**
-             * Clé d'autorisation d'utilisation de cette commande
-             * (configurée au niveau de la passerelle).
+             * Clé d'autorisation d'utilisation de cette commande.
+             *
+             * Cette valeur est configurée au niveau de la passerelle.
              *
              * Si l'adresse du serveur est la même que l'adresse du script
              * demandant cette commande, n'importe quelle clé est acceptée.
@@ -376,19 +387,26 @@ public data class ServiceResponse<TState : Any>(
             val key: String,
 
             /**
-             * Adresse et port (obligatoire) du serveur (Exemple : `mntl.joher.com:2018`).
+             * Adresse et port (obligatoire) du serveur.
              *
-             * Dans le cas d'une websocket SSL (wss), l'adresse doit être précédée de `ssl://`.
+             * Par ex : `mntl.joher.com:2018`.
+             *
+             * Dans le cas d'une WebSocket SSL (`wss`), l'adresse doit être précédée de `ssl://`.
              */
             val host: String,
 
             /**
+             * Active l'écho par la passerelle des caractères tapés par l'utilisateur,
+             * pour que l'utilisateur voie ce qu'il tape.
+             *
              * - `true` : l'écho est activé et géré par la passerelle.
              * - `false` : l'écho est géré directement par le serveur.
              */
             val echo: Boolean = true,
 
             /**
+             * Casse des caractères du clavier de l'utilisateur.
+             *
              * - [Case.Lower] : force le clavier de l'utilisateur en minuscules.
              * - [Case.Upper] : force le clavier de l'utilisateur en majuscules.
              */
@@ -404,7 +422,7 @@ public data class ServiceResponse<TState : Any>(
          * Demande à la passerelle de connecter l'utilisateur à un service Minitel
          * accessible par téléphone.
          *
-         * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
+         * En fin de connexion, l'URL indiquée dans la clé [nextUrl] de la requête
          * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
          * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
@@ -412,8 +430,9 @@ public data class ServiceResponse<TState : Any>(
          */
         public data class ConnectToExt(
             /**
-             * Clé d'autorisation d'utilisation de cette commande
-             * (configurée au niveau de la passerelle).
+             * Clé d'autorisation d'utilisation de cette commande.
+             *
+             * Cette valeur est configurée au niveau de la passerelle.
              */
             val key: String,
 
@@ -423,40 +442,43 @@ public data class ServiceResponse<TState : Any>(
             val telNumber: String,
 
             /**
-             * Niveau minimal en réception (en décibels)
-             * (Ex : -35)
+             * Niveau minimal en réception (en décibels).
+             *
+             * Par ex : `-35`.
              */
             val rx: Int,
 
             /**
-             * Niveau du signal transmis (en décibels)
-             * (Ex : -30)
+             * Niveau du signal transmis (en décibels).
+             *
+             * Par ex : `-30`.
              */
             val tx: Int,
         ) : Command
 
         /**
-         * Demande à la passerelle de connecter l'utilisateur A au flux
-         * transmis à un autre utilisateur B (l'utilisateur A voit
-         * ce que voit l'utilisateur B).
+         * Demande à la passerelle de connecter l'utilisateur `A` au flux
+         * transmis à un autre utilisateur `B` (l'utilisateur `A` voit
+         * ce que voit l'utilisateur `B`).
          *
-         * En fin de connexion, l'URL indiquée dans la clé `nextUrl` de la requête
-         * sera appelée et la touche de fonction indiquée sera [GatewayRequest.Event.DirectCallEnded]
+         * En fin de connexion, l'URL indiquée dans la clé [nextUrl]
+         * sera appelée et l'événement indiqué sera [GatewayRequest.Event.DirectCallEnded]
          * si la connexion s'est terminée normalement ou  [GatewayRequest.Event.DirectCallFailed]
          * si la connexion a échoué. L'utilisateur peut mettre fin à la connexion
          * par la séquence `***` + `Sommaire` ou par la touche `Connexion/fin`.
          */
         public data class DuplicateStream(
             /**
-             * Clé d'autorisation d'utilisation de cette commande
-             * (configurée au niveau de la passerelle).
+             * Clé d'autorisation d'utilisation de cette commande.
+             *
+             * Cette valeur est configurée au niveau de la passerelle.
              */
             val key: String,
 
             /**
              * Identifiant unique de l'utilisateur dont le flux sortant doit être dupliqué.
              */
-            val uniqueId: String,
+            val userId: String,
         ) : Command
 
         /**

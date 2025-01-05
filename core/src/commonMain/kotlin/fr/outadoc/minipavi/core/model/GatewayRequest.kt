@@ -10,12 +10,19 @@ public data class GatewayRequest<TState : Any>(
     val gatewayVersion: String,
 
     /**
+     * Trois caractères correspondant au type de Minitel, si connu. Sinon `???`.
+     *
+     * Ce champ n'est pas forcément initialisé dès la connexion.
+     */
+    val minitelVersion: String,
+
+    /**
      * Identifiant unique de l'utilisateur connecté au service.
      *
-     * Les 4 derniers chiffres correspondent au code pin pour l'utilisation
+     * Les 4 derniers chiffres correspondent au code PIN pour l'utilisation
      * de l'accès WebMedia.
      */
-    val sessionId: String,
+    val userId: String,
 
     /**
      * Adresse IP (ou téléphone si connu) de l'utilisateur connecté.
@@ -28,21 +35,6 @@ public data class GatewayRequest<TState : Any>(
     val socketType: SocketType,
 
     /**
-     * Trois caractères correspondant au type de Minitel, si connu. Sinon `???`.
-     *
-     * Ce champ n'est pas forcément initialisé dès la connexion.
-     */
-    val minitelVersion: String,
-
-    /**
-     * Tableau contenant la saisie de l'utilisateur.
-     *
-     * S'il s'agit d'une saisie de plusieurs lignes, chaque ligne est un élément du tableau.
-     * S'il n'y a qu'une seule ligne, la saisie est à l'indice `0` du tableau.
-     */
-    val userInput: List<String>,
-
-    /**
      * Données libres précédemment envoyées par le service.
      *
      * Sert à sauvegarder le contexte de l'utilisateur tout au long de sa visite du service.
@@ -53,6 +45,14 @@ public data class GatewayRequest<TState : Any>(
      * Évènement ayant initié cette requête.
      */
     val event: Event,
+
+    /**
+     * Tableau contenant la saisie de l'utilisateur.
+     *
+     * S'il s'agit d'une saisie de plusieurs lignes, chaque ligne est un élément du tableau.
+     * S'il n'y a qu'une seule ligne, la saisie est à l'indice `0` du tableau.
+     */
+    val userInput: List<String>,
 
     /**
      * Tableau associatif contenant les éventuels paramètres indiqués dans l'URL.

@@ -49,7 +49,7 @@ fun Application.helloWorld() {
 
                             append(" Vous êtes ")
                             withTextColor(Color.Red) {
-                                appendLine(request.sessionId)
+                                appendLine(request.userId)
                             }
 
                             append(" ou ")
