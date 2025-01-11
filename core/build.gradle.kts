@@ -71,6 +71,11 @@ tasks.dokkaHtmlPartial {
             externalDocumentationLink {
                 url.set(URL("https://kotlinlang.org/api/kotlinx-io/"))
             }
+
+            externalDocumentationLink {
+                url.set(URL("https://api.ktor.io/ktor-server"))
+                packageListUrl.set(URL("https://api.ktor.io/package-list"))
+            }
         }
     }
 }
