@@ -3,6 +3,7 @@ package fr.outadoc.minipavi.core.ktor
 import fr.outadoc.minipavi.core.internal.data.mapToDTO
 import fr.outadoc.minipavi.core.internal.data.mapToDomain
 import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
+import fr.outadoc.minipavi.core.internal.KJson
 import fr.outadoc.minipavi.core.model.GatewayRequest
 import fr.outadoc.minipavi.core.model.ServiceResponse
 import io.ktor.serialization.kotlinx.json.json
@@ -17,7 +18,6 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
 /**
@@ -76,7 +76,7 @@ public fun <TState : Any> Application.minitelService(
     block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>
 ) {
     install(ContentNegotiation) {
-        json(Json)
+        json(KJson)
     }
 
     routing {

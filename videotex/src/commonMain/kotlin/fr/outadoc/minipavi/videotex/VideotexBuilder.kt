@@ -268,9 +268,9 @@ public class VideotexBuilder internal constructor() {
         fun ByteStringBuilder.appendNormalizedText(text: String) {
             text.forEach { char ->
                 append(
-                    g2Map.getOrDefault(
+                    g2Map.getOrElse(
                         key = char,
-                        defaultValue = ByteString(char.code.toByte())
+                        defaultValue = { ByteString(char.code.toByte()) }
                     )
                 )
             }

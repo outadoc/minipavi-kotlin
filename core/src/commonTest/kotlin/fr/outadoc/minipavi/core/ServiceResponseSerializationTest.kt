@@ -4,7 +4,6 @@ import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
 import kotlinx.io.bytestring.encodeToByteString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import org.intellij.lang.annotations.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -12,7 +11,7 @@ class ServiceResponseSerializationTest {
 
     @Test
     fun `Correctly encode InputMessage command`() {
-        @Language("JSON")
+        //language=JSON
         val expected = """
             {
               "version": "1.0",
@@ -70,7 +69,7 @@ class ServiceResponseSerializationTest {
 
     @Test
     fun `Correctly encode InputText command`() {
-        @Language("JSON")
+        //language=JSON
         val expected = """
             {
               "version": "1.0",

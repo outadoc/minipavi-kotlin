@@ -1,13 +1,12 @@
 package fr.outadoc.minipavi.core.internal.data
 
+import fr.outadoc.minipavi.core.internal.KJson
 import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
 import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
 import fr.outadoc.minipavi.core.model.GatewayRequest
 import fr.outadoc.minipavi.core.model.FunctionKey
 import fr.outadoc.minipavi.core.model.ServiceResponse
-import io.ktor.server.application.ApplicationEnvironment
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 
 internal fun <TState : Any> ServiceResponse<TState>.mapToDTO(
     stateSerializer: KSerializer<TState>,
@@ -16,7 +15,7 @@ internal fun <TState : Any> ServiceResponse<TState>.mapToDTO(
     return ServiceResponseDTO(
         version = version,
         content = content,
-        context = Json.encodeToString(stateSerializer, state),
+        context = KJson.encodeToString(stateSerializer, state),
         echo = echo.mapToDTO(),
         directCall = directCall.mapToDTO(),
         nextUrl = nextUrl,
@@ -182,32 +181,6 @@ internal fun ServiceResponse.DirectCallSetting.mapToDTO(): ServiceResponseDTO.Di
         ServiceResponse.DirectCallSetting.No -> ServiceResponseDTO.DirectCallSetting.NO
         ServiceResponse.DirectCallSetting.YesCnx -> ServiceResponseDTO.DirectCallSetting.YES_CNX
     }
-}
-
-internal fun <TState : Any> GatewayRequestDTO.mapToDomain(
-    environment: ApplicationEnvironment,
-    serializer: KSerializer<TState>,
-    initialState: () -> TState,
-): GatewayRequest<TState> {
-    return GatewayRequest(
-        gatewayVersion = payload.version,
-        userId = payload.uniqueId,
-        remoteAddress = payload.remoteAddress,
-        socketType = payload.socketType.mapToDomain(),
-        minitelVersion = payload.minitelVersion,
-        userInput = payload.content,
-        state = try {
-            payload.context
-                .takeIf { context -> context.isNotEmpty() }
-                ?.let { context -> Json.decodeFromString(serializer, context) }
-                ?: initialState()
-        } catch (e: Exception) {
-            environment.log.error("Failed to decode state. Context was ${payload.context}", e)
-            initialState()
-        },
-        event = payload.function.mapToDomain(),
-        urlParams = urlParams
-    )
 }
 
 internal fun GatewayRequestDTO.Function.mapToDomain(): GatewayRequest.Event {

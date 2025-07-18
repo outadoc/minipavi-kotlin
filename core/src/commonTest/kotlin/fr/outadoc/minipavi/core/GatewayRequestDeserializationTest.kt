@@ -1,8 +1,7 @@
 package fr.outadoc.minipavi.core
 
+import fr.outadoc.minipavi.core.internal.KJson
 import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
-import kotlinx.serialization.json.Json
-import org.intellij.lang.annotations.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -10,7 +9,7 @@ class GatewayRequestDeserializationTest {
 
     @Test
     fun `When the user connects to the gateway via the web, then we correctly decode the request`() {
-        @Language("JSON")
+        //language=JSON
         val input = """
             {
               "PAVI": {
@@ -41,13 +40,13 @@ class GatewayRequestDeserializationTest {
 
         assertEquals(
             expected = expected,
-            actual = Json.decodeFromString(input)
+            actual = KJson.decodeFromString(input)
         )
     }
 
     @Test
     fun `When the user connects to the gateway via a phone line, then we correctly decode the request`() {
-        @Language("JSON")
+        //language=JSON
         val input = """
             {
               "PAVI": {
@@ -78,13 +77,13 @@ class GatewayRequestDeserializationTest {
 
         assertEquals(
             expected = expected,
-            actual = Json.decodeFromString(input)
+            actual = KJson.decodeFromString(input)
         )
     }
 
     @Test
     fun `When the user sends some text and presses ENVOI, then we correctly decode the request`() {
-        @Language("JSON")
+        //language=JSON
         val input = """
             {
               "PAVI": {
@@ -118,7 +117,7 @@ class GatewayRequestDeserializationTest {
 
         assertEquals(
             expected = expected,
-            actual = Json.decodeFromString(input)
+            actual = KJson.decodeFromString(input)
         )
     }
 }

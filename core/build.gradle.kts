@@ -35,6 +35,12 @@ kotlin {
             }
         }
 
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
+
         val jvmMain by getting {
             dependencies {
                 implementation(libs.ktor.server.core)
