@@ -83,6 +83,16 @@ dependencies {
 > Depuis la version 0.1.0, l'intégration Ktor (`minitelService`) est dans le module `core-ktor`.
 > Si vous utilisiez `core` avec Ktor, remplacez simplement cette dépendance par `core-ktor` :
 > le paquet et les signatures sont inchangés.
+>
+> `minitelService` n'installe plus le plugin `ContentNegotiation` dans votre application. Si d'autres
+> routes de votre application renvoient ou reçoivent du JSON avec `call.respond` ou `call.receive`,
+> installez-le vous-même :
+>
+> ```kotlin
+> install(ContentNegotiation) {
+>     json()
+> }
+> ```
 
 Commencez par créer un serveur Ktor de base. Je vous recommande encore une fois de suivre la [documentation de Ktor][4]
 si vous n'êtes pas familièr·e avec ce framework.

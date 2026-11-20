@@ -6,9 +6,17 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -28,6 +36,11 @@ jobs:
 
   cloudflare-worker-smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: sample/cloudflare-worker
 
     steps:
       - name: Checkout repository
@@ -46,21 +59,43 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: sample/cloudflare-worker/package-lock.json
 
       - name: Build sample worker
+        working-directory: .
         run: ./gradlew :sample:cloudflare-worker:jsNodeProductionLibraryDistribution
 
-      - name: Install wrangler
-        working-directory: sample/cloudflare-worker
-        run: npm install
+      - name: Install npm dependencies
+        run: npm ci
 
       - name: Run worker and send a gateway request
-        working-directory: sample/cloudflare-worker
         run: |
           npx wrangler dev --port 8787 > wrangler.log 2>&1 &
-          for i in $(seq 1 60); do curl -s -o /dev/null http://127.0.0.1:8787/ && break; sleep 1; done
-          status=$(curl -s -o response.json -w '%{http_code}' -X POST http://127.0.0.1:8787/ \
-            -d '{"PAVI":{"version":"1.2","uniqueId":"1","remoteAddr":"127.0.0.1","typesocket":"WSS","versionminitel":"Cv;","content":[],"context":"","fctn":"CNX"}}')
-          cat response.json
-          test "$status" = "200" || (cat wrangler.log; exit 1)
-          grep -q '"context":"{\\"visits\\":1}"' response.json
+          WRANGLER_PID=$!
+          # wrangler starts workerd as a child process, so stop both.
+          trap 'pkill -f "wrangler dev" || true; pkill -f workerd || true' EXIT
+
+          fail() {
+            echo "::error::$1"
+            echo "--- wrangler.log ---"
+            cat wrangler.log
+            exit 1
+          }
+
+          for i in $(seq 1 60); do
+            grep -q "Ready on" wrangler.log && break
+            kill -0 $WRANGLER_PID 2>/dev/null || fail "wrangler exited before it was ready"
+            sleep 1
+          done
+          grep -q "Ready on" wrangler.log || fail "wrangler was not ready after 60 seconds"
+
+          status=$(curl --silent --max-time 10 --retry 5 --retry-connrefused \
+            --output response.json --write-out '%{http_code}' \
+            --request POST http://127.0.0.1:8787/ \
+            --data '{"PAVI":{"version":"1.2","uniqueId":"1","remoteAddr":"127.0.0.1","typesocket":"WSS","versionminitel":"Cv;","content":[],"context":"","fctn":"CNX"}}') \
+            || fail "the request to the worker failed"
+
+          cat response.json; echo
+          test "$status" = "200" || fail "expected HTTP 200, got $status"
+          grep -q '"context":"{\\"visits\\":1}"' response.json || fail "unexpected response body"

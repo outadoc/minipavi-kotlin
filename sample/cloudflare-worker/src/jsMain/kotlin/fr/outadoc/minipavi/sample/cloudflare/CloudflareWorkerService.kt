@@ -26,7 +26,7 @@ private val handler =
     MinitelServiceHandler<VisitCounter>(
         version = "0.1",
         initialState = { VisitCounter(visits = 0) },
-        logger = ConsoleMinitelLogger,
+        logger = ConsoleMinitelLogger(),
     ) { request ->
         val visits = request.state.visits + 1
         ServiceResponse(

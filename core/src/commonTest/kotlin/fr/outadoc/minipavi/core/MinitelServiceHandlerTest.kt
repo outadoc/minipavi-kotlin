@@ -98,6 +98,33 @@ class MinitelServiceHandlerTest {
         assertEquals(1, logger.entries.count { (level, _) -> level == MinitelLogger.Level.Error })
     }
 
+    @Serializable
+    data class NonNegative(val count: Int) {
+        init {
+            check(count >= 0) { "count must not be negative" }
+        }
+    }
+
+    @Test
+    fun aStateThatFailsValidationUsesTheInitialState() {
+        val logger = RecordingLogger()
+        var received: GatewayRequest<NonNegative>? = null
+        val handler =
+            MinitelServiceHandler<NonNegative>(
+                version = "0.1",
+                initialState = { NonNegative(0) },
+                logger = logger,
+            ) { request ->
+                received = request
+                ServiceResponse(state = request.state, content = "hello".encodeToByteString())
+            }
+
+        handler.handle(requestBody(context = """{"count":-1}"""))
+
+        assertEquals(NonNegative(0), received?.state)
+        assertEquals(1, logger.entries.count { (level, _) -> level == MinitelLogger.Level.Error })
+    }
+
     @Test
     fun unknownKeysAreIgnored() {
         var received: GatewayRequest<Counter>? = null

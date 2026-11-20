@@ -67,6 +67,7 @@ class FetchHandlerTest {
     fun anotherMethodReturnsMethodNotAllowed(): Promise<*> =
         fetch(request("GET", "https://example.com/service")).then { response ->
             assertEquals(405, response.status)
+            assertEquals("POST", response.headers.get("allow"))
         }
 
     @Test
@@ -79,5 +80,6 @@ class FetchHandlerTest {
     fun anInvalidBodyReturnsBadRequest(): Promise<*> =
         fetch(request("POST", "https://example.com/service", "{\"not\":\"a request\"}")).then { response ->
             assertEquals(400, response.status)
+            response.text().then { body -> assertEquals("Bad Request", body) }
         }
 }

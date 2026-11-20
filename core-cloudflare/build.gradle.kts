@@ -9,9 +9,6 @@ plugins {
     `maven-publish`
 }
 
-group = "fr.outadoc.minipavi"
-version = findProperty("fr.outadoc.minipavi.version") as String
-
 kotlin {
     explicitApi()
 

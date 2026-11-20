@@ -77,6 +77,7 @@ class MinitelServiceTest {
         val response = client.post("/") { setBody("{\"not\":\"a request\"}") }
 
         assertEquals(HttpStatusCode.BadRequest, response.status)
+        assertEquals("Bad Request", response.bodyAsText())
     }
 
     @Test

@@ -4,7 +4,7 @@ Un service Minitel distribué par [Cloudflare Workers](https://developers.cloudf
 à l'aide de Kotlin/JS et du module `core-cloudflare`.
 
 ```shell
-npm install
+npm ci
 npm run dev     # compile le service et lance un Worker local sur http://localhost:8787
 npm run deploy  # compile le service et le déploie sur votre compte Cloudflare
 ```

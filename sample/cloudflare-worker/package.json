@@ -7,6 +7,9 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
-    "wrangler": "^4.0.0"
+    "wrangler": "4.165.0"
+  },
+  "dependencies": {
+    "@js-joda/core": "3.2.0"
   }
 }

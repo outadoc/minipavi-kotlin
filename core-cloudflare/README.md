@@ -66,9 +66,25 @@ import { fetch } from "../build/dist/js/productionLibrary/mon-service.mjs";
 export default { fetch };
 ```
 
-Si votre service utilise `kotlinx-datetime`, ajoutez `@js-joda/core` aux dépendances npm de votre Worker.
+Ajoutez toujours `@js-joda/core` aux dépendances npm de votre Worker : `core` dépend de
+`kotlinx-datetime`, qui l'importe dans tout bundle Kotlin/JS. Sans lui, `wrangler` échoue avec
+« Could not resolve "@js-joda/core" ».
+
+```json
+{
+  "dependencies": {
+    "@js-joda/core": "3.2.0"
+  }
+}
+```
 
 Le gestionnaire répond 404 si le chemin ne correspond pas, 405 pour une méthode autre que `POST`,
-et 400 si le corps n'est pas une requête valide de la passerelle.
+et 400 si le corps n'est pas une requête valide de la passerelle. Le chemin passé à `toFetchHandler`
+doit correspondre exactement au chemin de l'URL : contrairement aux routes Ktor, il n'accepte ni
+paramètre ni joker.
+
+Par défaut, `ConsoleMinitelLogger` n'écrit que les avertissements et les erreurs. Les messages de
+débogage, qui contiennent les requêtes complètes et donc l'adresse IP des utilisateurs, s'activent avec
+`ConsoleMinitelLogger(minLevel = MinitelLogger.Level.Debug)`.
 
 Voir [`sample/cloudflare-worker`](../sample/cloudflare-worker) pour un exemple complet.

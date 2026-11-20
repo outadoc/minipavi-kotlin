@@ -26,7 +26,8 @@ internal fun <TState : Any> GatewayRequestDTO.mapToDomain(
             ?.let { context ->
                 try {
                     KJson.decodeFromString(serializer, context)
-                } catch (e: IllegalArgumentException) {
+                } catch (e: Exception) {
+                    // Un contexte corrompu ne doit pas bloquer la session : on repart de l'état initial.
                     logger.log(MinitelLogger.Level.Error, e) {
                         "Failed to decode state. Context was $context"
                     }

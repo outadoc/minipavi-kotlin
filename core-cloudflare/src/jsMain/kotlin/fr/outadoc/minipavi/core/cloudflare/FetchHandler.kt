@@ -31,13 +31,19 @@ import kotlin.js.Promise
  * ```
  *
  * @param path Le chemin auquel le service répond. Par exemple, `/`, ou `/mon-service`.
+ * Il doit correspondre exactement au chemin de l'URL : contrairement aux routes Ktor, il n'accepte
+ * ni paramètre, ni joker, ni barre oblique finale supplémentaire.
+ * @param logger Le [fr.outadoc.minipavi.core.MinitelLogger] qui recevra les requêtes invalides.
  */
-public fun <TState : Any> MinitelServiceHandler<TState>.toFetchHandler(path: String = "/"): (Request) -> Promise<Response> =
-    { request -> handleFetch(handler = this, path = path, request = request) }
+public fun <TState : Any> MinitelServiceHandler<TState>.toFetchHandler(
+    path: String = "/",
+    logger: MinitelLogger = ConsoleMinitelLogger(),
+): (Request) -> Promise<Response> = { request -> handleFetch(handler = this, path = path, logger = logger, request = request) }
 
 private fun <TState : Any> handleFetch(
     handler: MinitelServiceHandler<TState>,
     path: String,
+    logger: MinitelLogger,
     request: Request,
 ): Promise<Response> {
     if (URL(request.url).pathname != path) {
@@ -45,15 +51,17 @@ private fun <TState : Any> handleFetch(
     }
 
     if (request.method != "POST") {
-        return Promise.resolve(textResponse(status = 405, body = "Method Not Allowed"))
+        return Promise.resolve(
+            textResponse(status = 405, body = "Method Not Allowed", extraHeaders = mapOf("allow" to "POST")),
+        )
     }
 
     return request.text().then { body ->
         try {
             jsonResponse(handler.handle(body))
         } catch (e: InvalidGatewayRequestException) {
-            ConsoleMinitelLogger.log(MinitelLogger.Level.Warn, e) { "Received an invalid request" }
-            textResponse(status = 400, body = e.message.orEmpty())
+            logger.log(MinitelLogger.Level.Warn, e) { "Received an invalid request" }
+            textResponse(status = 400, body = "Bad Request")
         }
     }
 }
@@ -71,6 +79,7 @@ private fun jsonResponse(body: String): Response =
 private fun textResponse(
     status: Int,
     body: String,
+    extraHeaders: Map<String, String> = emptyMap(),
 ): Response =
     Response(
         body = body,
@@ -78,15 +87,18 @@ private fun textResponse(
             responseInit(
                 status = status,
                 contentType = "text/plain; charset=utf-8",
+                extraHeaders = extraHeaders,
             ),
     )
 
 private fun responseInit(
     status: Int,
     contentType: String,
+    extraHeaders: Map<String, String> = emptyMap(),
 ): ResponseInit {
     val headers = Headers()
     headers.set("content-type", contentType)
+    extraHeaders.forEach { (name, value) -> headers.set(name, value) }
 
     val init = js("{}").unsafeCast<ResponseInit>()
     init.status = status

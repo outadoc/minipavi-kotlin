@@ -92,7 +92,7 @@ public fun <TState : Any> Application.minitelService(
                         "Received an invalid request"
                     }
                     call.respondText(
-                        text = e.message.orEmpty(),
+                        text = "Bad Request",
                         status = HttpStatusCode.BadRequest,
                     )
                     return@post

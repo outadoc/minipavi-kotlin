@@ -24,6 +24,12 @@ abstract interface fr.outadoc.minipavi.core.cloudflare/ResponseInit { // fr.outa
         abstract fun <set-status>(kotlin/Int?) // fr.outadoc.minipavi.core.cloudflare/ResponseInit.status.<set-status>|<set-status>(kotlin.Int?){}[0]
 }
 
+final class fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger : fr.outadoc.minipavi.core/MinitelLogger { // fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger|null[0]
+    constructor <init>(fr.outadoc.minipavi.core/MinitelLogger.Level = ...) // fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger.<init>|<init>(fr.outadoc.minipavi.core.MinitelLogger.Level){}[0]
+
+    final fun log(fr.outadoc.minipavi.core/MinitelLogger.Level, kotlin/Throwable?, kotlin/Function0<kotlin/String>) // fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger.log|log(fr.outadoc.minipavi.core.MinitelLogger.Level;kotlin.Throwable?;kotlin.Function0<kotlin.String>){}[0]
+}
+
 final class fr.outadoc.minipavi.core.cloudflare/Headers { // fr.outadoc.minipavi.core.cloudflare/Headers|null[0]
     constructor <init>() // fr.outadoc.minipavi.core.cloudflare/Headers.<init>|<init>(){}[0]
 
@@ -53,8 +59,4 @@ final class fr.outadoc.minipavi.core.cloudflare/Response { // fr.outadoc.minipav
     final fun text(): kotlin.js/Promise<kotlin/String> // fr.outadoc.minipavi.core.cloudflare/Response.text|text(){}[0]
 }
 
-final object fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger : fr.outadoc.minipavi.core/MinitelLogger { // fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger|null[0]
-    final fun log(fr.outadoc.minipavi.core/MinitelLogger.Level, kotlin/Throwable?, kotlin/Function0<kotlin/String>) // fr.outadoc.minipavi.core.cloudflare/ConsoleMinitelLogger.log|log(fr.outadoc.minipavi.core.MinitelLogger.Level;kotlin.Throwable?;kotlin.Function0<kotlin.String>){}[0]
-}
-
-final fun <#A: kotlin/Any> (fr.outadoc.minipavi.core/MinitelServiceHandler<#A>).fr.outadoc.minipavi.core.cloudflare/toFetchHandler(kotlin/String = ...): kotlin/Function1<fr.outadoc.minipavi.core.cloudflare/Request, kotlin.js/Promise<fr.outadoc.minipavi.core.cloudflare/Response>> // fr.outadoc.minipavi.core.cloudflare/toFetchHandler|toFetchHandler@fr.outadoc.minipavi.core.MinitelServiceHandler<0:0>(kotlin.String){0§<kotlin.Any>}[0]
+final fun <#A: kotlin/Any> (fr.outadoc.minipavi.core/MinitelServiceHandler<#A>).fr.outadoc.minipavi.core.cloudflare/toFetchHandler(kotlin/String = ..., fr.outadoc.minipavi.core/MinitelLogger = ...): kotlin/Function1<fr.outadoc.minipavi.core.cloudflare/Request, kotlin.js/Promise<fr.outadoc.minipavi.core.cloudflare/Response>> // fr.outadoc.minipavi.core.cloudflare/toFetchHandler|toFetchHandler@fr.outadoc.minipavi.core.MinitelServiceHandler<0:0>(kotlin.String;fr.outadoc.minipavi.core.MinitelLogger){0§<kotlin.Any>}[0]
