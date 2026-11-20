@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.net.URL
 
 plugins {
@@ -8,9 +9,6 @@ plugins {
     alias(libs.plugins.spotless)
     `maven-publish`
 }
-
-group = "fr.outadoc.minipavi"
-version = findProperty("fr.outadoc.minipavi.version") as String
 
 kotlin {
     explicitApi()
@@ -25,12 +23,24 @@ kotlin {
         nodejs()
     }
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlinx.io)
+                api(libs.kotlinx.io)
             }
         }
+    }
+}
+
+apiValidation {
+    @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+    klib {
+        enabled = true
     }
 }
 

@@ -33,8 +33,19 @@ GitHub][3]. Vous y trouverez des informations essentielles sur la topologie de M
 gardez en tête que vous pouvez substituer les références au développement PHP, que vous pourrez effectuer en Kotlin à la
 place.
 
-MiniPavi-Kotlin est conçue pour être utilisée avec le framework Ktor. MiniPavi va appeler votre service, qui construira
-sa réponse avec le SDK, et la renverra à MiniPavi.
+MiniPavi-Kotlin est un SDK Kotlin Multiplatform. MiniPavi va appeler votre service, qui construira
+sa réponse avec le SDK, et la renverra à MiniPavi. Le SDK est découpé en modules :
+
+| Module            | Cibles          | Rôle                                                           |
+|-------------------|-----------------|----------------------------------------------------------------|
+| `core`            | JVM, JS, Wasm   | Modèles et `MinitelServiceHandler`, sans dépendance HTTP.      |
+| `videotex`        | JVM, JS, Wasm   | Construction de pages Vidéotex.                                |
+| `core-ktor`       | JVM             | Distribution du service par un serveur [Ktor][4].              |
+| `core-cloudflare` | JS              | Distribution du service par [Cloudflare Workers][6].           |
+
+Les exemples ci-dessous utilisent Ktor. Pour Cloudflare Workers, consultez le
+[README de `core-cloudflare`](core-cloudflare/README.md) et l'exemple
+[`sample/cloudflare-worker`](sample/cloudflare-worker).
 
 Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
 
@@ -45,7 +56,7 @@ Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
 minipavi-kotlin = "x.y.z"
 
 [libraries]
-minipavi-core = { module = "com.github.outadoc.minipavi-kotlin:core", version.ref = "minipavi-kotlin" }
+minipavi-core-ktor = { module = "com.github.outadoc.minipavi-kotlin:core-ktor", version.ref = "minipavi-kotlin" }
 minipavi-videotex = { module = "com.github.outadoc.minipavi-kotlin:videotex", version.ref = "minipavi-kotlin" }
 ```
 
@@ -63,10 +74,25 @@ dependencyResolutionManagement {
 // build.gradle.kts
 
 dependencies {
-    implementation(libs.minipavi.core)
+    implementation(libs.minipavi.core.ktor)
     implementation(libs.minipavi.videotex)
 }
 ```
+
+> [!NOTE]
+> Depuis la version 0.1.0, l'intégration Ktor (`minitelService`) est dans le module `core-ktor`.
+> Si vous utilisiez `core` avec Ktor, remplacez simplement cette dépendance par `core-ktor` :
+> le paquet et les signatures sont inchangés.
+>
+> `minitelService` n'installe plus le plugin `ContentNegotiation` dans votre application. Si d'autres
+> routes de votre application renvoient ou reçoivent du JSON avec `call.respond` ou `call.receive`,
+> installez-le vous-même :
+>
+> ```kotlin
+> install(ContentNegotiation) {
+>     json()
+> }
+> ```
 
 Commencez par créer un serveur Ktor de base. Je vous recommande encore une fois de suivre la [documentation de Ktor][4]
 si vous n'êtes pas familièr·e avec ce framework.
@@ -192,3 +218,5 @@ Et voilà. Plus qu'à lancer votre serveur, et à le connecter à MiniPavi. 🎉
 [4]: https://ktor.io/docs/server-create-a-new-project.html
 
 [5]: https://github.com/Kotlin/kotlinx.serialization
+
+[6]: https://developers.cloudflare.com/workers/

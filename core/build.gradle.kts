@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.net.URL
 
 plugins {
@@ -9,9 +10,6 @@ plugins {
     alias(libs.plugins.spotless)
     `maven-publish`
 }
-
-group = "fr.outadoc.minipavi"
-version = findProperty("fr.outadoc.minipavi.version") as String
 
 kotlin {
     explicitApi()
@@ -26,12 +24,17 @@ kotlin {
         nodejs()
     }
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.kotlinx.io)
-                implementation(libs.kotlinx.serialization.json)
+                api(libs.kotlinx.datetime)
+                api(libs.kotlinx.io)
+                api(libs.kotlinx.serialization.json)
             }
         }
 
@@ -41,19 +44,18 @@ kotlin {
             }
         }
 
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.ktor.server.core)
-                implementation(libs.ktor.server.contentNegotiation)
-                implementation(libs.ktor.serialization.json)
-            }
-        }
-
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotlin.test.junit)
             }
         }
+    }
+}
+
+apiValidation {
+    @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+    klib {
+        enabled = true
     }
 }
 
@@ -76,11 +78,6 @@ tasks.dokkaHtmlPartial {
 
             externalDocumentationLink {
                 url.set(URL("https://kotlinlang.org/api/kotlinx-io/"))
-            }
-
-            externalDocumentationLink {
-                url.set(URL("https://api.ktor.io/ktor-server"))
-                packageListUrl.set(URL("https://api.ktor.io/package-list"))
             }
         }
     }

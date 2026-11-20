@@ -1,0 +1,84 @@
+// Klib ABI Dump
+// Targets: [js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <fr.outadoc.minipavi:videotex>
+final enum class fr.outadoc.minipavi.videotex/CharacterSize : kotlin/Enum<fr.outadoc.minipavi.videotex/CharacterSize> { // fr.outadoc.minipavi.videotex/CharacterSize|null[0]
+    enum entry DoubleHeight // fr.outadoc.minipavi.videotex/CharacterSize.DoubleHeight|null[0]
+    enum entry DoubleSize // fr.outadoc.minipavi.videotex/CharacterSize.DoubleSize|null[0]
+    enum entry DoubleWidth // fr.outadoc.minipavi.videotex/CharacterSize.DoubleWidth|null[0]
+    enum entry Normal // fr.outadoc.minipavi.videotex/CharacterSize.Normal|null[0]
+
+    final val entries // fr.outadoc.minipavi.videotex/CharacterSize.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.videotex/CharacterSize> // fr.outadoc.minipavi.videotex/CharacterSize.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): fr.outadoc.minipavi.videotex/CharacterSize // fr.outadoc.minipavi.videotex/CharacterSize.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<fr.outadoc.minipavi.videotex/CharacterSize> // fr.outadoc.minipavi.videotex/CharacterSize.values|values#static(){}[0]
+}
+
+final enum class fr.outadoc.minipavi.videotex/Color : kotlin/Enum<fr.outadoc.minipavi.videotex/Color> { // fr.outadoc.minipavi.videotex/Color|null[0]
+    enum entry Black // fr.outadoc.minipavi.videotex/Color.Black|null[0]
+    enum entry Blue // fr.outadoc.minipavi.videotex/Color.Blue|null[0]
+    enum entry Cyan // fr.outadoc.minipavi.videotex/Color.Cyan|null[0]
+    enum entry Green // fr.outadoc.minipavi.videotex/Color.Green|null[0]
+    enum entry Magenta // fr.outadoc.minipavi.videotex/Color.Magenta|null[0]
+    enum entry Red // fr.outadoc.minipavi.videotex/Color.Red|null[0]
+    enum entry White // fr.outadoc.minipavi.videotex/Color.White|null[0]
+    enum entry Yellow // fr.outadoc.minipavi.videotex/Color.Yellow|null[0]
+
+    final val entries // fr.outadoc.minipavi.videotex/Color.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.videotex/Color> // fr.outadoc.minipavi.videotex/Color.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): fr.outadoc.minipavi.videotex/Color // fr.outadoc.minipavi.videotex/Color.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<fr.outadoc.minipavi.videotex/Color> // fr.outadoc.minipavi.videotex/Color.values|values#static(){}[0]
+}
+
+final enum class fr.outadoc.minipavi.videotex/CursorDirection : kotlin/Enum<fr.outadoc.minipavi.videotex/CursorDirection> { // fr.outadoc.minipavi.videotex/CursorDirection|null[0]
+    enum entry Down // fr.outadoc.minipavi.videotex/CursorDirection.Down|null[0]
+    enum entry Left // fr.outadoc.minipavi.videotex/CursorDirection.Left|null[0]
+    enum entry LineStart // fr.outadoc.minipavi.videotex/CursorDirection.LineStart|null[0]
+    enum entry Right // fr.outadoc.minipavi.videotex/CursorDirection.Right|null[0]
+    enum entry Up // fr.outadoc.minipavi.videotex/CursorDirection.Up|null[0]
+
+    final val entries // fr.outadoc.minipavi.videotex/CursorDirection.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.videotex/CursorDirection> // fr.outadoc.minipavi.videotex/CursorDirection.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): fr.outadoc.minipavi.videotex/CursorDirection // fr.outadoc.minipavi.videotex/CursorDirection.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<fr.outadoc.minipavi.videotex/CursorDirection> // fr.outadoc.minipavi.videotex/CursorDirection.values|values#static(){}[0]
+}
+
+final class fr.outadoc.minipavi.videotex/VideotexBuilder { // fr.outadoc.minipavi.videotex/VideotexBuilder|null[0]
+    final val screenHeight // fr.outadoc.minipavi.videotex/VideotexBuilder.screenHeight|{}screenHeight[0]
+        final fun <get-screenHeight>(): kotlin/Int // fr.outadoc.minipavi.videotex/VideotexBuilder.screenHeight.<get-screenHeight>|<get-screenHeight>(){}[0]
+    final val screenWidth // fr.outadoc.minipavi.videotex/VideotexBuilder.screenWidth|{}screenWidth[0]
+        final fun <get-screenWidth>(): kotlin/Int // fr.outadoc.minipavi.videotex/VideotexBuilder.screenWidth.<get-screenWidth>|<get-screenWidth>(){}[0]
+
+    final fun append(kotlin/Char) // fr.outadoc.minipavi.videotex/VideotexBuilder.append|append(kotlin.Char){}[0]
+    final fun append(kotlin/String) // fr.outadoc.minipavi.videotex/VideotexBuilder.append|append(kotlin.String){}[0]
+    final fun appendLine(kotlin/String = ...) // fr.outadoc.minipavi.videotex/VideotexBuilder.appendLine|appendLine(kotlin.String){}[0]
+    final fun appendRawVideotex(kotlinx.io.bytestring/ByteString) // fr.outadoc.minipavi.videotex/VideotexBuilder.appendRawVideotex|appendRawVideotex(kotlinx.io.bytestring.ByteString){}[0]
+    final fun build(): kotlinx.io.bytestring/ByteString // fr.outadoc.minipavi.videotex/VideotexBuilder.build|build(){}[0]
+    final fun clearAll() // fr.outadoc.minipavi.videotex/VideotexBuilder.clearAll|clearAll(){}[0]
+    final fun clearLine() // fr.outadoc.minipavi.videotex/VideotexBuilder.clearLine|clearLine(){}[0]
+    final fun clearScreen() // fr.outadoc.minipavi.videotex/VideotexBuilder.clearScreen|clearScreen(){}[0]
+    final fun clearStatus() // fr.outadoc.minipavi.videotex/VideotexBuilder.clearStatus|clearStatus(){}[0]
+    final fun moveCursorRelative(fr.outadoc.minipavi.videotex/CursorDirection) // fr.outadoc.minipavi.videotex/VideotexBuilder.moveCursorRelative|moveCursorRelative(fr.outadoc.minipavi.videotex.CursorDirection){}[0]
+    final fun moveCursorTo(kotlin/Int, kotlin/Int) // fr.outadoc.minipavi.videotex/VideotexBuilder.moveCursorTo|moveCursorTo(kotlin.Int;kotlin.Int){}[0]
+    final fun repeatChar(kotlin/Char, kotlin/Int) // fr.outadoc.minipavi.videotex/VideotexBuilder.repeatChar|repeatChar(kotlin.Char;kotlin.Int){}[0]
+    final fun resetCharacterSets() // fr.outadoc.minipavi.videotex/VideotexBuilder.resetCharacterSets|resetCharacterSets(){}[0]
+    final fun setLocalEcho(kotlin/Boolean) // fr.outadoc.minipavi.videotex/VideotexBuilder.setLocalEcho|setLocalEcho(kotlin.Boolean){}[0]
+    final fun showCursor(kotlin/Boolean) // fr.outadoc.minipavi.videotex/VideotexBuilder.showCursor|showCursor(kotlin.Boolean){}[0]
+    final fun withBackgroundColor(fr.outadoc.minipavi.videotex/Color, kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withBackgroundColor|withBackgroundColor(fr.outadoc.minipavi.videotex.Color;kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withBlink(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withBlink|withBlink(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withCharacterSize(fr.outadoc.minipavi.videotex/CharacterSize, kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withCharacterSize|withCharacterSize(fr.outadoc.minipavi.videotex.CharacterSize;kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withInvertedBackground(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withInvertedBackground|withInvertedBackground(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withMosaic(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withMosaic|withMosaic(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withRouleau(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withRouleau|withRouleau(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withTextColor(fr.outadoc.minipavi.videotex/Color, kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withTextColor|withTextColor(fr.outadoc.minipavi.videotex.Color;kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+    final fun withUnderline(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>) // fr.outadoc.minipavi.videotex/VideotexBuilder.withUnderline|withUnderline(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]
+}
+
+final fun fr.outadoc.minipavi.videotex/buildVideotex(kotlin/Function1<fr.outadoc.minipavi.videotex/VideotexBuilder, kotlin/Unit>): kotlinx.io.bytestring/ByteString // fr.outadoc.minipavi.videotex/buildVideotex|buildVideotex(kotlin.Function1<fr.outadoc.minipavi.videotex.VideotexBuilder,kotlin.Unit>){}[0]

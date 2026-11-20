@@ -30,7 +30,10 @@ dependencyResolutionManagement {
 }
 
 include(":core")
+include(":core-ktor")
+include(":core-cloudflare")
 include(":videotex")
 
 include(":sample:static-videotex")
 include(":sample:hello-world")
+include(":sample:cloudflare-worker")

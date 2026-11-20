@@ -1,0 +1,464 @@
+// Klib ABI Dump
+// Targets: [js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <fr.outadoc.minipavi:core>
+final enum class fr.outadoc.minipavi.core.model/FunctionKey : kotlin/Enum<fr.outadoc.minipavi.core.model/FunctionKey> { // fr.outadoc.minipavi.core.model/FunctionKey|null[0]
+    enum entry Annulation // fr.outadoc.minipavi.core.model/FunctionKey.Annulation|null[0]
+    enum entry Correction // fr.outadoc.minipavi.core.model/FunctionKey.Correction|null[0]
+    enum entry Envoi // fr.outadoc.minipavi.core.model/FunctionKey.Envoi|null[0]
+    enum entry Guide // fr.outadoc.minipavi.core.model/FunctionKey.Guide|null[0]
+    enum entry Repetition // fr.outadoc.minipavi.core.model/FunctionKey.Repetition|null[0]
+    enum entry Retour // fr.outadoc.minipavi.core.model/FunctionKey.Retour|null[0]
+    enum entry Sommaire // fr.outadoc.minipavi.core.model/FunctionKey.Sommaire|null[0]
+    enum entry Suite // fr.outadoc.minipavi.core.model/FunctionKey.Suite|null[0]
+
+    final val entries // fr.outadoc.minipavi.core.model/FunctionKey.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/FunctionKey.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): fr.outadoc.minipavi.core.model/FunctionKey // fr.outadoc.minipavi.core.model/FunctionKey.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/FunctionKey.values|values#static(){}[0]
+}
+
+abstract fun interface fr.outadoc.minipavi.core/MinitelLogger { // fr.outadoc.minipavi.core/MinitelLogger|null[0]
+    abstract fun log(fr.outadoc.minipavi.core/MinitelLogger.Level, kotlin/Throwable?, kotlin/Function0<kotlin/String>) // fr.outadoc.minipavi.core/MinitelLogger.log|log(fr.outadoc.minipavi.core.MinitelLogger.Level;kotlin.Throwable?;kotlin.Function0<kotlin.String>){}[0]
+    open fun log(fr.outadoc.minipavi.core/MinitelLogger.Level, kotlin/Function0<kotlin/String>) // fr.outadoc.minipavi.core/MinitelLogger.log|log(fr.outadoc.minipavi.core.MinitelLogger.Level;kotlin.Function0<kotlin.String>){}[0]
+
+    final enum class Level : kotlin/Enum<fr.outadoc.minipavi.core/MinitelLogger.Level> { // fr.outadoc.minipavi.core/MinitelLogger.Level|null[0]
+        enum entry Debug // fr.outadoc.minipavi.core/MinitelLogger.Level.Debug|null[0]
+        enum entry Error // fr.outadoc.minipavi.core/MinitelLogger.Level.Error|null[0]
+        enum entry Warn // fr.outadoc.minipavi.core/MinitelLogger.Level.Warn|null[0]
+
+        final val entries // fr.outadoc.minipavi.core/MinitelLogger.Level.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.core/MinitelLogger.Level> // fr.outadoc.minipavi.core/MinitelLogger.Level.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): fr.outadoc.minipavi.core/MinitelLogger.Level // fr.outadoc.minipavi.core/MinitelLogger.Level.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<fr.outadoc.minipavi.core/MinitelLogger.Level> // fr.outadoc.minipavi.core/MinitelLogger.Level.values|values#static(){}[0]
+    }
+
+    final object Companion { // fr.outadoc.minipavi.core/MinitelLogger.Companion|null[0]
+        final val None // fr.outadoc.minipavi.core/MinitelLogger.Companion.None|{}None[0]
+            final fun <get-None>(): fr.outadoc.minipavi.core/MinitelLogger // fr.outadoc.minipavi.core/MinitelLogger.Companion.None.<get-None>|<get-None>(){}[0]
+    }
+}
+
+final class <#A: kotlin/Any> fr.outadoc.minipavi.core.model/GatewayRequest { // fr.outadoc.minipavi.core.model/GatewayRequest|null[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String, kotlin/String, fr.outadoc.minipavi.core.model/GatewayRequest.SocketType, #A, fr.outadoc.minipavi.core.model/GatewayRequest.Event, kotlin.collections/List<kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>? = ...) // fr.outadoc.minipavi.core.model/GatewayRequest.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;fr.outadoc.minipavi.core.model.GatewayRequest.SocketType;1:0;fr.outadoc.minipavi.core.model.GatewayRequest.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>?){}[0]
+
+    final val event // fr.outadoc.minipavi.core.model/GatewayRequest.event|{}event[0]
+        final fun <get-event>(): fr.outadoc.minipavi.core.model/GatewayRequest.Event // fr.outadoc.minipavi.core.model/GatewayRequest.event.<get-event>|<get-event>(){}[0]
+    final val gatewayVersion // fr.outadoc.minipavi.core.model/GatewayRequest.gatewayVersion|{}gatewayVersion[0]
+        final fun <get-gatewayVersion>(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.gatewayVersion.<get-gatewayVersion>|<get-gatewayVersion>(){}[0]
+    final val minitelVersion // fr.outadoc.minipavi.core.model/GatewayRequest.minitelVersion|{}minitelVersion[0]
+        final fun <get-minitelVersion>(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.minitelVersion.<get-minitelVersion>|<get-minitelVersion>(){}[0]
+    final val remoteAddress // fr.outadoc.minipavi.core.model/GatewayRequest.remoteAddress|{}remoteAddress[0]
+        final fun <get-remoteAddress>(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.remoteAddress.<get-remoteAddress>|<get-remoteAddress>(){}[0]
+    final val socketType // fr.outadoc.minipavi.core.model/GatewayRequest.socketType|{}socketType[0]
+        final fun <get-socketType>(): fr.outadoc.minipavi.core.model/GatewayRequest.SocketType // fr.outadoc.minipavi.core.model/GatewayRequest.socketType.<get-socketType>|<get-socketType>(){}[0]
+    final val state // fr.outadoc.minipavi.core.model/GatewayRequest.state|{}state[0]
+        final fun <get-state>(): #A // fr.outadoc.minipavi.core.model/GatewayRequest.state.<get-state>|<get-state>(){}[0]
+    final val urlParams // fr.outadoc.minipavi.core.model/GatewayRequest.urlParams|{}urlParams[0]
+        final fun <get-urlParams>(): kotlin.collections/Map<kotlin/String, kotlin/String>? // fr.outadoc.minipavi.core.model/GatewayRequest.urlParams.<get-urlParams>|<get-urlParams>(){}[0]
+    final val userId // fr.outadoc.minipavi.core.model/GatewayRequest.userId|{}userId[0]
+        final fun <get-userId>(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.userId.<get-userId>|<get-userId>(){}[0]
+    final val userInput // fr.outadoc.minipavi.core.model/GatewayRequest.userInput|{}userInput[0]
+        final fun <get-userInput>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/GatewayRequest.userInput.<get-userInput>|<get-userInput>(){}[0]
+
+    final fun component1(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.component2|component2(){}[0]
+    final fun component3(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.component3|component3(){}[0]
+    final fun component4(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.component4|component4(){}[0]
+    final fun component5(): fr.outadoc.minipavi.core.model/GatewayRequest.SocketType // fr.outadoc.minipavi.core.model/GatewayRequest.component5|component5(){}[0]
+    final fun component6(): #A // fr.outadoc.minipavi.core.model/GatewayRequest.component6|component6(){}[0]
+    final fun component7(): fr.outadoc.minipavi.core.model/GatewayRequest.Event // fr.outadoc.minipavi.core.model/GatewayRequest.component7|component7(){}[0]
+    final fun component8(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/GatewayRequest.component8|component8(){}[0]
+    final fun component9(): kotlin.collections/Map<kotlin/String, kotlin/String>? // fr.outadoc.minipavi.core.model/GatewayRequest.component9|component9(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., fr.outadoc.minipavi.core.model/GatewayRequest.SocketType = ..., #A = ..., fr.outadoc.minipavi.core.model/GatewayRequest.Event = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/Map<kotlin/String, kotlin/String>? = ...): fr.outadoc.minipavi.core.model/GatewayRequest<#A> // fr.outadoc.minipavi.core.model/GatewayRequest.copy|copy(kotlin.String;kotlin.String;kotlin.String;kotlin.String;fr.outadoc.minipavi.core.model.GatewayRequest.SocketType;1:0;fr.outadoc.minipavi.core.model.GatewayRequest.Event;kotlin.collections.List<kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.toString|toString(){}[0]
+
+    final enum class SocketType : kotlin/Enum<fr.outadoc.minipavi.core.model/GatewayRequest.SocketType> { // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType|null[0]
+        enum entry Asterisk // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.Asterisk|null[0]
+        enum entry Telnet // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.Telnet|null[0]
+        enum entry WebSocket // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.WebSocket|null[0]
+        enum entry WebSocketSSL // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.WebSocketSSL|null[0]
+
+        final val entries // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.core.model/GatewayRequest.SocketType> // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): fr.outadoc.minipavi.core.model/GatewayRequest.SocketType // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<fr.outadoc.minipavi.core.model/GatewayRequest.SocketType> // fr.outadoc.minipavi.core.model/GatewayRequest.SocketType.values|values#static(){}[0]
+    }
+
+    sealed class Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event|null[0]
+        final class KeyboardInput : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput|null[0]
+            constructor <init>(fr.outadoc.minipavi.core.model/FunctionKey) // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.<init>|<init>(fr.outadoc.minipavi.core.model.FunctionKey){}[0]
+
+            final val key // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.key|{}key[0]
+                final fun <get-key>(): fr.outadoc.minipavi.core.model/FunctionKey // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.key.<get-key>|<get-key>(){}[0]
+
+            final fun component1(): fr.outadoc.minipavi.core.model/FunctionKey // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.component1|component1(){}[0]
+            final fun copy(fr.outadoc.minipavi.core.model/FunctionKey = ...): fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.copy|copy(fr.outadoc.minipavi.core.model.FunctionKey){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.KeyboardInput.toString|toString(){}[0]
+        }
+
+        final object BackgroundCall : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCall|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCall.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCall.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCall.toString|toString(){}[0]
+        }
+
+        final object BackgroundCallSimulated : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCallSimulated|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCallSimulated.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCallSimulated.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.BackgroundCallSimulated.toString|toString(){}[0]
+        }
+
+        final object Connection : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Connection|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Connection.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Connection.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Connection.toString|toString(){}[0]
+        }
+
+        final object Direct : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Direct|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Direct.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Direct.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Direct.toString|toString(){}[0]
+        }
+
+        final object DirectCallEnded : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallEnded|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallEnded.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallEnded.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallEnded.toString|toString(){}[0]
+        }
+
+        final object DirectCallFailed : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallFailed|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallFailed.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallFailed.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectCallFailed.toString|toString(){}[0]
+        }
+
+        final object DirectConnection : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectConnection|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectConnection.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectConnection.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.DirectConnection.toString|toString(){}[0]
+        }
+
+        final object Disconnection : fr.outadoc.minipavi.core.model/GatewayRequest.Event { // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Disconnection|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Disconnection.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Disconnection.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/GatewayRequest.Event.Disconnection.toString|toString(){}[0]
+        }
+    }
+}
+
+final class <#A: kotlin/Any> fr.outadoc.minipavi.core.model/ServiceResponse { // fr.outadoc.minipavi.core.model/ServiceResponse|null[0]
+    constructor <init>(#A, kotlinx.io.bytestring/ByteString, kotlin/Boolean = ..., kotlin/String = ..., fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command = ...) // fr.outadoc.minipavi.core.model/ServiceResponse.<init>|<init>(1:0;kotlinx.io.bytestring.ByteString;kotlin.Boolean;kotlin.String;fr.outadoc.minipavi.core.model.ServiceResponse.DirectCallSetting;fr.outadoc.minipavi.core.model.ServiceResponse.Command){}[0]
+
+    final val command // fr.outadoc.minipavi.core.model/ServiceResponse.command|{}command[0]
+        final fun <get-command>(): fr.outadoc.minipavi.core.model/ServiceResponse.Command // fr.outadoc.minipavi.core.model/ServiceResponse.command.<get-command>|<get-command>(){}[0]
+    final val content // fr.outadoc.minipavi.core.model/ServiceResponse.content|{}content[0]
+        final fun <get-content>(): kotlinx.io.bytestring/ByteString // fr.outadoc.minipavi.core.model/ServiceResponse.content.<get-content>|<get-content>(){}[0]
+    final val directCall // fr.outadoc.minipavi.core.model/ServiceResponse.directCall|{}directCall[0]
+        final fun <get-directCall>(): fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting // fr.outadoc.minipavi.core.model/ServiceResponse.directCall.<get-directCall>|<get-directCall>(){}[0]
+    final val echo // fr.outadoc.minipavi.core.model/ServiceResponse.echo|{}echo[0]
+        final fun <get-echo>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.echo.<get-echo>|<get-echo>(){}[0]
+    final val nextUrl // fr.outadoc.minipavi.core.model/ServiceResponse.nextUrl|{}nextUrl[0]
+        final fun <get-nextUrl>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.nextUrl.<get-nextUrl>|<get-nextUrl>(){}[0]
+    final val state // fr.outadoc.minipavi.core.model/ServiceResponse.state|{}state[0]
+        final fun <get-state>(): #A // fr.outadoc.minipavi.core.model/ServiceResponse.state.<get-state>|<get-state>(){}[0]
+
+    final fun component1(): #A // fr.outadoc.minipavi.core.model/ServiceResponse.component1|component1(){}[0]
+    final fun component2(): kotlinx.io.bytestring/ByteString // fr.outadoc.minipavi.core.model/ServiceResponse.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.component3|component3(){}[0]
+    final fun component4(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.component4|component4(){}[0]
+    final fun component5(): fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting // fr.outadoc.minipavi.core.model/ServiceResponse.component5|component5(){}[0]
+    final fun component6(): fr.outadoc.minipavi.core.model/ServiceResponse.Command // fr.outadoc.minipavi.core.model/ServiceResponse.component6|component6(){}[0]
+    final fun copy(#A = ..., kotlinx.io.bytestring/ByteString = ..., kotlin/Boolean = ..., kotlin/String = ..., fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command = ...): fr.outadoc.minipavi.core.model/ServiceResponse<#A> // fr.outadoc.minipavi.core.model/ServiceResponse.copy|copy(1:0;kotlinx.io.bytestring.ByteString;kotlin.Boolean;kotlin.String;fr.outadoc.minipavi.core.model.ServiceResponse.DirectCallSetting;fr.outadoc.minipavi.core.model.ServiceResponse.Command){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.toString|toString(){}[0]
+
+    final enum class DirectCallSetting : kotlin/Enum<fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting> { // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting|null[0]
+        enum entry No // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.No|null[0]
+        enum entry Yes // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.Yes|null[0]
+        enum entry YesCnx // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.YesCnx|null[0]
+
+        final val entries // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.entries|#static{}entries[0]
+            final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting> // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.entries.<get-entries>|<get-entries>#static(){}[0]
+
+        final fun valueOf(kotlin/String): fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.valueOf|valueOf#static(kotlin.String){}[0]
+        final fun values(): kotlin/Array<fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting> // fr.outadoc.minipavi.core.model/ServiceResponse.DirectCallSetting.values|values#static(){}[0]
+    }
+
+    sealed interface Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command|null[0]
+        final enum class Case : kotlin/Enum<fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case> { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case|null[0]
+            enum entry Lower // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.Lower|null[0]
+            enum entry Upper // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.Upper|null[0]
+
+            final val entries // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.entries|#static{}entries[0]
+                final fun <get-entries>(): kotlin.enums/EnumEntries<fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.entries.<get-entries>|<get-entries>#static(){}[0]
+
+            final fun valueOf(kotlin/String): fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.valueOf|valueOf#static(kotlin.String){}[0]
+            final fun values(): kotlin/Array<fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case.values|values#static(){}[0]
+        }
+
+        final class BackgroundCall : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall|null[0]
+            constructor <init>(kotlinx.datetime/Instant, kotlin/Boolean, kotlin.collections/List<kotlin/String>, kotlin/String) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.<init>|<init>(kotlinx.datetime.Instant;kotlin.Boolean;kotlin.collections.List<kotlin.String>;kotlin.String){}[0]
+
+            final val sendAt // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.sendAt|{}sendAt[0]
+                final fun <get-sendAt>(): kotlinx.datetime/Instant // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.sendAt.<get-sendAt>|<get-sendAt>(){}[0]
+            final val simulate // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.simulate|{}simulate[0]
+                final fun <get-simulate>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.simulate.<get-simulate>|<get-simulate>(){}[0]
+            final val uniqueIds // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.uniqueIds|{}uniqueIds[0]
+                final fun <get-uniqueIds>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.uniqueIds.<get-uniqueIds>|<get-uniqueIds>(){}[0]
+            final val url // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.url|{}url[0]
+                final fun <get-url>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.url.<get-url>|<get-url>(){}[0]
+
+            final fun component1(): kotlinx.datetime/Instant // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.component1|component1(){}[0]
+            final fun component2(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.component2|component2(){}[0]
+            final fun component3(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.component3|component3(){}[0]
+            final fun component4(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.component4|component4(){}[0]
+            final fun copy(kotlinx.datetime/Instant = ..., kotlin/Boolean = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/String = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.copy|copy(kotlinx.datetime.Instant;kotlin.Boolean;kotlin.collections.List<kotlin.String>;kotlin.String){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.BackgroundCall.toString|toString(){}[0]
+        }
+
+        final class ConnectToExt : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt|null[0]
+            constructor <init>(kotlin/String, kotlin/String, kotlin/Int, kotlin/Int) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.<init>|<init>(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int){}[0]
+
+            final val key // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.key|{}key[0]
+                final fun <get-key>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.key.<get-key>|<get-key>(){}[0]
+            final val rx // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.rx|{}rx[0]
+                final fun <get-rx>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.rx.<get-rx>|<get-rx>(){}[0]
+            final val telNumber // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.telNumber|{}telNumber[0]
+                final fun <get-telNumber>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.telNumber.<get-telNumber>|<get-telNumber>(){}[0]
+            final val tx // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.tx|{}tx[0]
+                final fun <get-tx>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.tx.<get-tx>|<get-tx>(){}[0]
+
+            final fun component1(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.component1|component1(){}[0]
+            final fun component2(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.component2|component2(){}[0]
+            final fun component3(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.component3|component3(){}[0]
+            final fun component4(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.component4|component4(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Int = ..., kotlin/Int = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.copy|copy(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToExt.toString|toString(){}[0]
+        }
+
+        final class ConnectToTelnet : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet|null[0]
+            constructor <init>(kotlin/String, kotlin/String, kotlin/Boolean = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case, kotlin/String) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.<init>|<init>(kotlin.String;kotlin.String;kotlin.Boolean;fr.outadoc.minipavi.core.model.ServiceResponse.Command.Case;kotlin.String){}[0]
+
+            final val case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.case|{}case[0]
+                final fun <get-case>(): fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.case.<get-case>|<get-case>(){}[0]
+            final val echo // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.echo|{}echo[0]
+                final fun <get-echo>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.echo.<get-echo>|<get-echo>(){}[0]
+            final val host // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.host|{}host[0]
+                final fun <get-host>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.host.<get-host>|<get-host>(){}[0]
+            final val key // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.key|{}key[0]
+                final fun <get-key>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.key.<get-key>|<get-key>(){}[0]
+            final val startSequence // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.startSequence|{}startSequence[0]
+                final fun <get-startSequence>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.startSequence.<get-startSequence>|<get-startSequence>(){}[0]
+
+            final fun component1(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.component1|component1(){}[0]
+            final fun component2(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.component2|component2(){}[0]
+            final fun component3(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.component3|component3(){}[0]
+            final fun component4(): fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.component4|component4(){}[0]
+            final fun component5(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.component5|component5(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case = ..., kotlin/String = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.copy|copy(kotlin.String;kotlin.String;kotlin.Boolean;fr.outadoc.minipavi.core.model.ServiceResponse.Command.Case;kotlin.String){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToTelnet.toString|toString(){}[0]
+        }
+
+        final class ConnectToWebSocket : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket|null[0]
+            constructor <init>(kotlin/String, kotlin/String, kotlin/String? = ..., kotlin/String? = ..., kotlin/Boolean = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.<init>|<init>(kotlin.String;kotlin.String;kotlin.String?;kotlin.String?;kotlin.Boolean;fr.outadoc.minipavi.core.model.ServiceResponse.Command.Case){}[0]
+
+            final val case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.case|{}case[0]
+                final fun <get-case>(): fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.case.<get-case>|<get-case>(){}[0]
+            final val echo // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.echo|{}echo[0]
+                final fun <get-echo>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.echo.<get-echo>|<get-echo>(){}[0]
+            final val host // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.host|{}host[0]
+                final fun <get-host>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.host.<get-host>|<get-host>(){}[0]
+            final val key // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.key|{}key[0]
+                final fun <get-key>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.key.<get-key>|<get-key>(){}[0]
+            final val path // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.path|{}path[0]
+                final fun <get-path>(): kotlin/String? // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.path.<get-path>|<get-path>(){}[0]
+            final val proto // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.proto|{}proto[0]
+                final fun <get-proto>(): kotlin/String? // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.proto.<get-proto>|<get-proto>(){}[0]
+
+            final fun component1(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component1|component1(){}[0]
+            final fun component2(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component2|component2(){}[0]
+            final fun component3(): kotlin/String? // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component3|component3(){}[0]
+            final fun component4(): kotlin/String? // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component4|component4(){}[0]
+            final fun component5(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component5|component5(){}[0]
+            final fun component6(): fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.component6|component6(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/Boolean = ..., fr.outadoc.minipavi.core.model/ServiceResponse.Command.Case = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.copy|copy(kotlin.String;kotlin.String;kotlin.String?;kotlin.String?;kotlin.Boolean;fr.outadoc.minipavi.core.model.ServiceResponse.Command.Case){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.ConnectToWebSocket.toString|toString(){}[0]
+        }
+
+        final class DuplicateStream : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream|null[0]
+            constructor <init>(kotlin/String, kotlin/String) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+            final val key // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.key|{}key[0]
+                final fun <get-key>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.key.<get-key>|<get-key>(){}[0]
+            final val userId // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.userId|{}userId[0]
+                final fun <get-userId>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.userId.<get-userId>|<get-userId>(){}[0]
+
+            final fun component1(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.component1|component1(){}[0]
+            final fun component2(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.component2|component2(){}[0]
+            final fun copy(kotlin/String = ..., kotlin/String = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.copy|copy(kotlin.String;kotlin.String){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.DuplicateStream.toString|toString(){}[0]
+        }
+
+        final class InputForm : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm|null[0]
+            constructor <init>(kotlin.collections/List<kotlin/Int>, kotlin.collections/List<kotlin/Int>, kotlin.collections/List<kotlin/Int>, kotlin/Char = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.<init>|<init>(kotlin.collections.List<kotlin.Int>;kotlin.collections.List<kotlin.Int>;kotlin.collections.List<kotlin.Int>;kotlin.Char;kotlin.collections.List<kotlin.String>;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+
+            final val cols // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.cols|{}cols[0]
+                final fun <get-cols>(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.cols.<get-cols>|<get-cols>(){}[0]
+            final val cursor // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.cursor|{}cursor[0]
+                final fun <get-cursor>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.cursor.<get-cursor>|<get-cursor>(){}[0]
+            final val length // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.length|{}length[0]
+                final fun <get-length>(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.length.<get-length>|<get-length>(){}[0]
+            final val lines // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.lines|{}lines[0]
+                final fun <get-lines>(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.lines.<get-lines>|<get-lines>(){}[0]
+            final val prefill // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.prefill|{}prefill[0]
+                final fun <get-prefill>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.prefill.<get-prefill>|<get-prefill>(){}[0]
+            final val spaceChar // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.spaceChar|{}spaceChar[0]
+                final fun <get-spaceChar>(): kotlin/Char // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.spaceChar.<get-spaceChar>|<get-spaceChar>(){}[0]
+            final val submitWith // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.submitWith|{}submitWith[0]
+                final fun <get-submitWith>(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.submitWith.<get-submitWith>|<get-submitWith>(){}[0]
+
+            final fun component1(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component1|component1(){}[0]
+            final fun component2(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component2|component2(){}[0]
+            final fun component3(): kotlin.collections/List<kotlin/Int> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component3|component3(){}[0]
+            final fun component4(): kotlin/Char // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component4|component4(){}[0]
+            final fun component5(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component5|component5(){}[0]
+            final fun component6(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component6|component6(){}[0]
+            final fun component7(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.component7|component7(){}[0]
+            final fun copy(kotlin.collections/List<kotlin/Int> = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin.collections/List<kotlin/Int> = ..., kotlin/Char = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.copy|copy(kotlin.collections.List<kotlin.Int>;kotlin.collections.List<kotlin.Int>;kotlin.collections.List<kotlin.Int>;kotlin.Char;kotlin.collections.List<kotlin.String>;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputForm.toString|toString(){}[0]
+        }
+
+        final class InputMessage : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage|null[0]
+            constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/String = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+
+            final val col // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.col|{}col[0]
+                final fun <get-col>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.col.<get-col>|<get-col>(){}[0]
+            final val cursor // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.cursor|{}cursor[0]
+                final fun <get-cursor>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.cursor.<get-cursor>|<get-cursor>(){}[0]
+            final val height // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.height|{}height[0]
+                final fun <get-height>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.height.<get-height>|<get-height>(){}[0]
+            final val initialValues // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.initialValues|{}initialValues[0]
+                final fun <get-initialValues>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.initialValues.<get-initialValues>|<get-initialValues>(){}[0]
+            final val line // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.line|{}line[0]
+                final fun <get-line>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.line.<get-line>|<get-line>(){}[0]
+            final val spaceChar // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.spaceChar|{}spaceChar[0]
+                final fun <get-spaceChar>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.spaceChar.<get-spaceChar>|<get-spaceChar>(){}[0]
+            final val submitWith // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.submitWith|{}submitWith[0]
+                final fun <get-submitWith>(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.submitWith.<get-submitWith>|<get-submitWith>(){}[0]
+            final val width // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.width|{}width[0]
+                final fun <get-width>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.width.<get-width>|<get-width>(){}[0]
+
+            final fun component1(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component1|component1(){}[0]
+            final fun component2(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component2|component2(){}[0]
+            final fun component3(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component3|component3(){}[0]
+            final fun component4(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component4|component4(){}[0]
+            final fun component5(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component5|component5(){}[0]
+            final fun component6(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component6|component6(){}[0]
+            final fun component7(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component7|component7(){}[0]
+            final fun component8(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.component8|component8(){}[0]
+            final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputMessage.toString|toString(){}[0]
+        }
+
+        final class InputText : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText|null[0]
+            constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;kotlin.String;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+
+            final val col // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.col|{}col[0]
+                final fun <get-col>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.col.<get-col>|<get-col>(){}[0]
+            final val cursor // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.cursor|{}cursor[0]
+                final fun <get-cursor>(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.cursor.<get-cursor>|<get-cursor>(){}[0]
+            final val length // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.length|{}length[0]
+                final fun <get-length>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.length.<get-length>|<get-length>(){}[0]
+            final val line // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.line|{}line[0]
+                final fun <get-line>(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.line.<get-line>|<get-line>(){}[0]
+            final val prefill // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.prefill|{}prefill[0]
+                final fun <get-prefill>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.prefill.<get-prefill>|<get-prefill>(){}[0]
+            final val spaceChar // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.spaceChar|{}spaceChar[0]
+                final fun <get-spaceChar>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.spaceChar.<get-spaceChar>|<get-spaceChar>(){}[0]
+            final val submitWith // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.submitWith|{}submitWith[0]
+                final fun <get-submitWith>(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.submitWith.<get-submitWith>|<get-submitWith>(){}[0]
+            final val substituteChar // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.substituteChar|{}substituteChar[0]
+                final fun <get-substituteChar>(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.substituteChar.<get-substituteChar>|<get-substituteChar>(){}[0]
+
+            final fun component1(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component1|component1(){}[0]
+            final fun component2(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component2|component2(){}[0]
+            final fun component3(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component3|component3(){}[0]
+            final fun component4(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component4|component4(){}[0]
+            final fun component5(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component5|component5(){}[0]
+            final fun component6(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component6|component6(){}[0]
+            final fun component7(): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component7|component7(){}[0]
+            final fun component8(): kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.component8|component8(){}[0]
+            final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/Boolean = ..., kotlin.collections/Set<fr.outadoc.minipavi.core.model/FunctionKey> = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;kotlin.String;kotlin.Boolean;kotlin.collections.Set<fr.outadoc.minipavi.core.model.FunctionKey>){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.InputText.toString|toString(){}[0]
+        }
+
+        final class PushServiceMessage : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage|null[0]
+            constructor <init>(kotlin.collections/List<kotlin/String>, kotlin.collections/List<kotlin/String>) // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.<init>|<init>(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+
+            final val message // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.message|{}message[0]
+                final fun <get-message>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.message.<get-message>|<get-message>(){}[0]
+            final val userIds // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.userIds|{}userIds[0]
+                final fun <get-userIds>(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.userIds.<get-userIds>|<get-userIds>(){}[0]
+
+            final fun component1(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.component1|component1(){}[0]
+            final fun component2(): kotlin.collections/List<kotlin/String> // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.component2|component2(){}[0]
+            final fun copy(kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ...): fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.copy|copy(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.PushServiceMessage.toString|toString(){}[0]
+        }
+
+        final object Disconnect : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Disconnect|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Disconnect.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Disconnect.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Disconnect.toString|toString(){}[0]
+        }
+
+        final object Display : fr.outadoc.minipavi.core.model/ServiceResponse.Command { // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Display|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Display.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Display.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // fr.outadoc.minipavi.core.model/ServiceResponse.Command.Display.toString|toString(){}[0]
+        }
+    }
+}
+
+final class <#A: kotlin/Any> fr.outadoc.minipavi.core/MinitelServiceHandler { // fr.outadoc.minipavi.core/MinitelServiceHandler|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization/KSerializer<#A>, kotlin/Function0<#A>, fr.outadoc.minipavi.core/MinitelLogger = ..., kotlin/Function1<fr.outadoc.minipavi.core.model/GatewayRequest<#A>, fr.outadoc.minipavi.core.model/ServiceResponse<#A>>) // fr.outadoc.minipavi.core/MinitelServiceHandler.<init>|<init>(kotlin.String;kotlinx.serialization.KSerializer<1:0>;kotlin.Function0<1:0>;fr.outadoc.minipavi.core.MinitelLogger;kotlin.Function1<fr.outadoc.minipavi.core.model.GatewayRequest<1:0>,fr.outadoc.minipavi.core.model.ServiceResponse<1:0>>){}[0]
+
+    final fun handle(kotlin/String): kotlin/String // fr.outadoc.minipavi.core/MinitelServiceHandler.handle|handle(kotlin.String){}[0]
+}
+
+final class fr.outadoc.minipavi.core/InvalidGatewayRequestException : kotlin/Exception { // fr.outadoc.minipavi.core/InvalidGatewayRequestException|null[0]
+    constructor <init>(kotlin/Throwable) // fr.outadoc.minipavi.core/InvalidGatewayRequestException.<init>|<init>(kotlin.Throwable){}[0]
+}
+
+final inline fun <#A: reified kotlin/Any> fr.outadoc.minipavi.core/MinitelServiceHandler(kotlin/String, noinline kotlin/Function0<#A>, fr.outadoc.minipavi.core/MinitelLogger = ..., noinline kotlin/Function1<fr.outadoc.minipavi.core.model/GatewayRequest<#A>, fr.outadoc.minipavi.core.model/ServiceResponse<#A>>): fr.outadoc.minipavi.core/MinitelServiceHandler<#A> // fr.outadoc.minipavi.core/MinitelServiceHandler|MinitelServiceHandler(kotlin.String;kotlin.Function0<0:0>;fr.outadoc.minipavi.core.MinitelLogger;kotlin.Function1<fr.outadoc.minipavi.core.model.GatewayRequest<0:0>,fr.outadoc.minipavi.core.model.ServiceResponse<0:0>>){0§<kotlin.Any>}[0]
