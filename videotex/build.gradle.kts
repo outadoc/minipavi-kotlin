@@ -66,7 +66,7 @@ tasks.dokkaHtmlPartial {
 
 publishing {
     publications {
-        getByName<MavenPublication>("kotlinMultiplatform") {
+        withType<MavenPublication>().configureEach {
             pom {
                 name.set("minipavi-videotex")
                 description.set("Module de création de documents Vidéotex en Kotlin.")

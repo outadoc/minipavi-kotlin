@@ -85,7 +85,7 @@ tasks.dokkaHtmlPartial {
 
 publishing {
     publications {
-        getByName<MavenPublication>("kotlinMultiplatform") {
+        withType<MavenPublication>().configureEach {
             pom {
                 name.set("minipavi-core")
                 description.set("SDK pour le développement de services Minitel sur la plateforme MiniPavi en Kotlin.")

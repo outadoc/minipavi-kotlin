@@ -73,7 +73,7 @@ tasks.dokkaHtmlPartial {
 
 publishing {
     publications {
-        getByName<MavenPublication>("kotlinMultiplatform") {
+        withType<MavenPublication>().configureEach {
             pom {
                 name.set("minipavi-core-ktor")
                 description.set("Intégration Ktor du SDK MiniPavi-Kotlin.")

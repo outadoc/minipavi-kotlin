@@ -64,7 +64,7 @@ tasks.dokkaHtmlPartial {
 
 publishing {
     publications {
-        getByName<MavenPublication>("kotlinMultiplatform") {
+        withType<MavenPublication>().configureEach {
             pom {
                 name.set("minipavi-core-cloudflare")
                 description.set("Intégration Cloudflare Workers du SDK MiniPavi-Kotlin.")

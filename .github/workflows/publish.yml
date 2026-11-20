@@ -1,0 +1,57 @@
+name: Publish library
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Resolve version
+        id: version
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          # Releases publish the version in their tag (v1.2.3 or 1.2.3). Manual runs publish the
+          # version set in gradle.properties.
+          if [ -n "$TAG_NAME" ]; then
+            echo "version=${TAG_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$(grep '^fr.outadoc.minipavi.version=' gradle.properties | cut -d= -f2)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to GitHub Packages
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          ./gradlew
+          -Pfr.outadoc.minipavi.version=${{ steps.version.outputs.version }}
+          :core:publishAllPublicationsToGitHubPackagesRepository
+          :videotex:publishAllPublicationsToGitHubPackagesRepository
+          :core-ktor:publishAllPublicationsToGitHubPackagesRepository
+          :core-cloudflare:publishAllPublicationsToGitHubPackagesRepository

@@ -5,7 +5,7 @@ sur [Cloudflare Workers](https://developers.cloudflare.com/workers/), à l'aide 
 
 ## Utilisation
 
-Configurez la cible JS de votre projet pour produire des modules ES :
+Ajoutez le dépôt GitHub Packages comme indiqué dans le [README principal](../README.md), puis configurez la cible JS de votre projet pour produire des modules ES :
 
 ```kotlin
 // build.gradle.kts
@@ -18,7 +18,7 @@ kotlin {
 
     sourceSets {
         jsMain.dependencies {
-            implementation("com.github.outadoc.minipavi-kotlin:core-cloudflare:x.y.z")
+            implementation("fr.outadoc.minipavi:core-cloudflare:x.y.z")
         }
     }
 }
