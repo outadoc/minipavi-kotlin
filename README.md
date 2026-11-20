@@ -47,6 +47,11 @@ Les exemples ci-dessous utilisent Ktor. Pour Cloudflare Workers, consultez le
 [README de `core-cloudflare`](core-cloudflare/README.md) et l'exemple
 [`sample/cloudflare-worker`](sample/cloudflare-worker).
 
+MiniPavi-Kotlin est publié sur le dépôt Maven de [GitHub Packages][7] de ce projet. GitHub exige
+une authentification pour télécharger des paquets, même publics : il vous faut un
+[personal access token (classic)][8] avec la permission `read:packages`. Dans GitHub Actions, le
+`GITHUB_TOKEN` du workflow suffit si le job a la permission `packages: read`.
+
 Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
 
 ```toml
@@ -56,8 +61,8 @@ Ajoutez la dépendance à MiniPavi-Kotlin dans votre projet :
 minipavi-kotlin = "x.y.z"
 
 [libraries]
-minipavi-core-ktor = { module = "com.github.outadoc.minipavi-kotlin:core-ktor", version.ref = "minipavi-kotlin" }
-minipavi-videotex = { module = "com.github.outadoc.minipavi-kotlin:videotex", version.ref = "minipavi-kotlin" }
+minipavi-core-ktor = { module = "fr.outadoc.minipavi:core-ktor", version.ref = "minipavi-kotlin" }
+minipavi-videotex = { module = "fr.outadoc.minipavi:videotex", version.ref = "minipavi-kotlin" }
 ```
 
 ```kotlin
@@ -65,10 +70,24 @@ minipavi-videotex = { module = "com.github.outadoc.minipavi-kotlin:videotex", ve
 
 dependencyResolutionManagement {
     repositories {
-        maven("https://jitpack.io")
+        maven("https://maven.pkg.github.com/outadoc/minipavi-kotlin") {
+            name = "GitHubPackages"
+            credentials(PasswordCredentials::class)
+        }
     }
 }
 ```
+
+`credentials(PasswordCredentials::class)` lit les propriétés Gradle `GitHubPackagesUsername` et
+`GitHubPackagesPassword`, par exemple dans `~/.gradle/gradle.properties` :
+
+```properties
+GitHubPackagesUsername=votre-login-github
+GitHubPackagesPassword=ghp_votre_token
+```
+
+En CI, passez-les en variables d'environnement `ORG_GRADLE_PROJECT_GitHubPackagesUsername` et
+`ORG_GRADLE_PROJECT_GitHubPackagesPassword`.
 
 ```kotlin
 // build.gradle.kts
@@ -220,3 +239,7 @@ Et voilà. Plus qu'à lancer votre serveur, et à le connecter à MiniPavi. 🎉
 [5]: https://github.com/Kotlin/kotlinx.serialization
 
 [6]: https://developers.cloudflare.com/workers/
+
+[7]: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry
+
+[8]: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic
