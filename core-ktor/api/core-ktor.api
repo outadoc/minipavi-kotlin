@@ -1,0 +1,4 @@
+public final class fr/outadoc/minipavi/core/ktor/MinitelServiceKt {
+	public static final fun minitelService (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/KSerializer;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;)V
+}
+

@@ -1,22 +1,18 @@
 package fr.outadoc.minipavi.core.ktor
 
-import fr.outadoc.minipavi.core.internal.data.mapToDTO
-import fr.outadoc.minipavi.core.internal.data.mapToDomain
-import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
-import fr.outadoc.minipavi.core.internal.KJson
+import fr.outadoc.minipavi.core.InvalidGatewayRequestException
+import fr.outadoc.minipavi.core.MinitelLogger
+import fr.outadoc.minipavi.core.MinitelServiceHandler
 import fr.outadoc.minipavi.core.model.GatewayRequest
 import fr.outadoc.minipavi.core.model.ServiceResponse
-import io.ktor.serialization.kotlinx.json.json
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
-import io.ktor.server.application.install
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.request.receive
-import io.ktor.server.response.respond
+import io.ktor.server.request.receiveText
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
-import io.ktor.server.routing.application
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
-import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.serializer
 
@@ -33,20 +29,19 @@ import kotlinx.serialization.serializer
  * @param initialState L'état initial du service, lors de la première session d'un nouvel utilisateur.
  * @param block Le bloc de code qui sera exécuté à chaque requête de la passerelle.
  */
-@OptIn(InternalSerializationApi::class)
 @Suppress("DEPRECATION")
 public inline fun <reified TState : Any> Application.minitelService(
     path: String,
     version: String,
     noinline initialState: () -> TState,
-    noinline block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>
+    noinline block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>,
 ) {
     minitelService(
         path = path,
         version = version,
-        stateSerializer = TState::class.serializer(),
+        stateSerializer = serializer<TState>(),
         initialState = initialState,
-        block = block
+        block = block,
     )
 }
 
@@ -73,32 +68,39 @@ public fun <TState : Any> Application.minitelService(
     version: String,
     stateSerializer: KSerializer<TState>,
     initialState: () -> TState,
-    block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>
+    block: Route.(GatewayRequest<TState>) -> ServiceResponse<TState>,
 ) {
-    install(ContentNegotiation) {
-        json(KJson)
-    }
+    val logger = Slf4jMinitelLogger(environment.log)
 
     routing {
-        post(path) {
-            val requestDto: GatewayRequestDTO = call.receive<GatewayRequestDTO>()
-            val request = requestDto.mapToDomain(
-                environment = application.environment,
-                serializer = stateSerializer,
-                initialState = initialState
+        val route: Route = this
+        val handler =
+            MinitelServiceHandler(
+                version = version,
+                stateSerializer = stateSerializer,
+                initialState = initialState,
+                logger = logger,
+                block = { request -> route.block(request) },
             )
 
-            application.environment.log.debug("Received request: {}", request)
+        post(path) {
+            val responseBody: String =
+                try {
+                    handler.handle(call.receiveText())
+                } catch (e: InvalidGatewayRequestException) {
+                    logger.log(MinitelLogger.Level.Warn, e) {
+                        "Received an invalid request"
+                    }
+                    call.respondText(
+                        text = e.message.orEmpty(),
+                        status = HttpStatusCode.BadRequest,
+                    )
+                    return@post
+                }
 
-            val response: ServiceResponse<TState> = block(request)
-
-            application.environment.log.debug("Responding with: {}", response)
-
-            call.respond(
-                response.mapToDTO(
-                    stateSerializer = stateSerializer,
-                    version = version
-                )
+            call.respondText(
+                text = responseBody,
+                contentType = ContentType.Application.Json,
             )
         }
     }

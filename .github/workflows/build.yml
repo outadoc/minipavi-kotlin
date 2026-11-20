@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run checks
+        run: ./gradlew check
+
+  cloudflare-worker-smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: "temurin"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build sample worker
+        run: ./gradlew :sample:cloudflare-worker:jsNodeProductionLibraryDistribution
+
+      - name: Install wrangler
+        working-directory: sample/cloudflare-worker
+        run: npm install
+
+      - name: Run worker and send a gateway request
+        working-directory: sample/cloudflare-worker
+        run: |
+          npx wrangler dev --port 8787 > wrangler.log 2>&1 &
+          for i in $(seq 1 60); do curl -s -o /dev/null http://127.0.0.1:8787/ && break; sleep 1; done
+          status=$(curl -s -o response.json -w '%{http_code}' -X POST http://127.0.0.1:8787/ \
+            -d '{"PAVI":{"version":"1.2","uniqueId":"1","remoteAddr":"127.0.0.1","typesocket":"WSS","versionminitel":"Cv;","content":[],"context":"","fctn":"CNX"}}')
+          cat response.json
+          test "$status" = "200" || (cat wrangler.log; exit 1)
+          grep -q '"context":"{\\"visits\\":1}"' response.json

@@ -14,7 +14,7 @@ application {
 }
 
 dependencies {
-    implementation(projects.core)
+    implementation(projects.coreKtor)
     implementation(projects.videotex)
 
     implementation(libs.logback)

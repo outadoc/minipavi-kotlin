@@ -1,5 +1,6 @@
 package fr.outadoc.minipavi.core.internal.data
 
+import fr.outadoc.minipavi.core.MinitelLogger
 import fr.outadoc.minipavi.core.internal.KJson
 import fr.outadoc.minipavi.core.internal.data.model.GatewayRequestDTO
 import fr.outadoc.minipavi.core.internal.data.model.ServiceResponseDTO
@@ -7,6 +8,36 @@ import fr.outadoc.minipavi.core.model.GatewayRequest
 import fr.outadoc.minipavi.core.model.FunctionKey
 import fr.outadoc.minipavi.core.model.ServiceResponse
 import kotlinx.serialization.KSerializer
+
+internal fun <TState : Any> GatewayRequestDTO.mapToDomain(
+    serializer: KSerializer<TState>,
+    initialState: () -> TState,
+    logger: MinitelLogger,
+): GatewayRequest<TState> {
+    return GatewayRequest(
+        gatewayVersion = payload.version,
+        userId = payload.uniqueId,
+        remoteAddress = payload.remoteAddress,
+        socketType = payload.socketType.mapToDomain(),
+        minitelVersion = payload.minitelVersion,
+        userInput = payload.content,
+        state = payload.context
+            .takeIf { context -> context.isNotEmpty() }
+            ?.let { context ->
+                try {
+                    KJson.decodeFromString(serializer, context)
+                } catch (e: IllegalArgumentException) {
+                    logger.log(MinitelLogger.Level.Error, e) {
+                        "Failed to decode state. Context was $context"
+                    }
+                    null
+                }
+            }
+            ?: initialState(),
+        event = payload.function.mapToDomain(),
+        urlParams = urlParams,
+    )
+}
 
 internal fun <TState : Any> ServiceResponse<TState>.mapToDTO(
     stateSerializer: KSerializer<TState>,
